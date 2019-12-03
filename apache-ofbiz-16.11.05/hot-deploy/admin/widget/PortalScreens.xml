@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+
+    <screen name="home">
+        <section>
+            <actions>
+                <set field="title" value="Home"/>
+                <set field="currentPage" value="home"/>
+                <set field="currentViewId" value="HOME"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/home.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<platform-specific>
+							<html>
+								<html-template
+									location="component://admin/webapp/admin/pages/home.ftl" />
+							</html>
+						</platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="login">
+        <section>
+            <actions>
+                <set field="title" value="Login"/>
+                <set field="currentPage" value="home"/>
+                <set field="currentViewId" value="LOGIN"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/login.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+    <screen name="myaccount">
+        <section>
+            <actions>
+                <set field="title" value="My Account"/>
+                <set field="currentPage" value="myaccount"/>
+                <set field="currentViewId" value="MYACCOUNT"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/myaccount.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="changePassword">
+        <section>
+            <actions>
+                <set field="title" value="Change Password"/>
+                <set field="currentPage" value="myaccount"/>
+                <set field="currentViewId" value="CHANGE_PASSWORD"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/changePassword.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="manage_users">
+        <section>
+            <actions>
+                <set field="title" value="Manage Users"/>
+                <set field="currentPage" value="manage_users"/>
+                <set field="currentViewId" value="MANAGE_USERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/manage_users.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+</screens>

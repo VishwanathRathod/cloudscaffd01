@@ -6,17 +6,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AutoPatt Console</title>
+  <title>Admin - AutoPatt</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="../static/css/portal-main.css" rel="stylesheet">
+  <link href="../static/css/admin-main.css" rel="stylesheet">
 
   <link href="../static/css/md_icon.css" rel="stylesheet">
 
   <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+
 
 </head>
 <body>
