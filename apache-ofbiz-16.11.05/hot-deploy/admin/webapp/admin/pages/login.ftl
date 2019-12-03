@@ -9,7 +9,7 @@
 
 .login-sidenav {
     height: 100%;
-    background-color: steelblue;
+    background-color: whitesmoke;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -59,7 +59,7 @@
 .login-main-text{
     margin-top: 20%;
     padding: 60px;
-    color: #fff;
+    color: black;
 }
 
 .login-main-text h2{
@@ -67,7 +67,7 @@
 }
 
 .btn-login{
-    background-color: blue !important;
+    background-color: darkblue !important;
     color: #fff;
     width: 150px;
 }
@@ -96,8 +96,8 @@
 
   <div class="login-sidenav">
          <div class="login-main-text">
-            <h2>AutoPatt Console<br> Login </h2>
-            <p>Login here to access the AutoPatt Console.</p>
+            <h2>AutoPatt Admin <br> Login </h2>
+            <p>AutoPatt Admin interface for Administrators only!</p>
          </div>
       </div>
       <div class="login-main">
@@ -115,7 +115,7 @@
                 <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
                   <div class="form-group">
                     
-                     <label>Email Address</label>
+                     <label>Admin Email Address</label>
                      <input type="text" class="form-control" placeholder="Email" name="USERNAME">
                   </div>
                   <div class="form-group">
