@@ -3,8 +3,11 @@
 
 <entity-engine-xml>
 
-
-
+    <Party partyId="john.snow" partyTypeId="PERSON" />
+    <Person partyId="john.snow" firstName="John" lastName="Snow"/>
+    <UserLogin partyId="john.snow" userLoginId="john.snow@got.com"
+               currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
+    <!-- password: 123456 -->
 
 </entity-engine-xml>
 

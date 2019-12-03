@@ -108,10 +108,10 @@ table.table .avatar {
 }
 
 .table-title {
-  background: blueviolet;
-  color: #eee;
-  padding: 16px 30px;
-  border-radius: 3px 3px 0 0;
+  background: #ddd;
+  padding: 10px 20px;
+  border-radius: 1px 1px 0 0;
+  color: #080f29;
 }
 .table-title h2 {
   margin: 5px 0 0;

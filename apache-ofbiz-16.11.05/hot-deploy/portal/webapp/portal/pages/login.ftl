@@ -1,43 +1,23 @@
 
 <style>
-
-.main-head{
-    height: 150px;
-    background: #FFF;
-   
-}
-
 .login-sidenav {
     height: 100%;
-    background-color: steelblue;
+    background-color: #763965    ;
     overflow-x: hidden;
     padding-top: 20px;
 }
-
-
 .login-main {
     padding: 0px 10px;
 }
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-}
-
 @media screen and (max-width: 450px) {
     .login-form{
         margin-top: 10%;
     }
-
-    .register-form{
-        margin-top: 10%;
-    }
 }
-
 @media screen and (min-width: 768px){
     .login-main{
         margin-left: 40%; 
     }
-
     .login-sidenav{
         width: 40%;
         position: fixed;
@@ -45,31 +25,17 @@
         top: 0;
         left: 0;
     }
-
     .login-form{
         margin-top: 40%;
     }
-
-    .register-form{
-        margin-top: 20%;
-    }
 }
-
-
 .login-main-text{
     margin-top: 20%;
     padding: 60px;
     color: #fff;
 }
-
 .login-main-text h2{
     font-weight: 300;
-}
-
-.btn-login{
-    background-color: blue !important;
-    color: #fff;
-    width: 150px;
 }
 </style>
 
@@ -122,7 +88,7 @@
                      <label>Password</label>
                      <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
                   </div>
-                  <button type="submit" class="btn btn-login">Login</button>
+                  <button type="submit" class="btn btn-primary">Login</button>
                   <hr/>
                   <a href="<@ofbizUrl>forgotPassword</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
 

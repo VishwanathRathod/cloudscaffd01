@@ -6,7 +6,12 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AutoPatt Console</title>
+  <#if title??>
+    <title>${title!} - AutoPatt Console</title>
+  <#else>
+      <title>AutoPatt Console</title>
+  </#if>
+
 
   <!-- Bootstrap core CSS -->
   <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
