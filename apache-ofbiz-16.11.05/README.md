@@ -18,11 +18,18 @@ under the License.
 -->
 
 
-Environment Setup
+##### Environment Setup
 
 * Development Environment: Copy /framework/entity/config/entityengine-dev.xml to entityengine.xml
 * Test Environment: Copy /framework/entity/config/entityengine-test.xml to entityengine.xml, and set DB credentials appropriately.
 * Production: Copy /framework/entity/config/entityengine-prod.xml to entityengine.xml, and update DB credentials.
+
+
+---
+
+Developer Setup guide can be found in /tools/documentation/DeveloperGuide.md
+
+----
 
 
 Apache OFBiz®
