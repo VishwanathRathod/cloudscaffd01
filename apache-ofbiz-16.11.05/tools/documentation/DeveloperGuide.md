@@ -53,3 +53,12 @@ OR
 Ctrl+C to stop server
  
 
+---
+
+#### AutoPatt Console
+
+http://localhost:8080/portal
+
+#### AutoPatt Admin Page
+
+http://localhost:8080/admin
