@@ -6,7 +6,7 @@
     <a href="<@ofbizUrl>home</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'HOME'>active</#if>">
       <i class="material-icons">dashboard</i> Admin Home</a>
 
-    <a href="<@ofbizUrl>customers</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'PRODUCT_APC'>active</#if>">
+    <a href="<@ofbizUrl>customers</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'CUSTOMERS'>active</#if>">
       <i class="material-icons">pages</i> Customers</a>
 
     <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_PRODUCTS'>active</#if>">

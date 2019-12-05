@@ -5,7 +5,7 @@
                 <h2>Admin Users</h2>
             </div>
             <div class="col-sm-7">
-                <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New Admin</span></a>
+                <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>New Admin</span></a>
                 <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
             </div>
         </div>

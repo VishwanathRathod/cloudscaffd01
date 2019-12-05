@@ -7,7 +7,7 @@
         <section>
             <actions>
                 <set field="title" value="Home"/>
-                <set field="currentPage" value="home"/>
+                <set field="currentPage" value="HOME"/>
                 <set field="currentViewId" value="HOME"/>
                 <script location="component://admin/webapp/admin/WEB-INF/actions/home.groovy"/>
 
@@ -21,6 +21,53 @@
 									location="component://admin/webapp/admin/pages/home.ftl" />
 							</html>
 						</platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+    <screen name="customers">
+        <section>
+            <actions>
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/customers/customers.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="new_customer">
+        <section>
+            <actions>
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <!--<script location="component://admin/webapp/admin/WEB-INF/actions/customers.groovy"/>-->
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/customers/new_customer.ftl" />
+                            </html>
+                        </platform-specific>
                     </decorator-section>
                 </decorator-screen>
             </widgets>

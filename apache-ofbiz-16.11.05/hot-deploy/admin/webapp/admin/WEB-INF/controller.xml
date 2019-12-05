@@ -60,6 +60,14 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="home" />
 	</request-map>
+	<request-map uri="customers">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="customers" />
+	</request-map>
+	<request-map uri="new_customer">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="new_customer" />
+	</request-map>
 
 	<request-map uri="myaccount">
 		<security https="true" auth="true" />
@@ -70,7 +78,6 @@
 		<response name="success" type="view" value="changePassword" />
 	</request-map>
 
-
 	<request-map uri="manage_users">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_users" />
@@ -78,18 +85,21 @@
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
-		page="component://admin/widget/PortalScreens.xml#home" />
+		page="component://admin/widget/AdminScreens.xml#home" />
+	<view-map name="customers" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#customers" />
 
-	<view-map name="login" type="screen"
-			  page="component://admin/widget/PortalScreens.xml#login" />
-
-	<view-map name="myaccount" type="screen"
-			  page="component://admin/widget/PortalScreens.xml#myaccount" />
-
-	<view-map name="changePassword" type="screen"
-			  page="component://admin/widget/PortalScreens.xml#changePassword" />
+	<view-map name="new_customer" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#new_customer" />
 
 	<view-map name="manage_users" type="screen"
-			  page="component://admin/widget/PortalScreens.xml#manage_users" />
-		  
+			  page="component://admin/widget/AdminScreens.xml#manage_users" />
+
+	<view-map name="login" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#login" />
+	<view-map name="myaccount" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#myaccount" />
+	<view-map name="changePassword" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#changePassword" />
+
 </site-conf>
