@@ -59,7 +59,7 @@
 		<response name="success" type="request-redirect" value="home" />
 		<response name="error" type="view" value="home" />
 	</request-map>
-	
+
 	<!-- End of Security Mappings -->
 
 	<request-map uri="home">
@@ -87,6 +87,12 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_users" />
 	</request-map>
+	<request-map uri="requireChangePassword">
+		<event type="java" path="com.autopatt.portal.events.AutopattLoginWorker" invoke="changePassword" />
+		<response name="success" type="request-redirect" value="login" />
+		<response name="error" type="view" value="requirePasswordChange" />
+		<response name="requirePasswordChange" type="view" value="requirePasswordChange" />
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
@@ -107,5 +113,8 @@
 
 	<view-map name="manage_users" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#manage_users" />
+
+	<view-map name="requirePasswordChange" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#requirePasswordChange"/>
 		  
 </site-conf>
