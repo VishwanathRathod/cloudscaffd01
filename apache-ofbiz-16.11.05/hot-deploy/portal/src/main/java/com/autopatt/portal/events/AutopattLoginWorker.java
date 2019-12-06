@@ -37,7 +37,7 @@ public class AutopattLoginWorker {
         if (userLogin != null && StringUtils.isNotEmpty(userLogin.getString("userLoginId")) && StringUtils.isNotEmpty(sessionId)) {
             try {
                 String userLoginId = userLogin.getString("userLoginId");
-                GenericValue userLoginSessionInfo = delegator.findOne("AutopattUserLoginSessionInfo", false, "userLoginId", userLoginId);
+                GenericValue userLoginSessionInfo = delegator.findOne("UserLoginSessionInfo", false, "userLoginId", userLoginId);
                 if (null != userLoginSessionInfo) {
                     String currentSesionId = userLoginSessionInfo.getString("sessionId");
                     if (sessionId.equals(currentSesionId)) {
@@ -46,10 +46,10 @@ public class AutopattLoginWorker {
                     session.invalidate();
                 }
             } catch (GenericEntityException e) {
-                Debug.logError(e, "Exception during storing session id in AutopattUserLoginSessionInfo : " + e.getMessage(), module);
+                Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
-        String errMsg = "Same user has been logged in other place, logging out";
+        String errMsg = "You have been logged out since you have logged in from another device or browser.";
         request.setAttribute("_ERROR_MESSAGE_", errMsg);
         return ERROR;
     }
@@ -66,9 +66,9 @@ public class AutopattLoginWorker {
         if (userLogin != null && StringUtils.isNotEmpty(userLogin.getString("userLoginId")) && StringUtils.isNotEmpty(sessionId)) {
             try {
                 String userLoginId = userLogin.getString("userLoginId");
-                GenericValue userLoginSessionInfo = delegator.findOne("AutopattUserLoginSessionInfo", false, "userLoginId", userLoginId);
+                GenericValue userLoginSessionInfo = delegator.findOne("UserLoginSessionInfo", false, "userLoginId", userLoginId);
                 if (null == userLoginSessionInfo) {
-                    GenericValue userAccessToken = delegator.makeValue("AutopattUserLoginSessionInfo", UtilMisc.<String, Object>toMap(
+                    GenericValue userAccessToken = delegator.makeValue("UserLoginSessionInfo", UtilMisc.<String, Object>toMap(
                             "userLoginId", userLoginId,
                             "sessionId", sessionId));
                     delegator.create(userAccessToken);
@@ -82,7 +82,7 @@ public class AutopattLoginWorker {
                 delegator.store(userLoginSessionInfo);
                 return SUCCESS;
             } catch (GenericEntityException e) {
-                Debug.logError(e, "Exception during storing session id in AutopattUserLoginSessionInfo : " + e.getMessage(), module);
+                Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
         String errMsg = "Exception while managing One Device login feature";

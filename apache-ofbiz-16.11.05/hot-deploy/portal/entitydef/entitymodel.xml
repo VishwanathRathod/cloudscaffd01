@@ -10,7 +10,7 @@
     <version></version>
 
     <!--    Enriry to manage user login access token-->
-    <entity entity-name="AutopattUserLoginSessionInfo" package-name="com.autopatt.portal" title="User Login Session Info">
+    <entity entity-name="UserLoginSessionInfo" package-name="com.autopatt.portal" title="User Login Session Info">
         <field name="userLoginId" type="id-vlong"></field>
         <field name="sessionId" type="id-vlong"></field>
         <prim-key field="userLoginId"/>
