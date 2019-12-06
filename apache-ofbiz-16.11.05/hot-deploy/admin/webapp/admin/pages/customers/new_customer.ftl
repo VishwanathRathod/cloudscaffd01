@@ -18,7 +18,8 @@
     <div class="table-content">
         <div class="row">
             <div class="col-7">
-                <form>
+                <form id="new_customer_form" action="<@ofbizUrl>CreateCustomer</@ofbizUrl>" method="post">
+
                     <div class="form-group">
                         <label for="organizationName">Organization Name</label>
                         <input type="text" class="form-control" id="organizationName" placeholder="XYZ Corporation" required="true" >
@@ -61,7 +62,7 @@
                                     <div class="form-group">
                                         <label for="contactFirstName">Email Address</label>
                                         <input type="email" class="form-control" id="contactFirstName" placeholder="" required="true">
-                                        <small id="emailHelp" class="form-text text-muted">This email will be used as username to login to console</small>
+                                        <small id="emailHelp" class="form-text text-muted">This email will act as username to login to console</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

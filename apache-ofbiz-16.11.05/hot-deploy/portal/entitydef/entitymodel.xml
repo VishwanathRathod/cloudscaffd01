@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Portal Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+    <!--    Enriry to manage user login access token-->
+    <entity entity-name="UserLoginSessionInfo" package-name="com.autopatt.portal" title="User Login Session Info">
+        <field name="userLoginId" type="id-vlong"></field>
+        <field name="sessionId" type="id-vlong"></field>
+        <prim-key field="userLoginId"/>
+    </entity>
+
+</entitymodel>

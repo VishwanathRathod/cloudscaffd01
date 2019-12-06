@@ -30,10 +30,16 @@
 	<default-request request-uri="home" />
 
 	<!-- Security Request Mappings -->
+	<request-map uri="checkLogin" edit="false">
+		<description>Verify a user is logged in.</description>
+		<security https="true" auth="false"/>
+		<event type="java" path="com.autopatt.portal.events.AutopattLoginWorker" invoke="extensionCheckLogin"/>
+		<response name="success" type="view" value="main"/>
+		<response name="error" type="view" value="login"/>
+	</request-map>
 	<request-map uri="login">
 		<security https="true" auth="false" />
-		<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
-			invoke="login" />
+		<event type="java" path="com.autopatt.portal.events.AutopattLoginWorker" invoke="login" />
 		<response name="success" type="request-redirect" value="myaccount" />
 		<response name="requirePasswordChange" type="view"
 			value="requirePasswordChange" />
