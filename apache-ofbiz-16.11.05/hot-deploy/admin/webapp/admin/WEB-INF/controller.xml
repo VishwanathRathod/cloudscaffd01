@@ -68,6 +68,12 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="new_customer" />
 	</request-map>
+	<request-map uri="CreateCustomer">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.CustomerEvents"
+			   invoke="createCustomer" />
+		<response name="success" type="view" value="customers" />
+	</request-map>
 
 	<request-map uri="myaccount">
 		<security https="true" auth="true" />
