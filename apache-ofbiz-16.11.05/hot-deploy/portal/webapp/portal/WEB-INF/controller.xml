@@ -81,6 +81,10 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_users" />
 	</request-map>
+	<request-map uri="new_user">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="new_user" />
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
@@ -101,5 +105,7 @@
 
 	<view-map name="manage_users" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#manage_users" />
+	<view-map name="new_user" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#new_user" />
 		  
 </site-conf>

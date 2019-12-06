@@ -112,7 +112,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://portal/webapp/portal/pages/manage_users.ftl" />
+                                        location="component://portal/webapp/portal/pages/users/manage_users.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -120,6 +120,29 @@
             </widgets>
         </section>
     </screen>
+    <screen name="new_user">
+        <section>
+            <actions>
+                <set field="title" value="Manage Users"/>
+                <set field="currentPage" value="manage_users"/>
+                <set field="currentViewId" value="MANAGE_USERS"/>
+                <!-- <script location="component://portal/webapp/portal/WEB-INF/actions/myaccount.groovy"/> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/users/new_user.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
 
     <screen name="productAPC">
         <section>
