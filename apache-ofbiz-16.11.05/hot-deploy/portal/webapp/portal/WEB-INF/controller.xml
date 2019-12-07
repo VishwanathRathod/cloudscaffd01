@@ -76,8 +76,6 @@
 		<response name="success" type="view" value="changePassword" />
 	</request-map>
 
-
-
 	<request-map uri="productAPC">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="productAPC" />
@@ -120,5 +118,7 @@
 
 	<view-map name="requirePasswordChange" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#requirePasswordChange"/>
+	<view-map name="new_user" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#new_user" />
 
 </site-conf>
