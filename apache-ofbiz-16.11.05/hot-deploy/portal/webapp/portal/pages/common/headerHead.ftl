@@ -25,4 +25,9 @@
 
 </head>
 <body>
-  <div class="d-flex" id="wrapper">
+  <div class="text-center" id="page_loading" style="padding:50px;">
+    <div class="spinner-border" role="status">
+    </div>
+  </div>
+
+  <div class="d-flex" id="wrapper" style="display:none !important;">
