@@ -186,9 +186,6 @@ table.table .avatar {
   background-color: #9d4c87;
   border-color: #9d4c87 ;
 }
-
-
-
 .login-sidenav {
   height: 100%;
   background-color: #763965    ;
@@ -226,3 +223,8 @@ table.table .avatar {
 .login-main-text h2{
   font-weight: 300;
 }
+
+.mandatory{
+  color:red;
+}
+
