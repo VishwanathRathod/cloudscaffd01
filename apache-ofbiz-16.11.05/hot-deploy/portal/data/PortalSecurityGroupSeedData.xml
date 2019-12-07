@@ -28,7 +28,9 @@ under the License.
 
 
     <!-- Security Group Permissions -->
-    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_ADMIN"/>
+
+    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_ADD_USER"/>
+
 
 
 </entity-engine-xml>

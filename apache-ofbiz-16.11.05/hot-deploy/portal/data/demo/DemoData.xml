@@ -3,11 +3,21 @@
 
 <entity-engine-xml>
 
+    <!-- Admin -->
     <Party partyId="john.snow" partyTypeId="PERSON" />
     <Person partyId="john.snow" firstName="John" lastName="Snow"/>
     <UserLogin partyId="john.snow" userLoginId="john.snow@got.com"
                currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
     <!-- password: 123456 -->
+    <UserLoginSecurityGroup groupId="AP_FULLADMIN" userLoginId="john.snow@got.com" fromDate="2001-01-01 12:00:00.0"/>
+
+
+    <Party partyId="tyrion" partyTypeId="PERSON" />
+    <Person partyId="tyrion" firstName="Tyrion" lastName="Lannister"/>
+    <UserLogin partyId="tyrion" userLoginId="tyrion@got.com"
+               currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
+    <!-- password: 123456 -->
+    <UserLoginSecurityGroup groupId="AP_PLANNER" userLoginId="tyrion@got.com" fromDate="2001-01-01 12:00:00.0"/>
 
 </entity-engine-xml>
 

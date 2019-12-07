@@ -6,7 +6,9 @@
                 <h2>Users</h2>
             </div>
             <div class="col-sm-7">
-                <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                <#if security.hasEntityPermission("PORTAL", "_ADD_USER", session)>
+                    <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                </#if>
                 <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
             </div>
         </div>

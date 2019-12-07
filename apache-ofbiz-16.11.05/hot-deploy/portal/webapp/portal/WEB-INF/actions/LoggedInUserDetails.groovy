@@ -1,3 +1,7 @@
+import org.apache.ofbiz.base.util.UtilMisc
+
 context.userLogin = userLogin;
 
-context.loggedInUserName = "Jon Snow"
+loggedInParty = delegator.findOne("Party", UtilMisc.toMap("partyId", userLogin.partyId), false)
+
+context.loggedInParty = loggedInParty
