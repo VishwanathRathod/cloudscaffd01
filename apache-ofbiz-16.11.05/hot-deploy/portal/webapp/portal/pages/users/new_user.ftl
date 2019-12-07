@@ -45,11 +45,11 @@
             <div class="form-group row">
                 <div class="col-sm-2">Role</div>
                 <div class="col-sm-10">
-                    <select class="form-control">
-                        <option>Planner</option>
-                        <option>Approver</option>
-                        <option>Deployer</option>
-                        <option>Administrator</option>
+                    <select class="form-control" required>
+                        <option value="AP_PLANNER">Planner</option>
+                        <option value="AP_APPROVER">Approver</option>
+                        <option value="AP_DEPLOYER">Deployer</option>
+                        <option value="AP_FULLADMIN">Administrator</option>
                     </select>
                 </div>
             </div>

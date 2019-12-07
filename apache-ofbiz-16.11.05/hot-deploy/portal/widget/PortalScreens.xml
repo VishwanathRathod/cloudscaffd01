@@ -109,12 +109,27 @@
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
-                        <platform-specific>
-                            <html>
-                                <html-template
-                                        location="component://portal/webapp/portal/pages/users/manage_users.ftl" />
-                            </html>
-                        </platform-specific>
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PORTAL" action="_VIEW_USERS"/>
+                            </condition>
+                            <widgets>
+                                <platform-specific>
+                                    <html>
+                                        <html-template
+                                                location="component://portal/webapp/portal/pages/users/manage_users.ftl" />
+                                    </html>
+                                </platform-specific>
+                            </widgets>
+                            <fail-widgets>
+                                <platform-specific>
+                                    <html>
+                                        <html-template
+                                                location="component://portal/webapp/portal/error/no_permission.ftl" />
+                                    </html>
+                                </platform-specific>
+                            </fail-widgets>
+                        </section>
                     </decorator-section>
                 </decorator-screen>
             </widgets>

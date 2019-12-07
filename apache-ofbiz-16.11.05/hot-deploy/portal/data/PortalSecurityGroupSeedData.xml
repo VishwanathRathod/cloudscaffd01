@@ -27,10 +27,20 @@ under the License.
     <SecurityGroup groupId="AP_FULLADMIN" description="Administrator"/>
 
 
-    <!-- Security Group Permissions -->
-
+    <!-- Security Group Permissions for AP_FULLADMIN -->
     <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_ADD_USER"/>
+    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_UPDATE_USER"/>
+    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_REMOVE_USER"/>
+    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_VIEW_USERS"/>
 
+
+    <!-- Security Group Permissions for AP_PLANNER -->
+
+
+    <!-- Security Group Permissions for AP_APPROVER -->
+
+
+    <!-- Security Group Permissions for AP_DEPLOYER -->
 
 
 </entity-engine-xml>

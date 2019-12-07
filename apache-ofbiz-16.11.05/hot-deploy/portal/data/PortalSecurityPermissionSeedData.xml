@@ -24,6 +24,7 @@ under the License.
     <SecurityPermission description="View operations in the Portal" permissionId="PORTAL_VIEW"/>
 
     <SecurityPermission description="Add User to portal" permissionId="PORTAL_ADD_USER"/>
+    <SecurityPermission description="Update User to portal" permissionId="PORTAL_UPDATE_USER"/>
     <SecurityPermission description="Remove User from portal" permissionId="PORTAL_REMOVE_USER"/>
     <SecurityPermission description="View Portal Users" permissionId="PORTAL_VIEW_USERS"/>
 

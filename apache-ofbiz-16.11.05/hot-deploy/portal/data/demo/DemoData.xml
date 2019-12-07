@@ -11,13 +11,21 @@
     <!-- password: 123456 -->
     <UserLoginSecurityGroup groupId="AP_FULLADMIN" userLoginId="john.snow@got.com" fromDate="2001-01-01 12:00:00.0"/>
 
-
+    <!-- Planner -->
     <Party partyId="tyrion" partyTypeId="PERSON" />
     <Person partyId="tyrion" firstName="Tyrion" lastName="Lannister"/>
     <UserLogin partyId="tyrion" userLoginId="tyrion@got.com"
                currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
     <!-- password: 123456 -->
     <UserLoginSecurityGroup groupId="AP_PLANNER" userLoginId="tyrion@got.com" fromDate="2001-01-01 12:00:00.0"/>
+
+    <!-- Approver -->
+    <Party partyId="arya" partyTypeId="PERSON" />
+    <Person partyId="arya" firstName="Arya" lastName="Stark"/>
+    <UserLogin partyId="arya" userLoginId="arya@got.com"
+               currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
+    <!-- password: 123456 -->
+    <UserLoginSecurityGroup groupId="AP_APPROVER" userLoginId="tyrion@got.com" fromDate="2001-01-01 12:00:00.0"/>
 
 </entity-engine-xml>
 
