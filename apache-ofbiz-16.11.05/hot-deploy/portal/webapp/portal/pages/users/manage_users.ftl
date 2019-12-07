@@ -14,6 +14,9 @@
         </div>
     </div>
 
+    ${eventMessage!}
+    ${errorMessage!}
+
     <table class="table table-striped table-hover">
         <thead>
         <tr>

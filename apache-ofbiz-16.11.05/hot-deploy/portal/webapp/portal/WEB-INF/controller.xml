@@ -71,6 +71,11 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="myaccount" />
 	</request-map>
+	<request-map uri="UpdateMyProfile">
+		<event type="java" path="com.autopatt.portal.events.MyProfileEvents" invoke="updateMyProfile" />
+		<response name="success" type="request-redirect" value="myaccount" />
+		<response name="error" type="request-redirect" value="myaccount" />
+	</request-map>
 	<request-map uri="changePassword">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="changePassword" />
@@ -94,6 +99,13 @@
 		<response name="success" type="view" value="login" />
 		<response name="error" type="view" value="requirePasswordChange" />
 		<response name="requirePasswordChange" type="view" value="requirePasswordChange" />
+	</request-map>
+
+	<request-map uri="CreateUser">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="createUser" />
+		<response name="success" type="request-redirect" value="manage_users" />
+		<response name="error" type="view" value="new_user" />
 	</request-map>
 
 	<!-- View Mappings - START -->
