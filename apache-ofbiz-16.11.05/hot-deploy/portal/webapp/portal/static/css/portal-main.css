@@ -186,3 +186,7 @@ table.table .avatar {
   background-color: #9d4c87;
   border-color: #9d4c87 ;
 }
+
+.mandatory{
+  color:red;
+}
