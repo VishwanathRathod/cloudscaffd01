@@ -14,7 +14,7 @@
 
     <div class="col-md-8 my-4">
         <form action="<@ofbizUrl>CreateUser</@ofbizUrl>" method="post">
-            <div class="form-group row">
+            <div class="form-group row required">
                 <label for="userFirstName" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
                 <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="Tony" required>

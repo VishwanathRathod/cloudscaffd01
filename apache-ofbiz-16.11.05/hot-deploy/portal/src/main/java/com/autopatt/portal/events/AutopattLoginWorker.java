@@ -10,6 +10,7 @@ import org.apache.ofbiz.entity.condition.EntityCondition;
 import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
+import org.apache.ofbiz.webapp.control.LoginWorker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class AutopattLoginWorker {
 
     public static String extensionCheckLogin(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
-        String res = org.apache.ofbiz.webapp.control.LoginWorker.extensionCheckLogin(request, response);
+        String res = LoginWorker.extensionCheckLogin(request, response);
         if (!SUCCESS.equals(res)) {
             return res;
         }
@@ -56,7 +57,7 @@ public class AutopattLoginWorker {
 
     public static String login(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
-        String res = org.apache.ofbiz.webapp.control.LoginWorker.login(request, response);
+        String res = LoginWorker.login(request, response);
         if (!SUCCESS.equals(res)) {
             return res;
         }
@@ -89,5 +90,10 @@ public class AutopattLoginWorker {
         request.setAttribute("_ERROR_MESSAGE_", errMsg);
         return ERROR;
     }
+
+    public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
+        return LoginWorker.login(request, response);
+    }
+
 
 }

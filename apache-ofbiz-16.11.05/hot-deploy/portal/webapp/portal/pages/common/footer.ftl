@@ -13,6 +13,13 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+
+    $(function() {
+      setTimeout(function() {
+        $("#page_loading").hide();
+        $("#wrapper").show("slow","swing");
+      }, 200);
+    });
   </script>
 
 
