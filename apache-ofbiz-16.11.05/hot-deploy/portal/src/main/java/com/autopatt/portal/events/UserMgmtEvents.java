@@ -61,7 +61,7 @@ public class UserMgmtEvents {
             e.printStackTrace();
             return ERROR;
         }
-        request.setAttribute("_EVENT_MESSAGE_", "User added successfully");
+        request.setAttribute("createSuccess", "Y");
         return SUCCESS;
     }
 

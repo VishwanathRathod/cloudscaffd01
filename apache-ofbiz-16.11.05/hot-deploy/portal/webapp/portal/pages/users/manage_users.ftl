@@ -1,5 +1,14 @@
 <div class="container-fluid">
     <div>&nbsp;</div>
+    <#if requestParameters.createSuccess?? && requestParameters.createSuccess=="Y">
+        <div class="alert alert-success" role="alert">
+            <i class="material-icons">check</i> User has been addedd successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </#if>
+
     <div class="table-title">
         <div class="row">
             <div class="col-sm-5">
@@ -13,9 +22,6 @@
             </div>
         </div>
     </div>
-
-    ${eventMessage!}
-    ${errorMessage!}
 
     <table class="table table-striped table-hover">
         <thead>
@@ -110,10 +116,3 @@
   </div>
 </div>
 
-<script>
-
-
-
-
-
-</script>
