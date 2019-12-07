@@ -21,24 +21,43 @@
             <widgets>
 				<section>
 					<widgets>
-						<container>
-							<!-- HTML Headers  -->
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/headerHead.ftl"/></html></platform-specific>
+						<section>
+							<condition>
+								<if-has-permission permission="ADMINPORTAL" action="_VIEW"/>
+							</condition>
+							<widgets>
+								<container>
+									<!-- HTML Headers  -->
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/headerHead.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/sidebar.ftl"/></html></platform-specific>
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/sidebar.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/pageHeader.ftl"/></html></platform-specific>
-							
-							<!-- body -->
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/layouts/GeneralLayout.ftl"/></html>
-							</platform-specific>
-							<!-- decorator-section-include name="body"/ -->
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/pageHeader.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/pageFooter.ftl"/></html></platform-specific>
+									<!-- body -->
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/layouts/GeneralLayout.ftl"/></html>
+									</platform-specific>
+									<!-- decorator-section-include name="body"/ -->
 
-							<!-- footer -->
-							<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/footer.ftl"/></html></platform-specific>
-						</container>
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/pageFooter.ftl"/></html></platform-specific>
+
+									<!-- footer -->
+									<platform-specific><html><html-template location="component://admin/webapp/admin/pages/common/footer.ftl"/></html></platform-specific>
+								</container>
+							</widgets>
+							<fail-widgets>
+								<decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+									<decorator-section name="body">
+										<platform-specific>
+											<html>
+												<html-template
+														location="component://admin/webapp/admin/error/no_permission_page.ftl" />
+											</html>
+										</platform-specific>
+									</decorator-section>
+								</decorator-screen>
+							</fail-widgets>
+						</section>
 					</widgets>
 				</section>
 			</widgets>

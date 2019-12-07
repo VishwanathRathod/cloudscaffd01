@@ -21,8 +21,9 @@ menu
         <#if userLogin??>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">account_circle</i> ${loggedInUserName!}
-                <#--  <span class="sr-only">(current)</span>  -->
+                <i class="material-icons">account_circle</i>
+                ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(loggedInParty)}
+                <span class="sr-only">(current)</span> 
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="<@ofbizUrl>myaccount</@ofbizUrl>"><i class="material-icons">account_circle</i> My Account</a>

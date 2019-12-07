@@ -18,10 +18,12 @@
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
 -->
 
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/TypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminTypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityPermissionSeedData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityGroupSeedData.xml"/>
 
     <!-- Demo Data -->
-    <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/JohnTeacher.xml"/>
+    <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/AdminDemoData.xml"/>
 
     <!-- web applications; will be mounted when using the embedded container -->
     <webapp name="admin" app-bar-display="false"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<entity-engine-xml>
+
+    <!--APADMIN Admin -->
+    <Party partyId="aditya" partyTypeId="PERSON" />
+    <Person partyId="aditya" firstName="Aditya" lastName=" "/>
+    <UserLogin partyId="aditya" userLoginId="aditya@arithaconsulting.com"
+               currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
+    <!-- password: 123456 -->
+    <UserLoginSecurityGroup groupId="APADMIN_FULLADMIN" userLoginId="aditya@arithaconsulting.com" fromDate="2001-01-01 12:00:00.0"/>
+
+
+</entity-engine-xml>
+

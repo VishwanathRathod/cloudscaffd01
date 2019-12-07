@@ -16,12 +16,12 @@
     <!-- entity resources: model(s), eca(s), group, and data definitions -->
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
 
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/TypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/PortalTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/PortalSecurityPermissionSeedData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/PortalSecurityGroupSeedData.xml"/>
 
     <!-- Demo Data -->
-    <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/DemoData.xml"/>
+    <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/PortalDemoData.xml"/>
 
     <!-- web applications; will be mounted when using the embedded container -->
     <webapp name="portal" app-bar-display="false"
