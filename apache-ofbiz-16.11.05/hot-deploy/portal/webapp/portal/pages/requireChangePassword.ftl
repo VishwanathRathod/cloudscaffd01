@@ -63,7 +63,7 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console<br> Login </h2>
-            <p>Change the password here to access the AutoPatt Console.</p>
+            <p>Change Your Password</p>
         </div>
     </div>
     <div class="login-main">
@@ -80,10 +80,7 @@
                     </div>
                     <form id="login" action="<@ofbizUrl>requireChangePassword</@ofbizUrl>" method="post">
                         <input type="hidden" name="requirePasswordChange" value="Y"/>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="text" class="form-control" placeholder="Email" name="USERNAME">
-                        </div>
+                        <input type="hidden" name="USERNAME" value="${requestAttributes.USERNAME}"/>
                         <div class="form-group">
                             <label>Current Password</label>
                             <input type="password" class="form-control" placeholder="Password" name="PASSWORD">

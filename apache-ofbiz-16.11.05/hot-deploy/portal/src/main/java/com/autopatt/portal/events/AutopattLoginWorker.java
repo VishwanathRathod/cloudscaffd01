@@ -58,6 +58,7 @@ public class AutopattLoginWorker {
     public static String login(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         String res = LoginWorker.login(request, response);
+        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
         if (!SUCCESS.equals(res)) {
             return res;
         }
@@ -92,7 +93,9 @@ public class AutopattLoginWorker {
     }
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
-        return LoginWorker.login(request, response);
+        String login = LoginWorker.login(request, response);
+        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
+        return login;
     }
 
 
