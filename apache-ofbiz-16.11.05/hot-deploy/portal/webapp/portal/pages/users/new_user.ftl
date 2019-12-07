@@ -45,7 +45,7 @@
             <div class="form-group row">
                 <div class="col-sm-2">Role</div>
                 <div class="col-sm-10">
-                    <select class="form-control" required>
+                    <select name="securityGroupId" class="form-control" required>
                         <option value="AP_PLANNER">Planner</option>
                         <option value="AP_APPROVER">Approver</option>
                         <option value="AP_DEPLOYER">Deployer</option>
@@ -60,6 +60,6 @@
                     <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="btn btn-secondary">Cancel</a>
                 </div>
             </div>
-            </form>
+        </form>
     </div>
 </div>

@@ -103,7 +103,7 @@
                 <set field="title" value="Manage Users"/>
                 <set field="currentPage" value="manage_users"/>
                 <set field="currentViewId" value="MANAGE_USERS"/>
-                <script location="component://portal/webapp/portal/WEB-INF/actions/myaccount.groovy"/>
+                <script location="component://portal/webapp/portal/WEB-INF/actions/users/GetUsers.groovy"/>
 
             </actions>
             <widgets>
