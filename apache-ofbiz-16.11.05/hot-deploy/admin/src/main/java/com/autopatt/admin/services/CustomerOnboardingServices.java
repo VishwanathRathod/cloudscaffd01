@@ -19,13 +19,19 @@
 
 package com.autopatt.admin.services;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.SystemUtils;
+import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
+import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ModelService;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -37,6 +43,7 @@ import java.util.*;
 public class CustomerOnboardingServices {
 
     public static final String module = CustomerOnboardingServices.class.getName();
+    private static Properties ONBOARDING_PROPERTIES = UtilProperties.getProperties("onboarding.properties");
 
     /**
      * Onboard a new Customer.
@@ -50,10 +57,7 @@ public class CustomerOnboardingServices {
     public static Map<String, Object> onboardNewCustomer(DispatchContext ctx, Map<String, ? extends Object> context) {
         Map<String, Object> result = new HashMap<String, Object>();
         Delegator delegator = ctx.getDelegator();
-        Timestamp now = UtilDateTime.nowTimestamp();
-        List<GenericValue> toBeStored = new LinkedList<GenericValue>();
         Locale locale = (Locale) context.get("locale");
-        // in most cases userLogin will be null, but get anyway so we can keep track of that info if it is available
         GenericValue userLogin = (GenericValue) context.get("userLogin");
 
         String tenantId = (String) context.get("tenantId");
@@ -72,9 +76,22 @@ public class CustomerOnboardingServices {
         // TODO: 1. Create OrgEntry in Main DB (along with status)
         System.out.println("Creating OrgEntry................");
 
-        // TODO: 2. Initiate Tenant DB Creation
+        // 2. Initiate Tenant DB Creation
+        String dbHostIp = ONBOARDING_PROPERTIES.getProperty("onboarding.database.mysql.hostname", "127.0.0.1");
+        String dbHostPort = ONBOARDING_PROPERTIES.getProperty("onboarding.database.mysql.port", "3306");
+        String dbUsername = ONBOARDING_PROPERTIES.getProperty("onboarding.database.mysql.username");
+        String dbPassword = ONBOARDING_PROPERTIES.getProperty("onboarding.database.mysql.password");
+
+        String tenantDbUsername = "user" + tenantId;
+        String tenantDbPassword = "p" + RandomStringUtils.random(15, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890@".toCharArray());
+
+        createTenantDatabase(dbHostIp, dbHostPort, dbUsername, dbPassword, tenantId, tenantDbUsername, tenantDbPassword);
+
+        // Create Tenant entries
+        System.out.println("Creating Tenant entries ");
 
         // TODO: 3. Create Org Entry in TenantDB,
+        System.out.println("Creating Org Entry in Tenant DB");
 
         // TODO: 4. create user login for given contact in TennatDB, and build relationship
 
@@ -84,6 +101,48 @@ public class CustomerOnboardingServices {
         result.put("tenantId", tenantId);
         return result;
     }
+
+
+    private static void createTenantDatabase(String dbHostname, String dbHostPort, String dbUsername, String dbPassword,
+                                      String tenantId, String tenantDbUsername, String tenantDbPassword) {
+        String cloneScriptFile = getCloneScriptFilePath();
+        Debug.logInfo("Cloning Database from template for new tenant: " + tenantId, module);
+        Debug.logInfo("Running Script: " + cloneScriptFile, module);
+        try {
+            Debug.logInfo(cloneScriptFile + " " + dbHostname + " " + dbHostPort + " " + dbHostname + " "
+                    + dbUsername + " " + dbPassword
+                    + " " + tenantId + " " + tenantDbUsername + " " + tenantDbPassword, module);
+
+            ProcessBuilder pb = null;
+            if (SystemUtils.IS_OS_WINDOWS) {
+                pb = new ProcessBuilder(cloneScriptFile, dbHostname, dbUsername, dbPassword, dbHostPort,
+                        tenantId, tenantDbUsername, tenantDbPassword);
+            } else {
+                pb = new ProcessBuilder("sh", cloneScriptFile, dbHostname, dbUsername, dbPassword, dbHostPort,
+                        tenantId, tenantDbUsername, tenantDbPassword);
+            }
+            Process p = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String s;
+            while ((s = reader.readLine()) != null) {
+                Debug.logInfo(">>>" + s, module);
+            }
+            p.waitFor();
+            Debug.logInfo("Tenant Database creation completed for tenant: " + tenantId, module);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Return the script filename based on OS
+    private static String getCloneScriptFilePath() {
+        if (SystemUtils.IS_OS_WINDOWS) {
+            return "tools/scripts/windows/clone-tenant-db.cmd";
+        } else {
+            return "tools/scripts/linux/clone-tenant-db.sh";
+        }
+    }
+
 
 
 

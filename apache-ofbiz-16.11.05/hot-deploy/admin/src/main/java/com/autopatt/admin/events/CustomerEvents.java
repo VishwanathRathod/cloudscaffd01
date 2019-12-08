@@ -2,6 +2,7 @@ package com.autopatt.admin.events;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -33,11 +34,12 @@ public class CustomerEvents {
         String contactEmail = request.getParameter("contactEmail");
         String contactPassword = request.getParameter("contactPassword");
         String sendNotificationToContact = request.getParameter("sendNotificationToContact");
+        if(UtilValidate.isEmpty(sendNotificationToContact)) sendNotificationToContact = "N";
 
         Map<String, Object> onboardCustomerResp = null;
         try {
-            // TODO: Make async??
-            onboardCustomerResp = dispatcher.runSync("onboardNewCustomer", UtilMisc.<String, Object> toMap("tenantId", tenantId,
+            //Async call - use status on Org Party to know the result
+            dispatcher.runAsync("onboardNewCustomer", UtilMisc.<String, Object> toMap("tenantId", tenantId,
                     "organizationName", organizationName,
                     "contactFirstName",contactFirstName,
                     "contactLastName",contactLastName,
@@ -45,16 +47,15 @@ public class CustomerEvents {
                     "contactPassword",contactPassword,
                     "sendNotificationToContact",sendNotificationToContact,
                     "userLogin", userLogin));
-            if(!ServiceUtil.isSuccess(onboardCustomerResp)) {
+            /*if(!ServiceUtil.isSuccess(onboardCustomerResp)) {
                 Debug.logError("Error onboarding new customer with organization Id: " + tenantId, module);
                 request.setAttribute("_ERROR_MESSAGE_", "Error onboarding new customer. ");
                 return ERROR;
-            }
+            }*/
 
         } catch (GenericServiceException e) {
             e.printStackTrace();
         }
-
         return SUCCESS;
     }
 }

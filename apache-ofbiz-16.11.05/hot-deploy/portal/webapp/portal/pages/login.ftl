@@ -36,13 +36,20 @@
                         </div>
                     </#list>
                 </div>
+
+
                 <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
-                  <div class="form-group">
-                    
-                     <label>Email Address</label>
-                     <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+
+                    <div class="form-group">
+                     <label>Account Number</label>
+                     <input type="text" class="form-control" placeholder="Organization Account Number" name="userTenantId">
                   </div>
-                  <div class="form-group">
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+                    </div>
+                    <div class="form-group">
                      <label>Password</label>
                      <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
                   </div>

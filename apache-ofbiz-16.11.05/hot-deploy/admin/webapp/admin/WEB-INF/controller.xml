@@ -73,6 +73,7 @@
 		<event type="java" path="com.autopatt.admin.events.CustomerEvents"
 			   invoke="createCustomer" />
 		<response name="success" type="view" value="customers" />
+		<response name="error" type="view" value="new_customer" />
 	</request-map>
 
 	<request-map uri="myaccount">

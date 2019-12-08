@@ -3,7 +3,6 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="../static/vendor/jquery/jquery.min.js"></script>
-    <script src="../static/vendor/jquery/jquery.slim.min.js"></script>
 
   <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -17,7 +16,7 @@
     $(function() {
       setTimeout(function() {
         $("#page_loading").hide();
-        $("#wrapper").show("slow","swing");
+        $("#wrapper").show(300,"swing");
       }, 200);
     });
   </script>

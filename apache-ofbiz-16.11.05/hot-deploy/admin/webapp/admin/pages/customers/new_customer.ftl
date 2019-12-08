@@ -81,12 +81,24 @@
                         <span>Send Email notification to the organization contact person?</span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary"><i class="material-icons">check_box</i> Create Customer</button>
-                    <a href="<@ofbizUrl>customers</@ofbizUrl>" class="btn btn-secondary">
+                    <div id="newCustomerForm_Error" class="alert alert-danger d-none" role="alert">
+                        <i class="material-icons">check</i> Error Occured: <span id="newCustomerForm_Error_Message">asdf</span>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="newCustomerForm_Processing" class="alert alert-info d-none" role="alert">
+                        <div class="spinner-border text-primary" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <span>Onboarding new customer, please wait...</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="newCustomerFormSubmitButton"><i class="material-icons">check_box</i> Create Customer</button>
+                    <a href="<@ofbizUrl>customers</@ofbizUrl>" class="btn btn-secondary " id="newCustomerFormCancelButton" role="button">
                         <i class="material-icons">cancel</i> <span>Cancel</span></a>
 
                     <div>
-                        <br/>
                         <small id="emailHelp" class="form-text text-muted">
                             <i>Note: Setting up a new organization might take few minutes. Please try to login to new organization console after few mins.</i>
                         </small>
@@ -97,7 +109,5 @@
         </div>
         <br/><br/><br/>
     </div>
-
-
 
 </div>

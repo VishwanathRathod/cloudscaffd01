@@ -16,4 +16,6 @@
         <prim-key field="userLoginId"/>
     </entity>
 
+    <!-- TenantOrgParty association entity -->
+
 </entitymodel>
