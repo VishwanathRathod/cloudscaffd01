@@ -70,7 +70,6 @@ public class AutopattLoginWorker {
         if (userLogin != null && StringUtils.isNotEmpty(userLogin.getString("userLoginId")) && StringUtils.isNotEmpty(sessionId)) {
             try {
                 String userLoginId = userLogin.getString("userLoginId");
-                session.setAttribute("USERNAME",userLoginId);
                 GenericValue userLoginSessionInfo = delegator.findOne("UserLoginSessionInfo", false, "userLoginId", userLoginId);
                 if (null == userLoginSessionInfo) {
                     GenericValue userAccessToken = delegator.makeValue("UserLoginSessionInfo", UtilMisc.<String, Object>toMap(
@@ -97,20 +96,15 @@ public class AutopattLoginWorker {
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
         String login = LoginWorker.login(request, response);
-        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
         return login;
     }
 
     public static String updatePassword(HttpServletRequest request, HttpServletResponse response) {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-        String username = request.getParameter("USERNAME");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String username = userLogin.getString("userLoginId");
         String password = request.getParameter("PASSWORD");
-        if(StringUtils.isEmpty(request.getParameter("USERNAME"))){
-            HttpSession session = request.getSession();
-            if(StringUtils.isNotEmpty((String) session.getAttribute("USERNAME"))){
-                username = (String) session.getAttribute("USERNAME");
-            }
-        }
         Map<String, Object> inMap = UtilMisc.<String, Object>toMap("login.username", username, "login.password", password, "locale", UtilHttp.getLocale(request));
         inMap.put("userLoginId", username);
         inMap.put("currentPassword", password);

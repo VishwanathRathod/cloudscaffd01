@@ -26,7 +26,6 @@
         </#list>
     </div>
     <form id="login" action="<@ofbizUrl>updatePassword</@ofbizUrl>" method="post">
-        <input type="hidden" name="requirePasswordChange" value="Y"/>
         <div class="col-md-8 my-4">
             <div class="form-group row required">
                 <label for="CrrPswd" class="col-sm-3 col-form-label" >Current Password <span class="mandatory">*</span></label>
