@@ -42,15 +42,15 @@
                         <input type="hidden" name="USERNAME" value="${requestAttributes.USERNAME}"/>
                         <div class="form-group">
                             <label>Current Password</label>
-                            <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
+                            <input type="password" class="form-control" placeholder="Password" name="PASSWORD" required>
                         </div>
                         <div class="form-group">
                             <label>New Password</label>
-                            <input type="password" class="form-control" placeholder="New Password" name="newPassword">
+                            <input type="password" class="form-control" placeholder="New Password" name="newPassword" required>
                         </div>
                         <div class="form-group">
                             <label>Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="Confirm Password" name="newPasswordVerify">
+                            <input type="password" class="form-control" placeholder="Confirm Password" name="newPasswordVerify" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Change</button>
                     </form>

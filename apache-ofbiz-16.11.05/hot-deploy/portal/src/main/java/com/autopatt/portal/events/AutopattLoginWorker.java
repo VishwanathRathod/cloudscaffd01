@@ -1,14 +1,15 @@
 package com.autopatt.portal.events;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.condition.EntityCondition;
 import org.apache.ofbiz.entity.condition.EntityOperator;
+import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
+import org.apache.ofbiz.service.ModelService;
 import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.ofbiz.webapp.control.LoginWorker;
 
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class AutopattLoginWorker {
 
@@ -94,9 +96,39 @@ public class AutopattLoginWorker {
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
         String login = LoginWorker.login(request, response);
-        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
         return login;
     }
+
+    public static String updatePassword(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String username = userLogin.getString("userLoginId");
+        String password = request.getParameter("PASSWORD");
+        Map<String, Object> inMap = UtilMisc.<String, Object>toMap("login.username", username, "login.password", password, "locale", UtilHttp.getLocale(request));
+        inMap.put("userLoginId", username);
+        inMap.put("currentPassword", password);
+        inMap.put("newPassword", request.getParameter("newPassword"));
+        inMap.put("newPasswordVerify", request.getParameter("newPasswordVerify"));
+        Map<String, Object> resultPasswordChange = null;
+        try {
+            resultPasswordChange = dispatcher.runSync("updatePassword", inMap);
+        } catch (GenericServiceException e) {
+            Debug.logError(e, "Error calling updatePassword service", module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
+            return ERROR;
+        }
+        if (ServiceUtil.isError(resultPasswordChange)) {
+            String errorMessage = (String) resultPasswordChange.get(ModelService.ERROR_MESSAGE);
+            if (UtilValidate.isNotEmpty(errorMessage)) {
+                request.setAttribute("_ERROR_MESSAGE_", errorMessage);
+            }
+            request.setAttribute("_ERROR_MESSAGE_LIST_", resultPasswordChange.get(ModelService.ERROR_MESSAGE_LIST));
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
 
 
 }

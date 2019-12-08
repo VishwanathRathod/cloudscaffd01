@@ -100,6 +100,13 @@
 		<response name="requirePasswordChange" type="view" value="requirePasswordChange" />
 	</request-map>
 
+	<request-map uri="updatePassword">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.portal.events.AutopattLoginWorker" invoke="updatePassword" />
+		<response name="success" type="view" value="home" />
+		<response name="error" type="view" value="changePassword" />
+	</request-map>
+
 	<request-map uri="CreateUser">
 		<security https="true" auth="true" />
 		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="createUser" />
