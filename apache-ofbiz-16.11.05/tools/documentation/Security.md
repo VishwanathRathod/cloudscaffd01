@@ -13,21 +13,23 @@
 3. AP_DEPLOYER - Deployer
 4. AP_FULLADMIN - Administrator
 
-##### Services:
+##### Services / Java or Groovy
 
 Ways to check if currently logged in person has given permission
 ~~~
-        Security security = dctx.getSecurity();
-        if (!security.hasPermission("PORTAL_VIEW_USERS", userLogin)) {
-                return ServiceUtil.returnError("No permissions error");
-        }
+Security security = dctx.getSecurity();
+if (!security.hasPermission("PORTAL_VIEW_USERS", userLogin)) {
+        return ServiceUtil.returnError("No permissions error");
+}
 ~~~
-##### FTL:
+##### FTL
 ~~~
-                <#if security.hasEntityPermission("PORTAL", "_ADD_USER", session)>
+<#if security.hasEntityPermission("PORTAL", "_ADD_USER", session)>
+    ...
+</#if>
 ~~~
 
-##### Screens:
+##### Screens
 ~~~
 <condition>
     <if-has-permission permission="PORTAL" action="_VIEW_USERS"/>

@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <label for="organizationName">Organization Name</label>
-                        <input type="text" class="form-control" id="organizationName" placeholder="XYZ Corporation" required="true" >
+                        <input type="text" class="form-control" id="organizationName" name="organizationName" placeholder="XYZ Corporation" required="true" >
                     </div>
 
                     <div class="form-group">
@@ -31,7 +31,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">https://</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="xyz-org" aria-label="" aria-describedby="basic-addon2" required="true">
+                            <input type="text" class="form-control" placeholder="xyz-org" name="tenantId" aria-label="" aria-describedby="basic-addon2" required="true">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">.autopatt.com</span>
                             </div>
@@ -47,28 +47,28 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="contactFirstName">First Name</label>
-                                        <input type="text" class="form-control" id="contactFirstName" placeholder="" required="true" >
+                                        <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" placeholder="" required="true" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="contactFirstName">Last Name</label>
-                                        <input type="text" class="form-control" id="contactFirstName" placeholder="" required="true">
+                                        <label for="contactLastName">Last Name</label>
+                                        <input type="text" class="form-control" id="contactLastName" name="contactLastName" placeholder="" required="true">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="contactFirstName">Email Address</label>
-                                        <input type="email" class="form-control" id="contactFirstName" placeholder="" required="true">
+                                        <label for="contactEmail">Email Address</label>
+                                        <input type="email" class="form-control" id="contactEmail" name="contactEmail" placeholder="" required="true">
                                         <small id="emailHelp" class="form-text text-muted">This email will act as username to login to console</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="contactFirstName">Password</label>
-                                        <input type="password" class="form-control" id="contactFirstName" placeholder="" required="true">
+                                        <label for="contactPassword">Password</label>
+                                        <input type="password" class="form-control" id="contactPassword" name="contactPassword" placeholder="" required="true">
                                         <small id="emailHelp" class="form-text text-muted">User will be forced to change password on first login</small>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="checkbox" checked data-toggle="toggle" data-on="Yes" data-off="No" data-style="slow">
+                        <input type="checkbox" name="sendNotificationToContact" value="Y" checked data-toggle="toggle" data-on="Yes" data-off="No" data-style="slow">
                         <span>Send Email notification to the organization contact person?</span>
                     </div>
 
