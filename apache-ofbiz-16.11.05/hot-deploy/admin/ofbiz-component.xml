@@ -22,6 +22,7 @@
     <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityPermissionSeedData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityGroupSeedData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/SubscriptionData.xml"/>
 
     <!-- Demo Data -->
     <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/AdminDemoData.xml"/>
