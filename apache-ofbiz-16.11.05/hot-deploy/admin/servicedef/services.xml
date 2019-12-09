@@ -25,7 +25,8 @@ under the License.
     <version>1.0</version>
 
     <service name="onboardNewCustomer" engine="java"
-            location="com.autopatt.admin.services.CustomerOnboardingServices" invoke="onboardNewCustomer" auth="true">
+            location="com.autopatt.admin.services.CustomerOnboardingServices" invoke="onboardNewCustomer"
+             auth="true" require-new-transaction="true" transaction-timeout="1200">
         <!--<permission-service service-name="partyStatusPermissionCheck" main-action="UPDATE"/>-->
         <attribute name="tenantId" type="String" mode="INOUT"/>
         <attribute name="organizationName" type="String" mode="IN"/>
@@ -36,6 +37,20 @@ under the License.
         <attribute name="sendNotificationToContact" type="String" mode="IN"/>
     </service>
 
+
+    <service name="createTenantEntries" engine="java"
+             location="com.autopatt.admin.services.CustomerOnboardingServices" invoke="createTenantEntries"
+             auth="true" require-new-transaction="true" transaction-timeout="300">
+        <description>Creates Tenant and TenantDataSource entries for new tenant</description>
+        <!--<permission-service service-name="partyStatusPermissionCheck" main-action="UPDATE"/>-->
+        <attribute name="tenantId" type="String" mode="IN"/>
+        <attribute name="organizationName" type="String" mode="IN"/>
+        <attribute name="dbHostIp" type="String" mode="IN"/>
+        <attribute name="dbHostPort" type="String" mode="IN"/>
+        <attribute name="tenantDbPrefix" type="String" mode="IN"/>
+        <attribute name="tenantDbUsername" type="String" mode="IN"/>
+        <attribute name="tenantDbPassword" type="String" mode="IN"/>
+    </service>
 
 
 </services>

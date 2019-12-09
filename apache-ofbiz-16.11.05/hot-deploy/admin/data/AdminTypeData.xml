@@ -4,6 +4,7 @@
 <entity-engine-xml>
 
 
+    <RoleType description="Autopatt Customer" hasTable="N" parentTypeId="" roleTypeId="AP_CUSTOMER"/>
 
 </entity-engine-xml>
 

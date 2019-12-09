@@ -47,6 +47,7 @@ public class CustomerEvents {
                     "contactPassword",contactPassword,
                     "sendNotificationToContact",sendNotificationToContact,
                     "userLogin", userLogin));
+
             /*if(!ServiceUtil.isSuccess(onboardCustomerResp)) {
                 Debug.logError("Error onboarding new customer with organization Id: " + tenantId, module);
                 request.setAttribute("_ERROR_MESSAGE_", "Error onboarding new customer. ");

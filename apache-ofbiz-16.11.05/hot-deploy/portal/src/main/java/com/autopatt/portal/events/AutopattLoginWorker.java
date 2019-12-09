@@ -29,11 +29,11 @@ public class AutopattLoginWorker {
     public static String ERROR = "error";
 
     public static String extensionCheckLogin(HttpServletRequest request, HttpServletResponse response) {
-        Delegator delegator = (Delegator) request.getAttribute("delegator");
         String res = LoginWorker.extensionCheckLogin(request, response);
         if (!SUCCESS.equals(res)) {
             return res;
         }
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
@@ -58,12 +58,13 @@ public class AutopattLoginWorker {
     }
 
     public static String login(HttpServletRequest request, HttpServletResponse response) {
-        Delegator delegator = (Delegator) request.getAttribute("delegator");
         String res = LoginWorker.login(request, response);
         request.setAttribute("USERNAME",request.getParameter("USERNAME"));
         if (!SUCCESS.equals(res)) {
             return res;
         }
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");

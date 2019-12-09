@@ -35,7 +35,7 @@ public class UserMgmtEvents {
 
         // Check permission
         Security security = dispatcher.getSecurity();
-        if (!security.hasPermission("PORTAL_VIEW_USERS", userLogin)) {
+        if (!security.hasPermission("PORTAL_ADD_USER", userLogin)) {
             request.setAttribute("_ERROR_MESSAGE_", "You do not have permission to add a new user. ");
             return ERROR;
         }
