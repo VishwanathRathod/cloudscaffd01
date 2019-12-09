@@ -8,8 +8,8 @@
                 <h2>Customers</h2>
             </div>
             <div class="col-sm-7">
-                <a href="<@ofbizUrl>new_customer</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>New Customer</span></a>
-                <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
+                <a href="<@ofbizUrl>new_customer</@ofbizUrl>" class="btn btn-primary" title="Onboard New Customer"><i class="material-icons">&#xE147;</i> <span>New Customer</span></a>
+                <a href="<@ofbizUrl>customers</@ofbizUrl>" class="btn btn-primary" title="Refresh"><i class="material-icons">refresh</i> <span>Refresh</span></a>
             </div>
         </div>
     </div>
@@ -24,7 +24,43 @@
     </#if>
 
     <div class="table-content">
-        <p> list of available tenants </p>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Org Number</th>
+                <th>Organization Name</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#if tenantOrgParties?? && tenantOrgParties?size &gt; 0 >
+                <#list tenantOrgParties as org>
+                    <tr>
+                        <td>${org_index + 1}</td>
+                        <td>${org.tenantId!}</td>
+                        <td><a href="#"><i class="material-icons" style="font-size:1.6em;">business</i>
+                                ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(delegator, org.orgPartyId!, false)}
+                            </a></td>
+                        <td>${org.createdStamp!?date}</td>
+                        <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
+                        <td>
+                            <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                            <a href="#" class="delete" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>
+                        </td>
+                    </tr>
+                </#list>
+            <#else>
+                <tr>
+                    <td colspan="10">No customers onboarded yet.</td>
+                </tr>
+            </#if>
+
+
+            </tbody>
+        </table>
     </div>
 
 

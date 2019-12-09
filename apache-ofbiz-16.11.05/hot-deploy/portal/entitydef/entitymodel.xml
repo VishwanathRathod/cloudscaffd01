@@ -17,5 +17,14 @@
     </entity>
 
     <!-- TenantOrgParty association entity -->
+    <entity entity-name="TenantOrgParty" package-name="org.apache.ofbiz.tenant">
+        <field name="tenantId" type="id-ne"/>
+        <field name="orgPartyId" type="id-vlong-ne"/>
+        <prim-key field="tenantId"/>
+        <prim-key field="orgPartyId"/>
+        <relation type="one" fk-name="FK_TNT_ORG_PRTY" rel-entity-name="Tenant">
+            <key-map field-name="tenantId"/>
+        </relation>
+    </entity>
 
 </entitymodel>

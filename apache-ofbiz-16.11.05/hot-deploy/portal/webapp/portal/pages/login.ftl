@@ -42,16 +42,16 @@
 
                     <div class="form-group">
                      <label>Account Number</label>
-                     <input type="text" class="form-control" placeholder="Organization Account Number" name="userTenantId">
+                     <input type="text" class="form-control" placeholder="xyz-corp" name="userTenantId">
                   </div>
 
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
                     </div>
                     <div class="form-group">
                      <label>Password</label>
-                     <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
+                     <input type="password" class="form-control" placeholder="" name="PASSWORD">
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                   <hr/>
