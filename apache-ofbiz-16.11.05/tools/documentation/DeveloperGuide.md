@@ -11,7 +11,7 @@ Run below sql commands
 
 * SET PASSWORD FOR 'ofbiz'@'localhost' = 'ofbiz123';
 
-* GRANT ALL PRIVILEGES ON *.* to 'ofbiz'@'localhost';
+* GRANT ALL PRIVILEGES ON \*.* to 'ofbiz'@'localhost';
 
 
 ---
