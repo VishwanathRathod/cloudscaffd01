@@ -35,7 +35,24 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <#if users??>
+            <#list users as user>
+                <#assign name = Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(orgParty) />
+                <tr>
+                    <td>${user_index + 1}</td>
+                    <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> ${user.firstName} ${user.lastName}</a></td>
+                    <td>${user.createdDate!?date}</td>
+                    <td>-</td>
+                    <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
+                    <td>
+                        <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                        <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"
+                           data-party-id="${user.partyId}" data-party-name="${user.firstName} ${user.lastName}"><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+            </#list>
+        </#if>
+        <#--<tr>
             <td>1</td>
             <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Michael Holz</a></td>
             <td>04/10/2013</td>
@@ -43,7 +60,7 @@
             <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
             <td>
                 <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal" 
+                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"
                 data-party-id="michael" data-party-name="Michael Holz"><i class="material-icons">delete</i></a>
             </td>
         </tr>
@@ -90,7 +107,7 @@
                 <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                 <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"><i class="material-icons">delete</i></a>
             </td>
-        </tr>
+        </tr>-->
         </tbody>
     </table>
 </div>

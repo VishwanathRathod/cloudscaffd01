@@ -5,7 +5,9 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="pl-3"><b>Organization Name here</b> </div>
+        <#if orgParty??>
+            <div class="pl-3"><b>${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(orgParty)}</b> </div>
+        </#if>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -24,10 +26,14 @@
                     <#--  <span class="sr-only">(current)</span>  -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="<@ofbizUrl>myaccount</@ofbizUrl>"><i class="material-icons">account_circle</i> My Account</a>
-                <a class="dropdown-item" href="<@ofbizUrl>changePassword</@ofbizUrl>"><i class="material-icons">security</i> Change Password</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<@ofbizUrl>logout</@ofbizUrl>"><i class="material-icons">exit_to_app</i> Logout</a>
+                    <a class="dropdown-item disabled">
+                        <i class="material-icons">beenhere</i> <i>${userRoleName!}</i>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<@ofbizUrl>myaccount</@ofbizUrl>"><i class="material-icons">perm_identity</i> My Account</a>
+                    <a class="dropdown-item" href="<@ofbizUrl>changePassword</@ofbizUrl>"><i class="material-icons">security</i> Change Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<@ofbizUrl>logout</@ofbizUrl>"><i class="material-icons">exit_to_app</i> Logout</a>
                 </div>
             </li>
             <#else>

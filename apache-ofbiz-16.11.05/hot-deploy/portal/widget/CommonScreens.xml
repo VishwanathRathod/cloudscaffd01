@@ -16,7 +16,7 @@
                 <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
                  -->
 				<script location="component://portal/webapp/portal/WEB-INF/actions/LoggedInUserDetails.groovy"/>
-
+				<script location="component://portal/webapp/portal/WEB-INF/actions/OrgDetails.groovy"/>
 			</actions>
             <widgets>
 				<section>
