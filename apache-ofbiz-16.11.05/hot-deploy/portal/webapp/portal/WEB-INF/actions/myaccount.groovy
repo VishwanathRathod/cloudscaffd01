@@ -5,6 +5,7 @@ Map inputs = UtilMisc.toMap("partyId", userLogin.partyId)
 person = delegator.findOne("Person", inputs, false)
 
 context.person = person;
-context.email = userLogin.userLoginId
+context.email = userLogin.userLoginId;
 
-// TODO: Fetch user role
+
+
