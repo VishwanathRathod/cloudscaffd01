@@ -12,17 +12,17 @@
     </div>
 
     <form action="<@ofbizUrl>UpdateMyProfile</@ofbizUrl>" method="post">
-        <div class="col-md-8 my-4">
+        <div class="col-md-9 my-3">
             <div class="form-group row required">
-                <label for="fnameacc" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
+                <label for="fnamacc" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="${person.firstName}" name="firstName" required>
+                    <input type="text" class="form-control" value="${person.firstName}" name="firstname" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="lnameacc" class="col-sm-2 col-form-label">Last Name <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="${person.lastName}" required>
+                    <input type="text" class="form-control" value="${person.lastName}" name="lastname" required>
                 </div>
             </div>
             <div class="form-group row">
