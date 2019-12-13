@@ -7,9 +7,9 @@ Run below sql commands
 * CREATE DATABASE ofbiz;
 * CREATE DATABASE ofbizolap;
 * CREATE DATABASE ofbiztenant;
-* CREATE USER ofbiz@localhost;
+* CREATE USER ofbiz@localhost IDENTIFIED BY 'OFbiz@123';
 
-* SET PASSWORD FOR 'ofbiz'@'localhost' = 'ofbiz123';
+* SET PASSWORD FOR 'ofbiz'@'localhost' = 'OFbiz@123';
 
 * GRANT ALL PRIVILEGES ON \*.* to 'ofbiz'@'localhost';
 
