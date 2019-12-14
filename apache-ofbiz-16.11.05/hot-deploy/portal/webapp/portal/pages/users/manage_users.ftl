@@ -9,6 +9,15 @@
         </div>
     </#if>
 
+    <#if requestParameters.updateSuccess?? && requestParameters.updateSuccess=="Y">
+        <div class="alert alert-success" role="alert">
+            <i class="material-icons">check</i> User details updated successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </#if>
+
     <div class="table-title">
         <div class="row">
             <div class="col-sm-5">
@@ -42,7 +51,7 @@
                     <td>${user_index + 1}</td>
                     <td>
                     <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">account_circle</i> ${user.firstName!} ${user.lastName!}</a>
-                    <#if user.partyId == userLogin.partyId> <span class="badge badge-pill badge-primary">This is you</span></#if>
+                    <#if user.partyId == userLogin.partyId> <span class="badge badge-primary">This is you</span></#if>
                     </td>
                     <td><#if user.createdDate??>${user.createdDate!?date}</#if></td>
                     <td>-</td>

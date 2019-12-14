@@ -102,4 +102,38 @@ public class UserMgmtEvents {
         return SUCCESS;
     }
 
+
+    // TODO: Create new method "updateUser"
+    public static String updateUser(HttpServletRequest request, HttpServletResponse response) {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        // get firstname and lastname from frontend
+        String firstname=request.getParameter("firstname");
+        System.out.println("first name is "+firstname);
+        String lastname=request.getParameter( "lastname");
+        System.out.println("last name is "+lastname);
+        // get person object from db
+        Map<String, Object> inputs = UtilMisc.toMap("partyId", request.getParameter("partyId"));
+        try {
+            GenericValue person = delegator.findOne("Person", inputs , false);
+            // set new values for firstname, lastname
+            person.set("firstName",firstname);
+            person.set("lastName",lastname);
+
+            // store the person object back to db
+            delegator.store(person);
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            // return error message to front-end
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the profile details.");
+            return ERROR;
+        }
+
+        // return success messsage to front-end
+        request.setAttribute("updateSuccess", "Y");
+        return SUCCESS;
+    }
+
 }
