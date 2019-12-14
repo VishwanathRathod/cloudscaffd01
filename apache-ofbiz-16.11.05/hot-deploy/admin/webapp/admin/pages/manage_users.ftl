@@ -31,7 +31,7 @@
                 <td>Admin</td>
                 <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
                 <td>
-                    <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                    <a href="<@ofbizUrl>ListLocales</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                     <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></a>
                 </td>
             </tr>

@@ -59,4 +59,34 @@ public class CustomerEvents {
         }
         return SUCCESS;
     }
+
+    public static String assignSubscriptionToTenant(HttpServletRequest request, HttpServletResponse response) {
+
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String tenantId = request.getParameter("tenantId");
+        String productId = request.getParameter("productId");
+
+        Debug.log("Received request to assign product " + productId + " subscription to tenant " + tenantId, module);
+        Map<String, Object> resp = null;
+        try {
+            resp = dispatcher.runSync("assignSubscriptionToTenant", UtilMisc.<String, Object>toMap("tenantId", tenantId,
+                    "productId", productId,
+                    "userLogin", userLogin));
+
+            if (!ServiceUtil.isSuccess(resp)) {
+                Debug.logError("Error assigning product " + productId + " subscription to tenant " + tenantId, module);
+                request.setAttribute("_ERROR_MESSAGE_", "Error subscribing tenant. ");
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            Debug.logError("Error assigning product " + productId + " subscription to tenant " + tenantId, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Error subscribing tenant. ");
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
 }

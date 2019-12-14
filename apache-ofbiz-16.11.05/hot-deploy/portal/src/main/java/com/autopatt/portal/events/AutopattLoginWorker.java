@@ -5,8 +5,6 @@ import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
-import org.apache.ofbiz.entity.condition.EntityCondition;
-import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ModelService;
@@ -16,9 +14,6 @@ import org.apache.ofbiz.webapp.control.LoginWorker;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 public class AutopattLoginWorker {
@@ -63,8 +58,21 @@ public class AutopattLoginWorker {
         if (!SUCCESS.equals(res)) {
             return res;
         }
-        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        if (!overridePreviousLogInSession(request)) {
+            return ERROR;
+        }
+        if(hasValidSubscription(request)){
+            return SUCCESS;
+        }
+        return ERROR;
+    }
 
+    private static boolean hasValidSubscription(HttpServletRequest request) {
+        return false;
+    }
+
+    private static boolean overridePreviousLogInSession(HttpServletRequest request) {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
@@ -77,22 +85,22 @@ public class AutopattLoginWorker {
                             "userLoginId", userLoginId,
                             "sessionId", sessionId));
                     delegator.create(userAccessToken);
-                    return SUCCESS;
+                    return true;
                 }
-                String currentSesionId = userLoginSessionInfo.getString("sessionId");
-                if (currentSesionId.equals(sessionId)) {
-                    return SUCCESS;
+                String currentSessionId = userLoginSessionInfo.getString("sessionId");
+                if (currentSessionId.equals(sessionId)) {
+                    return true;
                 }
                 userLoginSessionInfo.setString("sessionId", sessionId);
                 delegator.store(userLoginSessionInfo);
-                return SUCCESS;
+                return true;
             } catch (GenericEntityException e) {
                 Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
         String errMsg = "Exception while managing One Device login feature";
         request.setAttribute("_ERROR_MESSAGE_", errMsg);
-        return ERROR;
+        return false;
     }
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
