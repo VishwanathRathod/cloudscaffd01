@@ -95,6 +95,15 @@
 		<response name="success" type="view" value="manage_users" />
 	</request-map>
 
+	<request-map uri="manage_products">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="manage_products"/>
+	</request-map>
+	<request-map uri="reports">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="reports"/>
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
@@ -113,5 +122,9 @@
 			  page="component://admin/widget/AdminScreens.xml#myaccount" />
 	<view-map name="changePassword" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#changePassword" />
+	<view-map name="manage_products" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#manage_products" />
+	<view-map name="reports" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#reports" />
 
 </site-conf>

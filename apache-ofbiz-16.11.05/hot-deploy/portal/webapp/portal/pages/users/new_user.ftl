@@ -12,28 +12,28 @@
         </div>
     </div>
 
-    <div class="col-md-8 my-4">
+    <div class="col-md-9 my-3">
         <form action="<@ofbizUrl>CreateUser</@ofbizUrl>" method="post">
             <div class="form-group row required">
-                <label for="userFirstName" class="col-sm-2 col-form-label">First Name</label>
+                <label for="userFirstName" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
                 <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="Tony" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="userLastName" class="col-sm-2 col-form-label">Last Name</label>
+                <label for="userLastName" class="col-sm-2 col-form-label">Last Name <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
                 <input type="text" class="form-control" id="userLastName" name="lastname" placeholder="Stark" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="userEmail" class="col-sm-2 col-form-label">Email</label>
+                <label for="userEmail" class="col-sm-2 col-form-label">Email <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
                 <input type="email" class="form-control" id="userEmail" name="email" placeholder="tony@company.com" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="userPassword" class="col-sm-2 col-form-label">Password</label>
+                <label for="userPassword" class="col-sm-2 col-form-label">Password  <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
                 <input type="password" class="form-control" id="userPassword" name="password" placeholder="Initial Password" required>
                 <small id="passwordHelpBlock" class="form-text text-muted">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-sm-2">Role</div>
+                <div class="col-sm-2">Role <span class="mandatory">*</span></div>
                 <div class="col-sm-10">
                     <select name="securityGroupId" class="form-control" required>
                         <option value="AP_PLANNER">Planner</option>

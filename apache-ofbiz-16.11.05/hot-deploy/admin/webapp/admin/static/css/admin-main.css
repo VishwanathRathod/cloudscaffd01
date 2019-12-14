@@ -178,3 +178,7 @@ table.table .avatar {
   border-bottom-left-radius: 0;
 }
 
+.mandatory{
+  color:red;
+}
+

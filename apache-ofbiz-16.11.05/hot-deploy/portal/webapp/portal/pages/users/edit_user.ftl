@@ -6,10 +6,16 @@
             <div class="col-sm-4">
                 <h2>Edit User</h2>
             </div>
-            <div class="col-sm-8">
+           <div class="col-sm-8">
+                           <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">keyboard_backspace</i> <span>Back</span></a>
+                           <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
+                       </div>
             </div>
         </div>
     </div>
+    <div class="col-sm-7">
+
+                </div>
 
     <form action="<@ofbizUrl>UpdateUser</@ofbizUrl>" method="post">
     <input type="hidden" name="partyId" value="${partyId!}"/>
@@ -48,6 +54,7 @@
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Update</button>
+                     <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="btn btn-secondary">Cancel</a>
                 </div>
             </div>
         </div>
