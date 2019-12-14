@@ -115,6 +115,17 @@
 		</response>
 		<response name="error" type="view" value="new_user" />
 	</request-map>
+	<request-map uri="edit_user">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="edit_user" />
+	</request-map>
+	<request-map uri="UpdateUser">
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="updateUser" />
+		<response name="success" type="request-redirect" value="manage_users" >
+			<redirect-parameter name="updateSuccess"/>
+		</response>
+		<response name="error" type="request-redirect" value="manage_users" />
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
@@ -140,5 +151,7 @@
 			  page="component://portal/widget/PortalScreens.xml#requirePasswordChange"/>
 	<view-map name="new_user" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#new_user" />
+	<view-map name="edit_user" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#edit_user" />
 
 </site-conf>

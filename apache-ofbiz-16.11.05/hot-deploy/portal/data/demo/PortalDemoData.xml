@@ -6,6 +6,7 @@
     <!-- Admin -->
     <Party partyId="john.snow" partyTypeId="PERSON" />
     <Person partyId="john.snow" firstName="John" lastName="Snow"/>
+    <PartyRole partyId="john.snow" roleTypeId="EMPLOYEE"/>
     <UserLogin partyId="john.snow" userLoginId="john.snow@got.com"
                currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
     <!-- password: 123456 -->
@@ -14,6 +15,7 @@
     <!-- Planner -->
     <Party partyId="tyrion" partyTypeId="PERSON" />
     <Person partyId="tyrion" firstName="Tyrion" lastName="Lannister"/>
+    <PartyRole partyId="tyrion" roleTypeId="EMPLOYEE"/>
     <UserLogin partyId="tyrion" userLoginId="tyrion@got.com"
                currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
     <!-- password: 123456 -->
@@ -22,6 +24,7 @@
     <!-- Approver -->
     <Party partyId="arya" partyTypeId="PERSON" />
     <Person partyId="arya" firstName="Arya" lastName="Stark"/>
+    <PartyRole partyId="arya" roleTypeId="EMPLOYEE"/>
     <UserLogin partyId="arya" userLoginId="arya@got.com"
                currentPassword="$SHA$0dQ9RiyA.QKJ$aeQth065oN0j-DeSwvK0q9s93x4" passwordHint="" enabled="Y"/>
     <!-- password: 123456 -->
