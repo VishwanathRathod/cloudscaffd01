@@ -28,7 +28,12 @@ under the License.
              location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscription"
              auth="true" require-new-transaction="true" transaction-timeout="300">
         <description>Assigns subscription to tenant</description>
-        <attribute name="tenantId" type="String" mode="IN" optional="false"/>
+    </service>
+
+    <service name="hasValidSubscriptionToAddUser" engine="java"
+             location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscriptionToAddUser"
+             auth="true" require-new-transaction="true" transaction-timeout="300">
+        <description>Assigns subscription to tenant</description>
     </service>
 
 </services>

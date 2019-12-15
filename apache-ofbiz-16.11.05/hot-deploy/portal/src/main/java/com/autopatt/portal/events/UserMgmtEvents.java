@@ -40,14 +40,31 @@ public class UserMgmtEvents {
             return ERROR;
         }
 
+        // check tenant has valid subscription to add new user
+        try {
+            Map<String, Object> resp = dispatcher.runSync("hasValidSubscriptionToAddUser",
+                    UtilMisc.<String, Object>toMap("userLogin", userLogin));
+            if (!ServiceUtil.isSuccess(resp)) {
+                Debug.logError("Tenant does not have valid subscription ", module);
+                request.setAttribute("_ERROR_MESSAGE_", "You dont have valid subscription or crossed the limit to add user");
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            Debug.logError("Failed to fetch subscription " + e.getMessage(), module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
+            return ERROR;
+        }
+
+
         // TODO: Validations - check for duplicate email
 
         try {
             // Create Party & Person
-            Map<String, Object> createPersonResp = dispatcher.runSync("createPerson", UtilMisc.<String, Object> toMap("firstName", firstName,
+            Map<String, Object> createPersonResp = dispatcher.runSync("createPerson", UtilMisc.<String, Object>toMap("firstName", firstName,
                     "lastName", lastName,
                     "userLogin", userLogin));
-            if(!ServiceUtil.isSuccess(createPersonResp)) {
+            if (!ServiceUtil.isSuccess(createPersonResp)) {
                 Debug.logError("Error creating new user for " + email, module);
                 request.setAttribute("_ERROR_MESSAGE_", "Unable to add new user. ");
                 return ERROR;
@@ -55,7 +72,7 @@ public class UserMgmtEvents {
             String partyId = (String) createPersonResp.get("partyId");
 
             // Create UserLogin
-            Map<String,Object> userLoginCtx = UtilMisc.toMap("userLogin", userLogin);
+            Map<String, Object> userLoginCtx = UtilMisc.toMap("userLogin", userLogin);
             userLoginCtx.put("userLoginId", email);
             userLoginCtx.put("currentPassword", password);
             userLoginCtx.put("currentPasswordVerify", password);
@@ -63,7 +80,7 @@ public class UserMgmtEvents {
             userLoginCtx.put("partyId", partyId);
 
             Map<String, Object> createUserLoginResp = dispatcher.runSync("createUserLogin", userLoginCtx);
-            if(!ServiceUtil.isSuccess(createUserLoginResp)) {
+            if (!ServiceUtil.isSuccess(createUserLoginResp)) {
                 Debug.logError("Error creating userLogin for " + email, module);
                 request.setAttribute("_ERROR_MESSAGE_", "Unable to add new user. ");
                 return ERROR;
@@ -75,8 +92,8 @@ public class UserMgmtEvents {
                     "roleTypeId", "EMPLOYEE",
                     "userLogin", userLogin
             );
-            Map<String,Object> createPartyRoleResp = dispatcher.runSync("createPartyRole", partyRole);
-            if(!ServiceUtil.isSuccess(createPartyRoleResp)) {
+            Map<String, Object> createPartyRoleResp = dispatcher.runSync("createPartyRole", partyRole);
+            if (!ServiceUtil.isSuccess(createPartyRoleResp)) {
                 Debug.logError("Error creating party role for " + email, module);
                 request.setAttribute("_ERROR_MESSAGE_", "Unable to add new user. ");
                 return ERROR;
@@ -110,17 +127,17 @@ public class UserMgmtEvents {
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
 
         // get firstname and lastname from frontend
-        String firstname=request.getParameter("firstname");
-        System.out.println("first name is "+firstname);
-        String lastname=request.getParameter( "lastname");
-        System.out.println("last name is "+lastname);
+        String firstname = request.getParameter("firstname");
+        System.out.println("first name is " + firstname);
+        String lastname = request.getParameter("lastname");
+        System.out.println("last name is " + lastname);
         // get person object from db
         Map<String, Object> inputs = UtilMisc.toMap("partyId", request.getParameter("partyId"));
         try {
-            GenericValue person = delegator.findOne("Person", inputs , false);
+            GenericValue person = delegator.findOne("Person", inputs, false);
             // set new values for firstname, lastname
-            person.set("firstName",firstname);
-            person.set("lastName",lastname);
+            person.set("firstName", firstname);
+            person.set("lastName", lastname);
 
             // store the person object back to db
             delegator.store(person);

@@ -44,6 +44,7 @@ public class AutopattLoginWorker {
                     session.invalidate();
                 }
             } catch (GenericEntityException e) {
+                Debug.logError(e, module);
                 Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
@@ -54,20 +55,37 @@ public class AutopattLoginWorker {
 
     public static String login(HttpServletRequest request, HttpServletResponse response) {
         String res = LoginWorker.login(request, response);
-        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
+        request.setAttribute("USERNAME", request.getParameter("USERNAME"));
         if (!SUCCESS.equals(res)) {
             return res;
         }
         if (!overridePreviousLogInSession(request)) {
             return ERROR;
         }
-        if(hasValidSubscription(request)){
+        if (hasValidSubscription(request)) {
             return SUCCESS;
         }
         return ERROR;
     }
 
     private static boolean hasValidSubscription(HttpServletRequest request) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        try {
+            Map<String, Object> resp = dispatcher.runSync("hasValidSubscription",
+                    UtilMisc.<String, Object>toMap("userLogin", userLogin));
+
+            if (ServiceUtil.isSuccess(resp)) {
+                return true;
+            }
+            Debug.logError("Tenant does not have valid subscription", module);
+            request.setAttribute("_ERROR_MESSAGE_", "You dont have valid subscription or crossed the limit to add user");
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            Debug.logError("Failed to fetch subscription " + e.getMessage(), module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
+        }
         return false;
     }
 
@@ -95,6 +113,7 @@ public class AutopattLoginWorker {
                 delegator.store(userLoginSessionInfo);
                 return true;
             } catch (GenericEntityException e) {
+                Debug.logError(e, module);
                 Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
@@ -123,7 +142,7 @@ public class AutopattLoginWorker {
         try {
             resultPasswordChange = dispatcher.runSync("updatePassword", inMap);
         } catch (GenericServiceException e) {
-            Debug.logError(e, "Error calling updatePassword service", module);
+            Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
             return ERROR;
         }
@@ -137,7 +156,6 @@ public class AutopattLoginWorker {
         }
         return SUCCESS;
     }
-
 
 
 }
