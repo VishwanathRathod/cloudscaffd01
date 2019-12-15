@@ -41,14 +41,14 @@
                     <tr>
                         <td>${org_index + 1}</td>
                         <td>${org.tenantId!}</td>
-                        <td><a href="#"><i class="material-icons" style="font-size:1.6em;">business</i>
+                        <td><a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">business</i>
                                 ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(delegator, org.orgPartyId!, false)}
                             </a></td>
                         <td>${org.createdStamp!?date}</td>
                         <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
-                        <td>
-                            <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                            <a href="#" class="delete" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>
+                        <td width="20%">
+                            <a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>" class="btn btn-outline-primary" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                            <a href="#" class="btn btn-outline-danger" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>
                         </td>
                     </tr>
                 </#list>
