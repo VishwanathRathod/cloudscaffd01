@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div >
+    <div>
         <#list errorMessageList as error>
             <div class="alert alert-danger" role="alert">
                 ${error}

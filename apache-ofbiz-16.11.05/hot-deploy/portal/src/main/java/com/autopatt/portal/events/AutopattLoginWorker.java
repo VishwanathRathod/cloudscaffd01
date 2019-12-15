@@ -59,10 +59,8 @@ public class AutopattLoginWorker {
         if (!SUCCESS.equals(res)) {
             return res;
         }
-        if (!overridePreviousLogInSession(request)) {
-            return ERROR;
-        }
-        if (hasValidSubscription(request)) {
+        boolean result = overridePreviousLogInSession(request);
+        if (result && hasValidSubscription(request)) {
             return SUCCESS;
         }
         return ERROR;

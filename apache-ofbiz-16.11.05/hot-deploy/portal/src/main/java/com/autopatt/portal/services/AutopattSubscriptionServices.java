@@ -91,8 +91,11 @@ public class AutopattSubscriptionServices {
                         GenericValue productAttribute = delegator.findOne("ProductAttribute", UtilMisc.toMap("productId", productId, "attrName", MAX_USER_LOGINS), false);
                         int maxUserLogins = Integer.parseInt(productAttribute.getString("attrValue"));
                         Debug.logInfo("max user logins " + maxUserLogins, module);
-                        //TODO:
-                        return ServiceUtil.returnSuccess();
+                        List<GenericValue> partyRoles = delegator.findByAnd("PartyRole", UtilMisc.toMap("roleTypeId", "EMPLOYEE"), null, false);
+                        if (partyRoles != null && partyRoles.size()<maxUserLogins) {
+                            return ServiceUtil.returnSuccess();
+                        }
+                        return ServiceUtil.returnFailure("Exceeded max user limit");
                     }
                 }
             }
