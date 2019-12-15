@@ -31,7 +31,7 @@
                 <th>Org Number</th>
                 <th>Organization Name</th>
                 <th>Date Created</th>
-                <th>Status</th>
+                <th>Subscription</th>
                 <th>Action</th>
             </tr>
             </thead>

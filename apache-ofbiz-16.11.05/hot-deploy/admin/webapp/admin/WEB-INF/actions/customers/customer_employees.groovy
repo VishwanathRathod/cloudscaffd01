@@ -50,7 +50,6 @@ if(UtilValidate.isNotEmpty(tenantOrgParties)) {
                     userRoleName = securityGroup.get("description")
                     entry.put("roleName", userRoleName)
                 }
-
             }
         }
 

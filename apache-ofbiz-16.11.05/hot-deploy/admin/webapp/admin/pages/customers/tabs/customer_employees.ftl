@@ -1,18 +1,19 @@
 
 
-<div class="table-title">
+<#--<div class="table-title">
     <div class="row">
         <div class="col-sm-5">
             <h2>Total Employees: <span class="badge badge-secondary">${employees!?size}</span></h2>
         </div>
         <div class="col-sm-7">
-<#--            <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>New Employee</span></a>-->
         </div>
     </div>
-</div>
+</div>-->
 
 <table class="table table-striped table-hover">
-    <thead>
+    <caption>Total Employees - <b>${employees!?size}</b> of 5 <span class="small text-muted">(max)</span></caption>
+
+    <thead class="thead-dark">
     <tr>
         <th>#</th>
         <th>Name</th>
@@ -50,17 +51,22 @@
                     <#if emp.userStatus?? && emp.userStatus == "ACTIVE">
                     <a href="#"
                        data-target="#suspendEmployeeConfirmModal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
-                       class="btn btn-outline-danger" title="Suspend" data-toggle="modal">
+                       class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
+                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </a>
                     <#else>
                     <a href="#"
-                       class="btn btn-outline-primary" title="Enable" data-toggle="modal">
+                       data-target="#activateEmployeeConfirmModal"
+                       class="btn btn-outline-primary" title="Enable" data-toggle="modal"
+                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}">
                         <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
                     </#if>
-                    <a href="#" class="btn btn-outline-info" title="Reset Password" data-toggle="modal" data-target="#deleteEmployeeConfirmModal"
+
+                    <a href="#"
+                       data-target="#resetPasswordEmployeeConfirmModal"
+                       class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
                        data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"><i class="fa fa-key" aria-hidden="true"></i>
                     </a>
                     <#--<a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal" data-target="#deleteEmployeeConfirmModal"
@@ -74,6 +80,29 @@
 </table>
 
 
+
+<div class="modal fade" id="activateEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="activateEmployeeModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Activate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to activate account for <b><span id="activatePartyName"></span></b>?
+                <br/>
+                <small>User will be able to login to Portal.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Activate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="suspendEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="suspendEmployeeModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -84,9 +113,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to suspend <b><span id="suspendPartyName"></span></b>?
+                Are you sure you want to suspend account for <b><span id="suspendPartyName"></span></b>?
                 <br/>
-                User will not be able to login to Portal.
+                <small>User will not be able to login to Portal.</small>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -95,6 +124,29 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="resetPasswordEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordEmployeeModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Password Reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to reset password for <b><span id="resetPasswordForPartyName"></span></b>?
+                <br/>
+                <small>An email will be sent to user with a link to set their password.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Reset Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -108,6 +160,7 @@
             <div class="modal-body">
                 Show user details here.<br/>
                 Option to change Role
+                <#-- TODO: load user details by ajax -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
