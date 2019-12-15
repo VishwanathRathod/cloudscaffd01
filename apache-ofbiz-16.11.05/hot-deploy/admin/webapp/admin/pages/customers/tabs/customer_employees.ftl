@@ -158,9 +158,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Show user details here.<br/>
-                Option to change Role
-                <#-- TODO: load user details by ajax -->
+                <div id="editEmployeeModal_Details"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

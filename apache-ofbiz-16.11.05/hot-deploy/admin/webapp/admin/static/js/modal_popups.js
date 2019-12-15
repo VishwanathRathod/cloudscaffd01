@@ -14,6 +14,8 @@ function initializeDeleteUserModal() {
 
         var modal = $(this)
         modal.find('#editEmployee_name').text(editPartyName)
+
+        $("#editEmployeeModal_Details").load(getUrl("/org_employee_details?partyId="+editPartyId))
     });
 
     $('#suspendEmployeeConfirmModal').on('show.bs.modal', function (event) {

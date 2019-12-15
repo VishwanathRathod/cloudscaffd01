@@ -80,6 +80,11 @@
 		<response name="success" type="view" value="manage_customer" />
 	</request-map>
 
+	<request-map uri="org_employee_details">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="org_employee_details" />
+	</request-map>
+
 	<request-map uri="myaccount">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="myaccount" />
@@ -118,6 +123,9 @@
 			  page="component://admin/widget/AdminCustomerScreens.xml#new_customer" />
 	<view-map name="manage_customer" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#manage_customer" />
+	<view-map name="org_employee_details" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#org_employee_details" />
+
 
 	<view-map name="manage_users" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#manage_users" />

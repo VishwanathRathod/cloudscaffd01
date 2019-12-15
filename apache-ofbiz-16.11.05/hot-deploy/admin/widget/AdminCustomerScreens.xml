@@ -137,4 +137,28 @@
         </section>
     </screen>
 
+    <screen name="org_employee_details">
+        <section>
+            <actions>
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/org_employee_details.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/customers/modals/org_employee_details.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
 </screens>
