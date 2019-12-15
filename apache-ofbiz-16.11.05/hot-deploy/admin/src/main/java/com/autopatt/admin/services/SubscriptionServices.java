@@ -1,5 +1,6 @@
 package com.autopatt.admin.services;
 
+import com.autopatt.admin.utils.TenantCommonUtils;
 import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -44,7 +45,7 @@ public class SubscriptionServices {
 
         Debug.logInfo("Initiating process to assign product "+productId+" subscription to tenant " + tenantId, module);
         String orderId;
-        String orgPartyId = "10121"; //find party id by tenant
+        String orgPartyId = TenantCommonUtils.getOrgPartyId(delegator, tenantId);
         try {
             ShoppingCart cart = new ShoppingCart(delegator, productStoreId, null, locale, currency);
             try {

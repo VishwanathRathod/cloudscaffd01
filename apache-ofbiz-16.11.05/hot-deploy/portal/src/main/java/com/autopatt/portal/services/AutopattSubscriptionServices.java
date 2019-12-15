@@ -1,11 +1,13 @@
 package com.autopatt.portal.services;
 
 import com.autopatt.admin.services.CustomerOnboardingServices;
+import com.autopatt.portal.utils.TenantCommonUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.*;
+import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
@@ -18,7 +20,7 @@ import java.util.Map;
  */
 public class AutopattSubscriptionServices {
 
-    public static final String module = CustomerOnboardingServices.class.getName();
+    public static final String module = AutopattSubscriptionServices.class.getName();
     private static final String MAX_USER_LOGINS = "maxUserLogins";
 
     /**
@@ -36,21 +38,15 @@ public class AutopattSubscriptionServices {
         if (UtilValidate.isEmpty(tenantId)) {
             return ServiceUtil.returnFailure("Tenant Id is missing");
         }
-        String orgPartyId = getOrgPartyId(tenantId, mainDelegator);
+        String orgPartyId = TenantCommonUtils.getOrgPartyId(mainDelegator, tenantId);
         if (UtilValidate.isEmpty(orgPartyId)) {
             return ServiceUtil.returnFailure("Org party Id is missing");
         }
         try {
             List<GenericValue> subscriptions = mainDelegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
-            if (UtilValidate.isNotEmpty(subscriptions) && subscriptions.size() > 0) {
-                for (GenericValue subscription : subscriptions) {
-                    Timestamp fromDate = subscription.getTimestamp("fromDate");
-                    Timestamp thruDate = subscription.getTimestamp("thruDate");
-                    Timestamp currentTimeStamp = UtilDateTime.nowTimestamp();
-                    if (fromDate.before(currentTimeStamp) && (null == thruDate || thruDate.after(currentTimeStamp))) {
-                        return ServiceUtil.returnSuccess();
-                    }
-                }
+            List<GenericValue> activeSubscriptions = EntityUtil.filterByDate(subscriptions);
+            if (UtilValidate.isNotEmpty(activeSubscriptions)) {
+                return ServiceUtil.returnSuccess();
             }
         } catch (GenericEntityException e) {
             Debug.logError(e, module);
@@ -74,30 +70,24 @@ public class AutopattSubscriptionServices {
         if (UtilValidate.isEmpty(tenantId)) {
             return ServiceUtil.returnFailure("Tenant Id is missing");
         }
-        String orgPartyId = getOrgPartyId(tenantId, mainDelegator);
+        String orgPartyId = TenantCommonUtils.getOrgPartyId(mainDelegator, tenantId);
         if (UtilValidate.isEmpty(orgPartyId)) {
             return ServiceUtil.returnFailure("Org party Id is missing");
         }
 
         try {
             List<GenericValue> subscriptions = mainDelegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
-            if (UtilValidate.isNotEmpty(subscriptions) && subscriptions.size() > 0) {
-                for (GenericValue subscription : subscriptions) {
-                    Timestamp fromDate = subscription.getTimestamp("fromDate");
-                    Timestamp thruDate = subscription.getTimestamp("thruDate");
-                    Timestamp currentTimeStamp = UtilDateTime.nowTimestamp();
-                    if (fromDate.before(currentTimeStamp) && (null == thruDate || thruDate.after(currentTimeStamp))) {
-                        String productId = subscription.getString("productId");
-                        GenericValue productAttribute = delegator.findOne("ProductAttribute", UtilMisc.toMap("productId", productId, "attrName", MAX_USER_LOGINS), false);
-                        int maxUserLogins = Integer.parseInt(productAttribute.getString("attrValue"));
-                        Debug.logInfo("max user logins " + maxUserLogins, module);
-                        List<GenericValue> partyRoles = delegator.findByAnd("PartyRole", UtilMisc.toMap("roleTypeId", "EMPLOYEE"), null, false);
-                        if (partyRoles != null && partyRoles.size()<maxUserLogins) {
-                            return ServiceUtil.returnSuccess();
-                        }
-                        return ServiceUtil.returnFailure("Exceeded max user limit");
-                    }
+            List<GenericValue> activeSubscriptions = EntityUtil.filterByDate(subscriptions);
+            for (GenericValue subscription : activeSubscriptions) {
+                String productId = subscription.getString("productId");
+                GenericValue productAttribute = delegator.findOne("ProductAttribute", UtilMisc.toMap("productId", productId, "attrName", MAX_USER_LOGINS), false);
+                int maxUserLogins = Integer.parseInt(productAttribute.getString("attrValue"));
+                Debug.logInfo("max user logins " + maxUserLogins, module);
+                List<GenericValue> partyRoles = delegator.findByAnd("PartyRole", UtilMisc.toMap("roleTypeId", "EMPLOYEE"), null, false);
+                if (partyRoles != null && partyRoles.size() < maxUserLogins) {
+                    return ServiceUtil.returnSuccess();
                 }
+                return ServiceUtil.returnFailure("Exceeded max user limit");
             }
         } catch (GenericEntityException e) {
             Debug.logError(e, module);
@@ -106,24 +96,4 @@ public class AutopattSubscriptionServices {
         return ServiceUtil.returnFailure("You don't have valid subscription");
     }
 
-    /**
-     *
-     * @param tenantId
-     * @param mainDelegator
-     * @return orgPartyId
-     */
-    private static String getOrgPartyId(String tenantId, GenericDelegator mainDelegator) {
-        String orgPartyId = null;
-        try {
-            List<GenericValue> tenantOrgParties = mainDelegator.findByAnd("TenantOrgParty", UtilMisc.toMap("tenantId", tenantId), null, false);
-            if (UtilValidate.isNotEmpty(tenantOrgParties)) {
-                GenericValue tenantOrg = tenantOrgParties.get(0);
-                orgPartyId = tenantOrg.getString("orgPartyId");
-            }
-        } catch (GenericEntityException e) {
-            Debug.logError(e, module);
-            e.printStackTrace();
-        }
-        return orgPartyId;
-    }
 }

@@ -59,32 +59,7 @@ public class AutopattLoginWorker {
         if (!SUCCESS.equals(res)) {
             return res;
         }
-        boolean result = overridePreviousLogInSession(request);
-        if (result && hasValidSubscription(request)) {
-            return SUCCESS;
-        }
-        return ERROR;
-    }
-
-    private static boolean hasValidSubscription(HttpServletRequest request) {
-        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-        HttpSession session = request.getSession();
-        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
-        try {
-            Map<String, Object> resp = dispatcher.runSync("hasValidSubscription",
-                    UtilMisc.<String, Object>toMap("userLogin", userLogin));
-
-            if (ServiceUtil.isSuccess(resp)) {
-                return true;
-            }
-            Debug.logError("Tenant does not have valid subscription", module);
-            request.setAttribute("_ERROR_MESSAGE_", "You dont have valid subscription or crossed the limit to add user");
-        } catch (GenericServiceException e) {
-            Debug.logError(e, module);
-            Debug.logError("Failed to fetch subscription " + e.getMessage(), module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
-        }
-        return false;
+        return overridePreviousLogInSession(request) ? SUCCESS : ERROR;
     }
 
     private static boolean overridePreviousLogInSession(HttpServletRequest request) {

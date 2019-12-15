@@ -60,7 +60,7 @@ public class CustomerEvents {
         return SUCCESS;
     }
 
-    public static String assignSubscriptionToTenant(HttpServletRequest request, HttpServletResponse response) {
+    public static String associateSubscriptionToTenant(HttpServletRequest request, HttpServletResponse response) {
 
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         HttpSession session = request.getSession();
@@ -81,8 +81,7 @@ public class CustomerEvents {
                 return ERROR;
             }
         } catch (GenericServiceException e) {
-            e.printStackTrace();
-            Debug.logError("Error assigning product " + productId + " subscription to tenant " + tenantId, module);
+            Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Error subscribing tenant. ");
             return ERROR;
         }

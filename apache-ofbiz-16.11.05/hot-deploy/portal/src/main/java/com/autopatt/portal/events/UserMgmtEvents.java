@@ -45,13 +45,13 @@ public class UserMgmtEvents {
             Map<String, Object> resp = dispatcher.runSync("hasValidSubscriptionToAddUser",
                     UtilMisc.<String, Object>toMap("userLogin", userLogin));
             if (!ServiceUtil.isSuccess(resp)) {
-                Debug.logError("Tenant does not have valid subscription ", module);
-                request.setAttribute("_ERROR_MESSAGE_", "You dont have valid subscription or crossed the limit to add user");
+                String errorMessage = (String) resp.get("errorMessage");
+                Debug.logError(errorMessage, module);
+                request.setAttribute("_ERROR_MESSAGE_", errorMessage);
                 return ERROR;
             }
         } catch (GenericServiceException e) {
-            e.printStackTrace();
-            Debug.logError("Failed to fetch subscription " + e.getMessage(), module);
+            Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
             return ERROR;
         }
