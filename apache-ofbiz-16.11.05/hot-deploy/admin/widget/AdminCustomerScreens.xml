@@ -3,60 +3,13 @@
          xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
 
-    <screen name="home">
+    <screen name="customers">
         <section>
             <actions>
-                <set field="title" value="Home"/>
-                <set field="currentPage" value="HOME"/>
-                <set field="currentViewId" value="HOME"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/home.groovy"/>
-
-            </actions>
-            <widgets>
-                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
-                    <decorator-section name="body">
-                    	<platform-specific>
-							<html>
-								<html-template
-									location="component://admin/webapp/admin/pages/home.ftl" />
-							</html>
-						</platform-specific>
-                    </decorator-section>
-                </decorator-screen>
-            </widgets>
-        </section>
-    </screen>
-
-    <screen name="login">
-        <section>
-            <actions>
-                <set field="title" value="Login"/>
-                <set field="currentPage" value="home"/>
-                <set field="currentViewId" value="LOGIN"/>
-            </actions>
-            <widgets>
-                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
-                    <decorator-section name="body">
-                        <platform-specific>
-                            <html>
-                                <html-template
-                                        location="component://admin/webapp/admin/pages/login.ftl" />
-                            </html>
-                        </platform-specific>
-                    </decorator-section>
-                </decorator-screen>
-            </widgets>
-        </section>
-    </screen>
-
-
-    <screen name="myaccount">
-        <section>
-            <actions>
-                <set field="title" value="My Account"/>
-                <set field="currentPage" value="myaccount"/>
-                <set field="currentViewId" value="MYACCOUNT"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/customers.groovy"/>
 
             </actions>
             <widgets>
@@ -65,7 +18,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/myaccount.ftl" />
+                                        location="component://admin/webapp/admin/pages/customers/customers.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -73,14 +26,13 @@
             </widgets>
         </section>
     </screen>
-    <screen name="changePassword">
+    <screen name="new_customer">
         <section>
             <actions>
-                <set field="title" value="Change Password"/>
-                <set field="currentPage" value="myaccount"/>
-                <set field="currentViewId" value="CHANGE_PASSWORD"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
-
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <!--<script location="component://admin/webapp/admin/WEB-INF/actions/customers.groovy"/>-->
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -88,7 +40,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/changePassword.ftl" />
+                                        location="component://admin/webapp/admin/pages/customers/new_customer.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -96,15 +48,13 @@
             </widgets>
         </section>
     </screen>
-
-    <screen name="manage_users">
+    <screen name="manage_customer">
         <section>
             <actions>
-                <set field="title" value="Manage Users"/>
-                <set field="currentPage" value="manage_users"/>
-                <set field="currentViewId" value="MANAGE_USERS"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
-
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/manage_customer.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -112,7 +62,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/manage_users.ftl" />
+                                        location="component://admin/webapp/admin/pages/customers/manage_customer.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -120,22 +70,21 @@
             </widgets>
         </section>
     </screen>
-    <screen name="manage_products">
+    <screen name="customer_details_tab">
         <section>
             <actions>
-                <set field="title" value="Manage Products"/>
-                <set field="currentPage" value="manage_products"/>
-                <set field="currentViewId" value="MANAGE_PRODUCTS"/>
-
-
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/manage_customer.groovy"/>
             </actions>
             <widgets>
-                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/manage_products.ftl" />
+                                        location="component://admin/webapp/admin/pages/customers/tabs/customer_details.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -143,23 +92,21 @@
             </widgets>
         </section>
     </screen>
-
-    <screen name="reports">
+    <screen name="customer_employees_tab">
         <section>
             <actions>
-                <set field="title" value="Reports"/>
-                <set field="currentPage" value="reports"/>
-                <set field="currentViewId" value="REPORTS"/>
-
-
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/customer_employees.groovy"/>
             </actions>
             <widgets>
-                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/reports.ftl" />
+                                        location="component://admin/webapp/admin/pages/customers/tabs/customer_employees.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -167,7 +114,27 @@
             </widgets>
         </section>
     </screen>
-
-
+    <screen name="customer_subscriptions_tab">
+        <section>
+            <actions>
+                <set field="title" value="Customers"/>
+                <set field="currentPage" value="CUSTOMERS"/>
+                <set field="currentViewId" value="CUSTOMERS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/manage_customer.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/customers/tabs/customer_subscriptions.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
 </screens>

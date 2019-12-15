@@ -75,6 +75,10 @@
 		<response name="success" type="view" value="customers" />
 		<response name="error" type="view" value="new_customer" />
 	</request-map>
+	<request-map uri="manage_customer">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="manage_customer" />
+	</request-map>
 
 	<request-map uri="myaccount">
 		<security https="true" auth="true" />
@@ -107,11 +111,13 @@
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
-	<view-map name="customers" type="screen"
-			  page="component://admin/widget/AdminScreens.xml#customers" />
 
+	<view-map name="customers" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#customers" />
 	<view-map name="new_customer" type="screen"
-			  page="component://admin/widget/AdminScreens.xml#new_customer" />
+			  page="component://admin/widget/AdminCustomerScreens.xml#new_customer" />
+	<view-map name="manage_customer" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#manage_customer" />
 
 	<view-map name="manage_users" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#manage_users" />

@@ -11,6 +11,7 @@
 
   <script src="../static/js/validations.js"></script>
   <script src="../static/js/ajax_requests.js"></script>
+  <script src="../static/js/modal_popups.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
