@@ -85,7 +85,7 @@ public class CustomerOnboardingServices {
         // Remove special chars from tenantDatabaseName
         tenantDbPrefix = tenantDbPrefix.replaceAll("[^\\w]","");
         String tenantDbUsername = "user" + tenantDbPrefix;
-        String tenantDbPassword = "p" + RandomStringUtils.random(15, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890@".toCharArray());
+        String tenantDbPassword = "P@" + RandomStringUtils.random(15, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890@".toCharArray());
 
         createTenantDatabase(dbHostIp, dbHostPort, dbUsername, dbPassword, tenantDbPrefix, tenantDbUsername, tenantDbPassword);
 
