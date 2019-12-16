@@ -9,13 +9,14 @@ function initializeDeleteUserModal() {
     $('#editEmployeeModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var editPartyId = button.data('party-id') // Extract info from data-* attributes
+        var orgPartyId = button.data('org-party-id');
         var editPartyName = button.data('party-name');
         if(editPartyName == null) editPartyName = "";
 
         var modal = $(this)
         modal.find('#editEmployee_name').text(editPartyName)
 
-        $("#editEmployeeModal_Details").load(getUrl("/org_employee_details?partyId="+editPartyId))
+        $("#editEmployeeModal_Details").load(getUrl("/org_employee_details?orgPartyId="+orgPartyId+"&partyId="+editPartyId))
     });
 
     $('#suspendEmployeeConfirmModal').on('show.bs.modal', function (event) {

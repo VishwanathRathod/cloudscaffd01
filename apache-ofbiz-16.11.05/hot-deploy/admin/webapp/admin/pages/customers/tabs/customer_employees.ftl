@@ -33,6 +33,7 @@
                     <i class="material-icons" style="font-size:1.6em;">account_circle</i>
                     <a href="#" data-toggle="modal" data-target="#editEmployeeModal"
                        data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                       data-org-party-id="${orgPartyId!}"
                        title="${emp.userLogin.userLoginId!}">${emp.firstName!} ${emp.lastName!}</a>
                 </td>
                 <td><#if emp.createdDate??>${emp.createdDate!?date}</#if></td>
@@ -52,14 +53,16 @@
                     <a href="#"
                        data-target="#suspendEmployeeConfirmModal"
                        class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}">
+                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                       data-org-party-id="${orgPartyId!}">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </a>
                     <#else>
                     <a href="#"
                        data-target="#activateEmployeeConfirmModal"
                        class="btn btn-outline-primary" title="Enable" data-toggle="modal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}">
+                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                       data-org-party-id="${orgPartyId!}">
                         <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
                     </#if>
@@ -67,7 +70,8 @@
                     <a href="#"
                        data-target="#resetPasswordEmployeeConfirmModal"
                        class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"><i class="fa fa-key" aria-hidden="true"></i>
+                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                       data-org-party-id="${orgPartyId!}"><i class="fa fa-key" aria-hidden="true"></i>
                     </a>
                     <#--<a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal" data-target="#deleteEmployeeConfirmModal"
                        data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"><i class="fa fa-trash-o" aria-hidden="true"></i>
