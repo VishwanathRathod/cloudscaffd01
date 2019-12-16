@@ -5,8 +5,6 @@ import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
-import org.apache.ofbiz.entity.condition.EntityCondition;
-import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ModelService;
@@ -16,9 +14,6 @@ import org.apache.ofbiz.webapp.control.LoginWorker;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 public class AutopattLoginWorker {
@@ -49,6 +44,7 @@ public class AutopattLoginWorker {
                     session.invalidate();
                 }
             } catch (GenericEntityException e) {
+                Debug.logError(e, module);
                 Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
@@ -59,12 +55,15 @@ public class AutopattLoginWorker {
 
     public static String login(HttpServletRequest request, HttpServletResponse response) {
         String res = LoginWorker.login(request, response);
-        request.setAttribute("USERNAME",request.getParameter("USERNAME"));
+        request.setAttribute("USERNAME", request.getParameter("USERNAME"));
         if (!SUCCESS.equals(res)) {
             return res;
         }
-        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        return overridePreviousLogInSession(request) ? SUCCESS : ERROR;
+    }
 
+    private static boolean overridePreviousLogInSession(HttpServletRequest request) {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
@@ -77,22 +76,23 @@ public class AutopattLoginWorker {
                             "userLoginId", userLoginId,
                             "sessionId", sessionId));
                     delegator.create(userAccessToken);
-                    return SUCCESS;
+                    return true;
                 }
-                String currentSesionId = userLoginSessionInfo.getString("sessionId");
-                if (currentSesionId.equals(sessionId)) {
-                    return SUCCESS;
+                String currentSessionId = userLoginSessionInfo.getString("sessionId");
+                if (currentSessionId.equals(sessionId)) {
+                    return true;
                 }
                 userLoginSessionInfo.setString("sessionId", sessionId);
                 delegator.store(userLoginSessionInfo);
-                return SUCCESS;
+                return true;
             } catch (GenericEntityException e) {
+                Debug.logError(e, module);
                 Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
         String errMsg = "Exception while managing One Device login feature";
         request.setAttribute("_ERROR_MESSAGE_", errMsg);
-        return ERROR;
+        return false;
     }
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
@@ -115,7 +115,7 @@ public class AutopattLoginWorker {
         try {
             resultPasswordChange = dispatcher.runSync("updatePassword", inMap);
         } catch (GenericServiceException e) {
-            Debug.logError(e, "Error calling updatePassword service", module);
+            Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
             return ERROR;
         }
@@ -129,7 +129,6 @@ public class AutopattLoginWorker {
         }
         return SUCCESS;
     }
-
 
 
 }

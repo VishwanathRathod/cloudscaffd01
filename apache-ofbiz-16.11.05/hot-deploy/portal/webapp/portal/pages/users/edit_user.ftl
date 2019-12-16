@@ -1,5 +1,20 @@
+<#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
+<#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
 
+<#if !errorMessage?has_content>
+    <#assign errorMessage = requestAttributes._ERROR_MESSAGE_!>
+</#if>
+<#if !errorMessageList?has_content>
+    <#assign errorMessageList = requestAttributes._ERROR_MESSAGE_LIST_!>
+</#if>
 <div class="container-fluid">
+    <div>
+        <#list errorMessageList as error>
+            <div class="alert alert-danger" role="alert">
+                ${error}
+            </div>
+        </#list>
+    </div>
     <div>&nbsp;</div>
     <div class="table-title">
         <div class="row">
