@@ -37,15 +37,18 @@ public class AutopattLoginWorker {
                 String userLoginId = userLogin.getString("userLoginId");
                 GenericValue userLoginSessionInfo = delegator.findOne("UserLoginSessionInfo", false, "userLoginId", userLoginId);
                 if (null != userLoginSessionInfo) {
-                    String currentSesionId = userLoginSessionInfo.getString("sessionId");
-                    if (sessionId.equals(currentSesionId)) {
+                    String oldSessionId = userLoginSessionInfo.getString("sessionId");
+                    if (sessionId.equals(oldSessionId)) {
                         return SUCCESS;
                     }
                     session.invalidate();
                 }
+                else{
+                    //rare case scenario
+                    return SUCCESS;
+                }
             } catch (GenericEntityException e) {
                 Debug.logError(e, module);
-                Debug.logError(e, "Exception during storing session id in UserLoginSessionInfo : " + e.getMessage(), module);
             }
         }
         String errMsg = "You have been logged out since you have logged in from another device or browser.";
@@ -96,8 +99,11 @@ public class AutopattLoginWorker {
     }
 
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
-        String login = LoginWorker.login(request, response);
-        return login;
+        String res = LoginWorker.login(request, response);
+        if (!SUCCESS.equals(res)) {
+            return res;
+        }
+        return overridePreviousLogInSession(request) ? SUCCESS : ERROR;
     }
 
     public static String updatePassword(HttpServletRequest request, HttpServletResponse response) {
