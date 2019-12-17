@@ -6,7 +6,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <#if orgParty??>
-            <div class="pl-3"><b>${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(orgParty)}</b> </div>
+            <div class="pl-3">
+                <b>${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(orgParty)}</b>
+                <span class="small text-muted">(${tenantId!})</span>
+            </div>
         </#if>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

@@ -126,8 +126,7 @@
                 <set field="title" value="Manage Products"/>
                 <set field="currentPage" value="manage_products"/>
                 <set field="currentViewId" value="MANAGE_PRODUCTS"/>
-
-
+                <script location="component://admin/webapp/admin/WEB-INF/actions/GetProducts.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
