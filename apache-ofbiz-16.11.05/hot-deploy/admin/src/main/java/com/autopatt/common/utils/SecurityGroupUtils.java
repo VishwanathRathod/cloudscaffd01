@@ -1,4 +1,4 @@
-package com.autopatt.admin.utils;
+package com.autopatt.common.utils;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
