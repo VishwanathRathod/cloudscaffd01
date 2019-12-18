@@ -12,6 +12,7 @@ import org.apache.ofbiz.order.shoppingcart.ShoppingCartItem;
 import org.apache.ofbiz.service.*;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -24,7 +25,8 @@ public class SubscriptionServices {
 
     /**
      * Assigns subscription to tenant
-     * @param ctx The DispatchContext that this service is operating in.
+     *
+     * @param ctx     The DispatchContext that this service is operating in.
      * @param context Map containing the input parameters.
      * @return Map with the result of the service, the output parameters.
      */
@@ -43,7 +45,7 @@ public class SubscriptionServices {
         String productStoreId = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.product.store", "AUTOPATT_STORE");
         String currency = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.currency", "USD");
 
-        Debug.logInfo("Initiating process to assign product "+productId+" subscription to tenant " + tenantId, module);
+        Debug.logInfo("Initiating process to assign product " + productId + " subscription to tenant " + tenantId, module);
         String orderId;
         String orgPartyId = TenantCommonUtils.getOrgPartyId(delegator, tenantId);
         try {
@@ -107,4 +109,38 @@ public class SubscriptionServices {
         return sendResp;
     }
 
+    public static Map<String, Object> listSubscriptions(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        String orgPartyId = (String) context.get("orgPartyId");
+        List<Map> subscriptionsList = new ArrayList<>();
+        try {
+            List<GenericValue> subscriptions = delegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
+            Map<String, Object> resultMap = ServiceUtil.returnSuccess();
+            Timestamp moment = UtilDateTime.nowTimestamp();
+            if (UtilValidate.isNotEmpty(subscriptions)) {
+                for (GenericValue subscription : subscriptions) {
+                    Map subscriptionMap = UtilMisc.toMap();
+                    java.sql.Timestamp fromDate = subscription.getTimestamp("fromDate");
+                    java.sql.Timestamp thruDate = subscription.getTimestamp("thruDate");
+                    subscriptionMap.put("id", subscription.getString("subscriptionId"));
+                    subscriptionMap.put("productId", subscription.getString("productId"));
+                    subscriptionMap.put("fromDate", fromDate);
+                    subscriptionMap.put("thruDate", thruDate);
+                    subscriptionMap.put("createdDate", subscription.getString("createdStamp"));
+                    if ((thruDate == null || thruDate.after(moment)) && (fromDate == null || fromDate.before(moment) || fromDate.equals(moment))) {
+                        subscriptionMap.put("status", "ACTIVE");
+                    } else {
+                        subscriptionMap.put("status", "INACTIVE");
+                    }
+                    subscriptionMap.put("orgPartyId", orgPartyId);
+                    subscriptionsList.add(subscriptionMap);
+                }
+            }
+            resultMap.put("subscriptions", subscriptionsList);
+            return resultMap;
+        } catch (GenericEntityException e) {
+            Debug.logError(e, module);
+            return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
+        }
+    }
 }

@@ -120,7 +120,7 @@
                 <set field="title" value="Customers"/>
                 <set field="currentPage" value="CUSTOMERS"/>
                 <set field="currentViewId" value="CUSTOMERS"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/manage_customer.groovy"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/customer_subscriptions.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
