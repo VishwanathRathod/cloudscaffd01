@@ -8,6 +8,7 @@
     <#assign errorMessageList = requestAttributes._ERROR_MESSAGE_LIST_!>
 </#if>
 <div class="container-fluid">
+${userSecurityGroup!}
     <div>
         <#list errorMessageList as error>
             <div class="alert alert-danger" role="alert">
@@ -28,9 +29,6 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-7">
-
-                </div>
 
     <form action="<@ofbizUrl>UpdateUser</@ofbizUrl>" method="post">
     <input type="hidden" name="partyId" value="${partyId!}"/>
