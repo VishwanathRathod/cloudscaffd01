@@ -18,7 +18,16 @@ if(UtilValidate.isNotEmpty(tenantOrgParties)) {
     tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#" + tenantId);
 
     // TODO: Fetch User details (firstname, lastname, email, role) ---- use tenantDelegator (NOT delegator)
-    
+    Map inputs = UtilMisc.toMap("partyId", partyId)
+    employee = tenantDelegator.findOne("Person", inputs, false)
+    context.employee = employee
 
+    partyUserLogins = tenantDelegator.findByAnd("UserLogin",inputs, null, false)
+    if(partyUserLogins != null && partyUserLogins.size()>0 ) {
+        partyUserLogin = partyUserLogins.get(0)
+        context.email = partyUserLogin.userLoginId
+
+    }
 }
+
 

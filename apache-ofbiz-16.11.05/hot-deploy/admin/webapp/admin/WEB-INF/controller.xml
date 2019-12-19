@@ -90,9 +90,16 @@
 		<response name="success" type="view" value="myaccount" />
 	</request-map>
 	<request-map uri="UpdateMyProfile">
-		<event type="java" path="com.autopatt.admin.events.MyProfileEvents" invoke="updateMyProfile" />
-		<response name="success" type="request-redirect" value="myaccount" />
-		<response name="error" type="request-redirect" value="myaccount" />
+	<event type="java" path="com.autopatt.admin.events.MyProfileEvents" invoke="updateMyProfile" />
+	<response name="success" type="request-redirect" value="myaccount" />
+	<response name="error" type="request-redirect" value="myaccount" />
+	</request-map>
+	<request-map uri="updateEmployee">
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="updateEmployee" />
+		<response name="success" type="request-redirect" value="manage_customer" >
+			<redirect-parameter name="orgPartyId"/>
+		</response>
+		<response name="error" type="view" value="manage_customer" />
 	</request-map>
 	<request-map uri="changePassword">
 		<security https="true" auth="true" />
