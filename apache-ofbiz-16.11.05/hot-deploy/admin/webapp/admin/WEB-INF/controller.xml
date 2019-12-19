@@ -112,6 +112,10 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="reports"/>
 	</request-map>
+	<request-map uri="filter_subscriptions">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="customer_subscription" />
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
@@ -140,5 +144,7 @@
 			  page="component://admin/widget/AdminScreens.xml#manage_products" />
 	<view-map name="reports" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#reports" />
+	<view-map name="customer_subscription" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#customer_subscriptions_tab" />
 
 </site-conf>

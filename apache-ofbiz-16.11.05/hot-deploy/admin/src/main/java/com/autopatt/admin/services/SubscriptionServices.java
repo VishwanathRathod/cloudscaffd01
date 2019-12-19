@@ -109,12 +109,18 @@ public class SubscriptionServices {
         return sendResp;
     }
 
-    public static Map<String, Object> listSubscriptions(DispatchContext ctx, Map<String, ? extends Object> context) {
+    public static Map<String, Object> getSubscriptions(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         String orgPartyId = (String) context.get("orgPartyId");
+        String status = null == context.get("status") ? "ALL" : (String) context.get("status");
+        String productId = null == context.get("productId") ? "ALL" : (String) context.get("productId");
         List<Map> subscriptionsList = new ArrayList<>();
         try {
-            List<GenericValue> subscriptions = delegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
+            Map<String, String> filterMap = UtilMisc.toMap("partyId", orgPartyId);
+            if (!"ALL".equals(productId)) {
+                filterMap.put("productId", productId);
+            }
+            List<GenericValue> subscriptions = delegator.findByAnd("Subscription", filterMap, null, false);
             Map<String, Object> resultMap = ServiceUtil.returnSuccess();
             Timestamp moment = UtilDateTime.nowTimestamp();
             if (UtilValidate.isNotEmpty(subscriptions)) {
@@ -133,7 +139,9 @@ public class SubscriptionServices {
                         subscriptionMap.put("status", "INACTIVE");
                     }
                     subscriptionMap.put("orgPartyId", orgPartyId);
-                    subscriptionsList.add(subscriptionMap);
+                    if ("ALL".equals(status) || status.equals(subscriptionMap.get("status"))) {
+                        subscriptionsList.add(subscriptionMap);
+                    }
                 }
             }
             resultMap.put("subscriptions", subscriptionsList);

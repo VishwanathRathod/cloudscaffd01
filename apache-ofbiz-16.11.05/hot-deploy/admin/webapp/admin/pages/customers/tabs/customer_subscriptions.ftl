@@ -1,25 +1,26 @@
 <div>
     <form class="form-inline">
+        <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
         <div class="form-group mx-sm-3 mb-2 ">
             <label for="filterSubscriptionsByStatus" class="p-2">Status</label>
-            <select class="form-control form-control-sm" id="filterSubscriptionsByStatus">
-                <option>All</option>
-                <option>Active</option>
-                <option>Expired</option>
+            <select class="form-control form-control-sm" id="filterSubscriptionsByStatus" name="status">
+                <option value="ALL">All</option>
+                <option value="ACTIVE">Active</option>
+                <option value="EXPIRED">Expired</option>
             </select>
         </div>
 
         <div class="form-group mx-sm-3 mb-2">
             <label for="filterSubscriptionsByProduct" class="p-2">Product</label>
-            <select class="form-control form-control-sm" id="filterSubscriptionsByProduct">
-                <option>All</option>
-                <option>Demo</option>
-                <option>Basic Planner - P1</option>
-                <option>Advanced Planner - P2</option>
-                <option>Enterprise Planner - EP1</option>
+            <select class="form-control form-control-sm" id="filterSubscriptionsByProduct"name="productId">
+                <option value="ALL">All</option>
+                <option value="Demo">Demo</option>
+                <option value="P1">Basic Planner - P1</option>
+                <option value="P2">Advanced Planner - P2</option>
+                <option value="EP1">Enterprise Planner - EP1</option>
             </select>
         </div>
-        <button class="btn btn-outline-primary btn-sm mb-2">Apply</button>
+        <a class="btn btn-outline-primary btn-sm mb-2" onclick="listSubscriptions()">Apply</a>
     </form>
 </div>
 
@@ -60,7 +61,7 @@
                     </td>
                     <td>
                         <#if subscription.status?? && subscription.status == "ACTIVE">
-                            <span class="status text-success" >&#8226;</span> <span>Active</span>
+                            <span class="status text-success">&#8226;</span> <span>Active</span>
                         <#else>
                             <span class="status text-warning">&bull;</span> Inactive
                         </#if>

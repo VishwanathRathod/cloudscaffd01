@@ -1,17 +1,17 @@
 import org.apache.ofbiz.base.util.UtilMisc
+import org.apache.ofbiz.service.ServiceUtil
 
 String orgPartyId = parameters.orgPartyId
 
 context.orgPartyId = orgPartyId;
 
 // Get list of subscriptions for this customer
-List subscriptions =new ArrayList();
-resp = dispatcher.runSync("listSubscriptions", UtilMisc.<String, Object>toMap("orgPartyId", orgPartyId,
-        "userLogin", userLogin));
+List subscriptions = new ArrayList();
+resp = dispatcher.runSync("getSubscriptions",
+        UtilMisc.<String, Object> toMap("orgPartyId", orgPartyId, "status", parameters.status, "productId", parameters.productId, "userLogin", userLogin));
 
-if (resp != null && resp.get("responseMessage") != null) {
+if (ServiceUtil.isSuccess(resp)) {
     subscriptions = resp.get("subscriptions")
 }
 
 context.subscriptions = subscriptions;
-
