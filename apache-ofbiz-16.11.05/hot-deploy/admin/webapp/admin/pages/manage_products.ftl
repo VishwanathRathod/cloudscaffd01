@@ -1,5 +1,12 @@
 <div class="container-fluid">
-
+    <#if requestParameters.updateSuccess?? && requestParameters.updateSuccess=="Y">
+        <div class="alert alert-success" role="alert">
+            <i class="material-icons">check</i> Product details updated successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </#if>
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
@@ -25,11 +32,11 @@
          <#list products as product>
          <tr>
              <td>${product.productId}</td>
-             <td><a href="#"><i class="material-icons" style="font-size:1.6em;">cloud_circle</i>${product.productName}</a></td>
+             <td><a href="<@ofbizUrl>edit_product?productId=${product.productId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">cloud_circle</i>${product.productName}</a></td>
              <td>${product.productPrice}</td>
              <td>${product.productAttributes}</td>
              <td>
-                 <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                 <a href="<@ofbizUrl>edit_product?productId=${product.productId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
              </td>
          </tr>
          </#list>

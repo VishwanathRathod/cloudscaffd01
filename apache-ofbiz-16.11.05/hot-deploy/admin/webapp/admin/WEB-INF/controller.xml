@@ -119,6 +119,17 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="reports"/>
 	</request-map>
+	<request-map uri="edit_product">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="edit_product"/>
+	</request-map>
+	<request-map uri="updateProduct">
+		<event type="java" path="com.autopatt.admin.events.ProductMgmtEvents" invoke="updateProduct" />
+		<response type="request-redirect" name="success" value="manage_products">
+			<redirect-parameter name="updateSuccess"/>
+		</response>
+		<response type="view" name="error" value="edit_product"/>
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
@@ -147,5 +158,6 @@
 			  page="component://admin/widget/AdminScreens.xml#manage_products" />
 	<view-map name="reports" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#reports" />
-
+	<view-map name="edit_product" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#edit_product" />
 </site-conf>
