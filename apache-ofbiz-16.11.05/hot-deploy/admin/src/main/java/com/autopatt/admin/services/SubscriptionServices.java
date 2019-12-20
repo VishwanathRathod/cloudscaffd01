@@ -38,16 +38,19 @@ public class SubscriptionServices {
         Locale locale = (Locale) context.get("locale");
         GenericValue userLogin = (GenericValue) context.get("userLogin");
 
-        String tenantId = (String) context.get("tenantId");
+        String orgPartyId = (String) context.get("orgPartyId");
         String productId = (String) context.get("productId");
+        String validFrom = (String) context.get("validFrom");
+        String validTo = (String) context.get("validTo");
+        UtilDateTime.stringToTimeStamp()
+        Timestamp fromDate=UtilDateTime.nowTimestamp();
 
         //load properties
         String productStoreId = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.product.store", "AUTOPATT_STORE");
         String currency = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.currency", "USD");
 
-        Debug.logInfo("Initiating process to assign product " + productId + " subscription to tenant " + tenantId, module);
+        Debug.logInfo("Initiating process to assign product " + productId + " subscription to org party " + orgPartyId, module);
         String orderId;
-        String orgPartyId = TenantCommonUtils.getOrgPartyId(delegator, tenantId);
         try {
             ShoppingCart cart = new ShoppingCart(delegator, productStoreId, null, locale, currency);
             try {
@@ -92,7 +95,7 @@ public class SubscriptionServices {
             newSubscription.set("partyId", orgPartyId);
             newSubscription.set("productId", productId);
             newSubscription.set("orderId", orderId);
-            newSubscription.set("fromDate", UtilDateTime.nowTimestamp());
+            newSubscription.set("fromDate", fromDate);
 
             Map<String, Object> createSubscriptionMap = ctx.getModelService("createSubscription").makeValid(newSubscription, ModelService.IN_PARAM);
             createSubscriptionMap.put("userLogin", EntityQuery.use(delegator).from("UserLogin").where("userLoginId", "system").queryOne());

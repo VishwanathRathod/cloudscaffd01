@@ -56,8 +56,10 @@ under the License.
              location="com.autopatt.admin.services.SubscriptionServices" invoke="assignSubscriptionToTenant"
              auth="true" require-new-transaction="true" transaction-timeout="300">
         <description>Assigns subscription to tenant</description>
-        <attribute name="tenantId" type="String" mode="IN" optional="false"/>
+        <attribute name="orgPartyId" type="String" mode="IN" optional="false"/>
         <attribute name="productId" type="String" mode="IN" optional="false"/>
+        <attribute name="validFrom" type="String" mode="IN" optional="true"/>
+        <attribute name="validTo" type="String" mode="IN" optional="true"/>
         <attribute name="subscriptionId" type="String" mode="OUT" optional="false"/>
         <attribute name="orderId" type="String" mode="OUT" optional="false"/>
     </service>

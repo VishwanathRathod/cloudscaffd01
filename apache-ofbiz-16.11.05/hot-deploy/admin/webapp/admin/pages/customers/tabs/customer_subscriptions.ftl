@@ -1,5 +1,3 @@
-
-
 <div>
     <form class="form-inline">
         <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
@@ -14,22 +12,32 @@
 
         <div class="form-group mx-sm-3 mb-2">
             <label for="filterSubscriptionsByProduct" class="p-2">Product</label>
-            <select class="form-control form-control-sm" id="filterSubscriptionsByProduct"name="productId">
+            <select class="form-control form-control-sm" id="filterSubscriptionsByProduct" name="productId">
                 <option value="ALL">All</option>
                 <option value="Demo" <#if productId?? && productId=="Demo">selected</#if>>Demo</option>
                 <option value="P1" <#if productId?? && productId=="P1">selected</#if>>Basic Planner - P1</option>
                 <option value="P2" <#if productId?? && productId=="P2">selected</#if>>Advanced Planner - P2</option>
-                <option value="EP1" <#if productId?? && productId=="EP1">selected</#if>>Enterprise Planner - EP1</option>
+                <option value="EP1" <#if productId?? && productId=="EP1">selected</#if>>Enterprise Planner - EP1
+                </option>
             </select>
         </div>
-        <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2" onclick="listSubscriptions()">Apply</a>
+        <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+           onclick="listSubscriptions()">Apply</a>
+        <div>
+            <a href="#"
+               data-target="#newSubscribeConfirmModal"
+               class="btn btn-outline-primary" title="add" data-toggle="modal"
+               data-org-party-id="${orgPartyId!}">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
+        </div>
     </form>
 </div>
 
 <div>
     <table class="table table-striped table-hover">
         <#if subscriptions?? && subscriptions?size &gt; 0 >
-        <caption>Total Subscriptions - <b>${subscriptions!?size}</b></caption>
+            <caption>Total Subscriptions - <b>${subscriptions!?size}</b></caption>
         </#if>
         <thead class="thead-dark">
         <tr>
@@ -73,9 +81,8 @@
                     <td width="20%">
                         <#if subscription.status?? && subscription.status == "ACTIVE">
                             <a href="#"
-                               data-target="#suspendEmployeeConfirmModal"
+                               data-target="#newSubscribeConfirmModal"
                                class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                               data-party-id="${orgPartyId}" data-party-name="${subscription.productId!}"
                                data-org-party-id="${orgPartyId!}">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </a>
@@ -97,5 +104,45 @@
         </#if>
         </tbody>
     </table>
+</div>
+
+<div class="modal fade" id="newSubscribeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="newSubscribeModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModalLabel">New Subscription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="newSubscriptionProduct" class="p-2">Product</label>
+                        <select class="form-control form-control-sm" id="productId" name="productId" required>
+                            <option value="Demo">Demo</option>
+                            <option value="P1">Basic Planner - P1</option>
+                            <option value="P2">Advanced Planner - P2</option>
+                            <option value="EP1">Enterprise Planner - EP1</option>
+                        </select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <label for="newSubscriptionValidFrom" class="p-2">Valid From</label>
+                        <input class="form-control form-control-sm" type="date" id="validFrom" name="validFrom" required>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <label for="newSubscriptionValidTo" class="p-2">Valid From</label>
+                        <input class="form-control form-control-sm" type="date" id="validTo" name="validTo" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="newSubscriptionSubmit" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="addNewSubscription()">Add</button>
+            </div>
+        </div>
+    </div>
 </div>
 

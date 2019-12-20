@@ -43,7 +43,31 @@ function listSubscriptions() {
     var productId = $('select[id="filterSubscriptionsByProduct"]').val();
     console.log("orgPartyId: " + orgPartyId + "&status=" + status + "&productId=" + productId);
     $("#customer_subscriptions").load(getUrl("filter_subscriptions?orgPartyId=" + orgPartyId + "&status=" + status + "&productId=" + productId))
+}
 
+function addNewSubscription() {
+    console.log("debug: ");
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var productId = $('select[id="productId"]').val();
+    var validFrom = $('input[name="validFrom"]').val();
+    var validTo = $('input[name="validTo"]').val();
+    console.log("debug end: ");
+    var postData = {"orgPartyId":orgPartyId,productId:productId,"validFrom":validFrom,"validTo":validTo};
+    var formURL = getUrl("newSubscription");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                //data: return data from server
+                console.log("request completed... redirecting to.. " + getUrl("customers"))
+                //window.location.replace(getUrl("customers") + "?createInitiated=Y");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
 }
 
 
