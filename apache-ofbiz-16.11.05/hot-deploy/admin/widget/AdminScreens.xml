@@ -73,6 +73,29 @@
             </widgets>
         </section>
     </screen>
+    <screen name="org_employee_details">
+        <section>
+            <actions>
+                <set field="title" value="My Account"/>
+                <set field="currentPage" value="org_employee_details"/>
+                <set field="currentViewId" value="org_employee_details"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/customers/org_employee_details.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/customers/modals/org_employee_details.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
     <screen name="changePassword">
         <section>
             <actions>
@@ -126,8 +149,7 @@
                 <set field="title" value="Manage Products"/>
                 <set field="currentPage" value="manage_products"/>
                 <set field="currentViewId" value="MANAGE_PRODUCTS"/>
-
-
+                <script location="component://admin/webapp/admin/WEB-INF/actions/GetProducts.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -168,6 +190,29 @@
         </section>
     </screen>
 
+    <screen name="edit_product">
+        <section>
+            <actions>
+                <set field="title" value="Edit Product"/>
+                <set field="currentPage" value="edit_product"/>
+                <set field="currentViewId" value="EDIT_PRODUCT"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/editProduct.groovy"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/edit_product.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
 
 </screens>

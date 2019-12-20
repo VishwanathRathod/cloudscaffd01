@@ -41,7 +41,7 @@ public class UserMgmtEvents {
         }
 
         // check tenant has valid subscription to add new user
-        try {
+        /*try {
             Map<String, Object> resp = dispatcher.runSync("hasValidSubscriptionToAddUser",
                     UtilMisc.<String, Object>toMap("userLogin", userLogin));
             if (!ServiceUtil.isSuccess(resp)) {
@@ -54,7 +54,7 @@ public class UserMgmtEvents {
             Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
             return ERROR;
-        }
+        }*/
 
 
         // TODO: Validations - check for duplicate email

@@ -28,9 +28,6 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-7">
-
-                </div>
 
     <form action="<@ofbizUrl>UpdateUser</@ofbizUrl>" method="post">
     <input type="hidden" name="partyId" value="${partyId!}"/>
@@ -57,10 +54,12 @@
                 <label for="roleacc" class="col-sm-2 col-form-label">Role</label>
                 <div class="col-sm-10">
                     <select name="securityGroupId" class="form-control" required>
-                        <option value="AP_PLANNER">Planner</option>
-                        <option value="AP_APPROVER">Approver</option>
-                        <option value="AP_DEPLOYER">Deployer</option>
-                        <option value="AP_FULLADMIN">Administrator</option>
+                        <#list availableSecurityGroups as secGroup>
+                            <option value="${secGroup.groupId!}"
+                            <#if userSecurityGroup?? && secGroup.groupId == userSecurityGroup.groupId>selected</#if>
+                            >${secGroup.description!}
+                            </option>
+                        </#list>
                     </select>
 
                 </div>

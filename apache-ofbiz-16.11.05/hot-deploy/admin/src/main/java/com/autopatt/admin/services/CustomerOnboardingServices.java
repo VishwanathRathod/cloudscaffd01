@@ -372,8 +372,8 @@ public class CustomerOnboardingServices {
         Debug.logInfo("Running Script: " + cloneScriptFile, module);
         try {
             Debug.logInfo(cloneScriptFile + " " + dbHostname + " " + dbHostPort + " " + dbHostname + " "
-                    + dbUsername + " " + dbPassword
-                    + " " + tenantId + " " + tenantDbUsername + " " + tenantDbPassword, module);
+                    + dbUsername + " *******"
+                    + " " + tenantId + " " + tenantDbUsername + " ******" , module);
 
             ProcessBuilder pb = null;
             if (SystemUtils.IS_OS_WINDOWS) {

@@ -90,9 +90,16 @@
 		<response name="success" type="view" value="myaccount" />
 	</request-map>
 	<request-map uri="UpdateMyProfile">
-		<event type="java" path="com.autopatt.admin.events.MyProfileEvents" invoke="updateMyProfile" />
-		<response name="success" type="request-redirect" value="myaccount" />
-		<response name="error" type="request-redirect" value="myaccount" />
+	<event type="java" path="com.autopatt.admin.events.MyProfileEvents" invoke="updateMyProfile" />
+	<response name="success" type="request-redirect" value="myaccount" />
+	<response name="error" type="request-redirect" value="myaccount" />
+	</request-map>
+	<request-map uri="updateEmployee">
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="updateEmployee" />
+		<response name="success" type="request-redirect" value="manage_customer" >
+			<redirect-parameter name="orgPartyId"/>
+		</response>
+		<response name="error" type="view" value="manage_customer" />
 	</request-map>
 	<request-map uri="changePassword">
 		<security https="true" auth="true" />
@@ -114,7 +121,18 @@
 	</request-map>
 	<request-map uri="filter_subscriptions">
 		<security https="true" auth="true"/>
-		<response name="success" type="view" value="customer_subscription" />
+		<response name="success" type="view" value="customer_subscription"/>
+	</request-map>
+	<request-map uri="edit_product">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="edit_product"/>
+	</request-map>
+	<request-map uri="updateProduct">
+		<event type="java" path="com.autopatt.admin.events.ProductMgmtEvents" invoke="updateProduct" />
+		<response type="request-redirect" name="success" value="manage_products">
+			<redirect-parameter name="updateSuccess"/>
+		</response>
+		<response type="view" name="error" value="edit_product"/>
 	</request-map>
 
 	<!-- View Mappings - START -->
@@ -146,5 +164,6 @@
 			  page="component://admin/widget/AdminScreens.xml#reports" />
 	<view-map name="customer_subscription" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#customer_subscriptions_tab" />
-
+	<view-map name="edit_product" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#edit_product" />
 </site-conf>

@@ -7,8 +7,10 @@ import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericDelegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.DelegatorFactory;
 
 import java.util.List;
+
 
 public class TenantCommonUtils {
 
@@ -33,5 +35,31 @@ public class TenantCommonUtils {
             e.printStackTrace();
         }
         return orgPartyId;
+    }
+
+    public static String getTenantIdForOrgPartyId(Delegator delegator, String orgPartyId) {
+        String tenantId = null;
+        try {
+            List<GenericValue> tenantOrgParties = delegator.findByAnd("TenantOrgParty", UtilMisc.toMap("orgPartyId", orgPartyId), null, false);
+            if (UtilValidate.isNotEmpty(tenantOrgParties)) {
+                GenericValue tenantOrg = tenantOrgParties.get(0);
+                tenantId = tenantOrg.getString("tenantId");
+            }
+        } catch (GenericEntityException e) {
+            Debug.logError(e, module);
+            e.printStackTrace();
+        }
+        return tenantId;
+    }
+
+    public static Delegator getTenantDelegator(String tenantId) {
+        GenericDelegator tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#" + tenantId);
+        return tenantDelegator;
+    }
+
+    public static Delegator getTenantDelegatorByOrgPartyId(String orgPartyId) {
+        GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+        String tenantId = getTenantIdForOrgPartyId(mainDelegator, orgPartyId);
+        return getTenantDelegator(tenantId);
     }
 }
