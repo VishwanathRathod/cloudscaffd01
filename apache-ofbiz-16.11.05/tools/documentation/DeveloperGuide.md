@@ -25,8 +25,8 @@ Run below sql commands
 
 * CREATE USER ofadmin@'%' IDENTIFIED BY 'oAdmin@123';
 * CREATE USER ofadmin@localhost IDENTIFIED BY 'oAdmin@123';
-* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'%';
-* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'localhost';
+* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'%' WITH GRANT OPTION;
+* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'localhost' WITH GRANT OPTION;
 
 ---
 

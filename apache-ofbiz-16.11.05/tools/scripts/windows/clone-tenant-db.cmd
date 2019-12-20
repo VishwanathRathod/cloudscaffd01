@@ -27,4 +27,4 @@ mysql -h%hostname% -u%dbusername% -p%dbpassword% -Dofbizolap_%tenantId% -e "GRAN
 mysqldump  -h%hostname% -u%dbusername% -p%dbpassword% --quick ofbizolap_template | mysql  -h%hostname% -u%dbusername% -p%dbpassword% ofbizolap_%tenantId%
 
 
-REM USAGE: clone-tenant-db.cmd localhost root admin123 3306 t1 t1user t1pwd
+REM USAGE: clone-tenant-db.cmd localhost ofadmin oAdmin@123 3306 t1 t1user t1pwd
