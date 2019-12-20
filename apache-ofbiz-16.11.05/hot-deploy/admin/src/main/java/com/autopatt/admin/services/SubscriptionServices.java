@@ -120,7 +120,7 @@ public class SubscriptionServices {
             if (!"ALL".equals(productId)) {
                 filterMap.put("productId", productId);
             }
-            List<GenericValue> subscriptions = delegator.findByAnd("Subscription", filterMap, null, false);
+            List<GenericValue> subscriptions = delegator.findByAnd("Subscription", filterMap, UtilMisc.toList("-subscriptionId"), false);
             Map<String, Object> resultMap = ServiceUtil.returnSuccess();
             Timestamp moment = UtilDateTime.nowTimestamp();
             if (UtilValidate.isNotEmpty(subscriptions)) {
@@ -132,7 +132,7 @@ public class SubscriptionServices {
                     subscriptionMap.put("productId", subscription.getString("productId"));
                     subscriptionMap.put("fromDate", fromDate);
                     subscriptionMap.put("thruDate", thruDate);
-                    subscriptionMap.put("createdDate", subscription.getString("createdStamp"));
+                    subscriptionMap.put("createdDate", subscription.getTimestamp("createdStamp"));
                     if ((thruDate == null || thruDate.after(moment)) && (fromDate == null || fromDate.before(moment) || fromDate.equals(moment))) {
                         subscriptionMap.put("status", "ACTIVE");
                     } else {

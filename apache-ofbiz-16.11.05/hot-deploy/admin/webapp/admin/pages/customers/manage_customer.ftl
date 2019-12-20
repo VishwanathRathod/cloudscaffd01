@@ -25,7 +25,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="employees-tab" data-toggle="tab"
-                   href="#customer_employees" role="tab" aria-controls="customer_employees" aria-selected="false">Employees <span class="badge badge-pill badge-info">3</span></a>
+                   href="#customer_employees" role="tab" aria-controls="customer_employees" aria-selected="false">Employees <#--<span class="badge badge-pill badge-info">3</span>--></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="subscriptions-tab" data-toggle="tab" href="#customer_subscriptions" role="tab" aria-controls="customer_subscriptions" aria-selected="false">Subscriptions</a>

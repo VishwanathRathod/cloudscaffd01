@@ -10,6 +10,9 @@ List subscriptions = new ArrayList();
 resp = dispatcher.runSync("getSubscriptions",
         UtilMisc.<String, Object> toMap("orgPartyId", orgPartyId, "status", parameters.status, "productId", parameters.productId, "userLogin", userLogin));
 
+context.productId = parameters.productId
+context.status = parameters.status
+
 if (ServiceUtil.isSuccess(resp)) {
     subscriptions = resp.get("subscriptions")
 }
