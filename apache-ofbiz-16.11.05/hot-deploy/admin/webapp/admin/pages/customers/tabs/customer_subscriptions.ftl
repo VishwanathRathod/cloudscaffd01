@@ -29,21 +29,22 @@
 </p>
 <div>
     <table class="table table-striped table-hover">
-        <caption>Total Subscriptions - <b>${subscriptions!?size}</b> of 5 <span class="small text-muted">(max)</span>
-        </caption>
+        <#if subscriptions?? && subscriptions?size &gt; 0 >
+        <caption>Total Subscriptions - <b>${subscriptions!?size}</b></caption>
+        </#if>
         <thead class="thead-dark">
         <tr>
             <th>#</th>
             <th>Product</th>
             <th>Date Created</th>
-            <th>From Date</th>
-            <th>Thru Date</th>
+            <th>Valid From</th>
+            <th>Valid Till</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <#if subscriptions??>
+        <#if subscriptions?? && subscriptions?size &gt; 0 >
             <#list subscriptions as subscription>
                 <tr>
                     <td>${subscription_index + 1}</td>
@@ -86,6 +87,10 @@
                         </#if>
                 </tr>
             </#list>
+        <#else>
+            <tr>
+                <td colspan="10" align="center"> No subscriptions found.</td>
+            </tr>
         </#if>
         </tbody>
     </table>

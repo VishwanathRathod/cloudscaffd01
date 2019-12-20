@@ -4,15 +4,29 @@
 Install Mysql DB (8.0)
 
 Run below sql commands 
+
+###### Create Database and Users for Ofbiz 
 * CREATE DATABASE ofbiz;
 * CREATE DATABASE ofbizolap;
 * CREATE DATABASE ofbiztenant;
+
 * CREATE USER ofbiz@localhost IDENTIFIED BY 'OFbiz@123';
+* CREATE USER ofbiz@'%' IDENTIFIED BY 'OFbiz@123';
+* GRANT ALL PRIVILEGES ON ofbiz.* to 'ofbiz'@'localhost';
+* GRANT ALL PRIVILEGES ON ofbiz.* to 'ofbiz'@'%';
 
-* SET PASSWORD FOR 'ofbiz'@'localhost' = 'OFbiz@123';
+* GRANT ALL PRIVILEGES ON ofbizolap.* to 'ofbiz'@'localhost';
+* GRANT ALL PRIVILEGES ON ofbizolap.* to 'ofbiz'@'%';
 
-* GRANT ALL PRIVILEGES ON \*.* to 'ofbiz'@'localhost';
+* GRANT ALL PRIVILEGES ON ofbiztenant.* to 'ofbiz'@'localhost';
+* GRANT ALL PRIVILEGES ON ofbiztenant.* to 'ofbiz'@'%';
 
+##### Create Admin user to perform tenant creation operations
+
+* CREATE USER ofadmin@'%' IDENTIFIED BY 'oAdmin@123';
+* CREATE USER ofadmin@localhost IDENTIFIED BY 'oAdmin@123';
+* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'%';
+* GRANT ALL PRIVILEGES ON \*.* to 'ofadmin'@'localhost';
 
 ---
 
