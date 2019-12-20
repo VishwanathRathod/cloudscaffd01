@@ -1,10 +1,9 @@
-
-$(function(){
+$(function () {
     // initialize things..
 });
 
 
-$("#new_customer_form").submit(function(event) {
+$("#new_customer_form").submit(function (event) {
     console.log("Creating new customer....");
     event.preventDefault();
 
@@ -19,15 +18,15 @@ $("#new_customer_form").submit(function(event) {
 
     $.ajax(
         {
-            url : formURL,
+            url: formURL,
             type: "POST",
-            data : postData,
-            success:function(data, textStatus, jqXHR) {
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
                 //data: return data from server
                 console.log("request completed... redirecting to.. " + getUrl("customers"))
                 window.location.replace(getUrl("customers") + "?createInitiated=Y");
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
                 $("#newCustomerFormSubmitButton").attr("disabled", false);
                 $('#newCustomerFormCancelButton').removeClass('disabled');
@@ -37,5 +36,14 @@ $("#new_customer_form").submit(function(event) {
         });
     //e.unbind(); //unbind. to stop multiple form submit.
 });
+
+function listSubscriptions() {
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var status = $('select[id="filterSubscriptionsByStatus"]').val();
+    var productId = $('select[id="filterSubscriptionsByProduct"]').val();
+    console.log("orgPartyId: " + orgPartyId + "&status=" + status + "&productId=" + productId);
+    $("#customer_subscriptions").load(getUrl("filter_subscriptions?orgPartyId=" + orgPartyId + "&status=" + status + "&productId=" + productId))
+
+}
 
 

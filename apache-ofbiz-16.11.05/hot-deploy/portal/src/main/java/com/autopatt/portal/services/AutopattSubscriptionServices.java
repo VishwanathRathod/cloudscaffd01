@@ -1,9 +1,7 @@
 package com.autopatt.portal.services;
 
-import com.autopatt.admin.services.CustomerOnboardingServices;
-import com.autopatt.portal.utils.TenantCommonUtils;
+import com.autopatt.admin.utils.TenantCommonUtils;
 import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.*;
@@ -11,7 +9,6 @@ import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 

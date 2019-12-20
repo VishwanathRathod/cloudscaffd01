@@ -119,6 +119,10 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="reports"/>
 	</request-map>
+	<request-map uri="filter_subscriptions">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="customer_subscription"/>
+	</request-map>
 	<request-map uri="edit_product">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="edit_product"/>
@@ -158,6 +162,8 @@
 			  page="component://admin/widget/AdminScreens.xml#manage_products" />
 	<view-map name="reports" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#reports" />
+	<view-map name="customer_subscription" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#customer_subscriptions_tab" />
 	<view-map name="edit_product" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_product" />
 </site-conf>
