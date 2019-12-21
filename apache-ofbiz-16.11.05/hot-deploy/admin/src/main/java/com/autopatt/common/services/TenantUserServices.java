@@ -7,7 +7,6 @@ import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.DelegatorFactory;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.condition.EntityCondition;
@@ -50,7 +49,6 @@ public class TenantUserServices {
 
         List<EntityCondition> condList = new LinkedList<EntityCondition>();
         condList.add(EntityCondition.makeCondition("partyIdFrom", tenantOrganizationPartyId));
-        //condList.add(EntityCondition.makeCondition("partyIdTo", partyIdTo));
         condList.add(EntityCondition.makeCondition("roleTypeIdFrom", "ORGANIZATION_ROLE"));
         condList.add(EntityCondition.makeCondition("roleTypeIdTo", "EMPLOYEE"));
         condList.add(EntityCondition.makeCondition("partyRelationshipTypeId", "EMPLOYMENT"));
@@ -137,10 +135,26 @@ public class TenantUserServices {
         }
 
         Long userCount = 0L;
-        // Use a view entity with agreegation (COUNT) to get counts from PartyRelationship
+        // Use a view entity with aggregation (COUNT) to get counts from PartyRelationship
         try {
-            List<GenericValue> partyRelationshipCounts = tenantDelegator.findByAnd("PartyRelationshipCount",
-                    UtilMisc.toMap("partyIdFrom", tenantOrganizationPartyId, "partyRelationshipTypeId", "EMPLOYMENT"), null, false);
+            List<EntityCondition> condList = new LinkedList<EntityCondition>();
+            condList.add(EntityCondition.makeCondition("partyIdFrom", tenantOrganizationPartyId));
+            condList.add(EntityCondition.makeCondition("roleTypeIdFrom", "ORGANIZATION_ROLE"));
+            condList.add(EntityCondition.makeCondition("roleTypeIdTo", "EMPLOYEE"));
+            condList.add(EntityCondition.makeCondition("partyRelationshipTypeId", "EMPLOYMENT"));
+            condList.add(EntityCondition.makeCondition("fromDate", EntityOperator.LESS_THAN_EQUAL_TO, UtilDateTime.nowTimestamp()));
+            EntityCondition thruCond = EntityCondition.makeCondition(UtilMisc.toList(
+                    EntityCondition.makeCondition("thruDate", null),
+                    EntityCondition.makeCondition("thruDate", EntityOperator.GREATER_THAN, UtilDateTime.nowTimestamp())),
+                    EntityOperator.OR);
+            condList.add(thruCond);
+            EntityCondition condition = EntityCondition.makeCondition(condList);
+
+            List<GenericValue>  partyRelationshipCounts = EntityQuery.use(tenantDelegator).from("PartyRelationshipCount").where(condition).queryList();
+
+            /*List<GenericValue> partyRelationshipCounts = tenantDelegator.findByAnd("PartyRelationshipCount",
+                    UtilMisc.toMap("partyIdFrom", tenantOrganizationPartyId, "partyRelationshipTypeId", "EMPLOYMENT"), null, false);*/
+
             if(UtilValidate.isNotEmpty(partyRelationshipCounts)) {
                 GenericValue partyRelCount = partyRelationshipCounts.get(0);
                 userCount = partyRelCount.getLong("partyIdTo");
@@ -151,4 +165,7 @@ public class TenantUserServices {
         resp.put("count", userCount);
         return resp;
     }
+
+
+
 }

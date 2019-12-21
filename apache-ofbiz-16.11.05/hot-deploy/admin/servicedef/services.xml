@@ -72,6 +72,11 @@ under the License.
         <attribute name="subscriptions" type="List" mode="OUT" optional="false"/>
     </service>
 
-
+    <service name="removeOrgEmployee" engine="java"
+             location="com.autopatt.common.services.OrgEmployeeServices" invoke="removeOrgEmployee"
+             auth="true" require-new-transaction="true" transaction-timeout="300">
+        <description>remove employee user from the org</description>
+        <attribute name="orgEmployeePartyId" type="String" mode="IN" optional="false"/>
+    </service>
 
 </services>

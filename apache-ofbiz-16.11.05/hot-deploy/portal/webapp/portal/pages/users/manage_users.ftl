@@ -69,7 +69,7 @@
                     <td>
                         <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                         <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"
-                           data-party-id="${user.partyId}" data-party-name="${user.firstName!} ${user.lastName!}"><i class="material-icons">delete</i></a>
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"><i class="material-icons">delete</i></a>
                     </td>
                 </tr>
             </#list>

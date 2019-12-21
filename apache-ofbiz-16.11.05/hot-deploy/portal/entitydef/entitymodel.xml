@@ -34,6 +34,10 @@
         <alias entity-alias="PR" name="partyIdTo" function="count"/>
         <alias entity-alias="PR" name="partyIdFrom" group-by="true"/>
         <alias entity-alias="PR" name="partyRelationshipTypeId" group-by="true"/>
+        <alias entity-alias="PR" name="roleTypeIdFrom" />
+        <alias entity-alias="PR" name="roleTypeIdTo" />
+        <alias entity-alias="PR" name="fromDate" />
+        <alias entity-alias="PR" name="thruDate" />
     </view-entity>
 
 </entitymodel>
