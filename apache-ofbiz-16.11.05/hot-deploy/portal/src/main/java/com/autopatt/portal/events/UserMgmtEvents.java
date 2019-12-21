@@ -1,11 +1,13 @@
 package com.autopatt.portal.events;
 
+import com.autopatt.admin.utils.UserLoginUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.security.Security;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
@@ -86,7 +88,7 @@ public class UserMgmtEvents {
                 return ERROR;
             }
 
-            // All Org Users should have EMPLOYEE role (so that we can fetch all org users)
+            // All Org Users should have EMPLOYEE role
             Map<String, Object> partyRole = UtilMisc.toMap(
                     "partyId", partyId,
                     "roleTypeId", "EMPLOYEE",
@@ -98,7 +100,22 @@ public class UserMgmtEvents {
                 request.setAttribute("_ERROR_MESSAGE_", "Unable to add new user. ");
                 return ERROR;
             }
-            // TODO: Add partyRelationship with ORG Party (once Tenant is ready)
+
+            // Add partyRelationship with ORG Party (once Tenant is ready)
+            String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY",null, delegator);
+            Map<String, Object> partyRelationship = UtilMisc.toMap(
+                    "partyIdFrom", tenantOrganizationPartyId,
+                    "partyIdTo", partyId,
+                    "roleTypeIdFrom", "ORGANIZATION_ROLE",
+                    "roleTypeIdTo", "EMPLOYEE",
+                    "partyRelationshipTypeId", "EMPLOYMENT",
+                    "userLogin", UserLoginUtils.getSystemUserLogin(delegator)
+            );
+            Map<String,Object> createPartyRelationResp = dispatcher.runSync("createPartyRelationship", partyRelationship);
+            if(!ServiceUtil.isSuccess(createPartyRelationResp)) {
+                Debug.logError("Error creating new Party Relationship between " + tenantOrganizationPartyId + " and "
+                        + partyId+" in tenant " + delegator.getDelegatorTenantId(), module);
+            }
 
             // Assign SecurityGroup to user
             GenericValue userLoginSecurityGroup = delegator.makeValue("UserLoginSecurityGroup",

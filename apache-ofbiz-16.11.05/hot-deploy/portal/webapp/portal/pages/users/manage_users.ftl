@@ -46,16 +46,26 @@
         <tbody>
         <#if users??>
             <#list users as user>
-                <#assign name = Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(orgParty) />
                 <tr>
                     <td>${user_index + 1}</td>
                     <td>
-                    <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">account_circle</i> ${user.firstName!} ${user.lastName!}</a>
-                    <#if user.partyId == userLogin.partyId> <span class="badge badge-primary">This is you</span></#if>
+                    <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">account_circle</i> ${user.partyName!}</a>
+                    <#if user.partyId == userLogin.partyId> &nbsp;&nbsp;<span class="badge badge-primary">You</span></#if>
+                        <div class="small text-muted">${user.userLogin.userLoginId!}</div>
                     </td>
-                    <td><#if user.createdDate??>${user.createdDate!?date}</#if></td>
-                    <td>-</td>
-                    <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
+                    <td><#if user.userLogin.createdStamp??>${user.userLogin.createdStamp!?date}</#if></td>
+                    <td>${user.roleName!}</td>
+                    <td>
+                        <#if user.userStatus?? && user.userStatus == "ACTIVE">
+                            <span class="status text-success" >&#8226;</span> <span>Active</span>
+                        <#elseif user.userStatus?? && user.userStatus == "INACTIVE">
+                            <span class="status text-info">&bull;</span> In-Active
+                        <#elseif user.userStatus?? && user.userStatus == "LOCKED">
+                            <span class="status text-warning">&bull;</span> Locked
+                        <#else>
+                            <span class="status text-danger">&bull;</span> Suspended
+                        </#if>
+                    </td>
                     <td>
                         <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                         <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"

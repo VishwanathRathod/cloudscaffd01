@@ -32,13 +32,6 @@
     <tbody>
     <#if employees??>
         <#list employees as emp>
-            <#assign employeeName = ""/>
-            <#if emp.firstName??>
-                <#assign employeeName = emp.firstName />
-            </#if>
-            <#if emp.lastName??>
-                <#assign employeeName = employeeName + " " + emp.lastName/>
-            </#if>
             <tr>
                 <td>${emp_index + 1}</td>
                 <td class="user-name">
@@ -46,16 +39,18 @@
                     <i class="material-icons" style="font-size:1.6em;">account_circle</i>
                     <a href="#" data-toggle="modal" data-target="#editEmployeeModal"
                        data-party-id="${emp.partyId}" data-party-name="${employeeName!}"
-                       data-org-party-id="${orgPartyId!}">${employeeName!}</a>
+                       data-org-party-id="${orgPartyId!}">${emp.partyName!}</a>
                     <div class="small text-muted">${emp.userLogin.userLoginId!}</div>
                 </td>
-                <td><#if emp.createdDate??>${emp.createdDate!?date}</#if></td>
+                <td><#if emp.userLogin.createdStamp??>${emp.userLogin.createdStamp!?date}</#if></td>
                 <td>${emp.roleName!}</td>
                 <td>
                     <#if emp.userStatus?? && emp.userStatus == "ACTIVE">
                         <span class="status text-success" >&#8226;</span> <span>Active</span>
                     <#elseif emp.userStatus?? && emp.userStatus == "INACTIVE">
-                        <span class="status text-warning">&bull;</span> Inactive
+                        <span class="status text-info">&bull;</span> In-Active
+                    <#elseif emp.userStatus?? && emp.userStatus == "LOCKED">
+                        <span class="status text-warning">&bull;</span> Locked
                     <#else>
                         <span class="status text-danger">&bull;</span> Suspended
                     </#if>
@@ -66,28 +61,28 @@
                         <a href="#"
                            data-target="#suspendEmployeeConfirmModal"
                            class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </a>
                         <a href="#"
                            data-target="#resetPasswordEmployeeConfirmModal"
                            class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}"><i class="fa fa-key" aria-hidden="true"></i>
                         </a>
                     <#else>
                         <a href="#"
                            data-target="#activateEmployeeConfirmModal"
                            class="btn btn-outline-primary" title="Activate" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}">
                             <i class="fa fa-unlock" aria-hidden="true"></i>
                         </a>
                     </#if>
 
                     <#--<a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal" data-target="#deleteEmployeeConfirmModal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                       data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"><i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>-->
                 </td>
             </tr>
