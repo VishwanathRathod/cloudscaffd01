@@ -43,7 +43,32 @@ function listSubscriptions() {
     var productId = $('select[id="filterSubscriptionsByProduct"]').val();
     console.log("orgPartyId: " + orgPartyId + "&status=" + status + "&productId=" + productId);
     $("#customer_subscriptions").load(getUrl("filter_subscriptions?orgPartyId=" + orgPartyId + "&status=" + status + "&productId=" + productId))
-
 }
 
 
+function loadOrgEmployees() {
+    var orgPartyId = $('#orgPartyId').val();
+    $("#customer_employees").load(getUrl("org_employees?orgPartyId=" + orgPartyId ))
+}
+
+function suspendOrgEmployee() {
+    var employeePartyId = $("#suspendEmployee_partyId").val()
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId };
+    var formURL = $("#suspend_org_employee_form").attr("action");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                //data: return data from server
+                console.log(data);
+                $('#suspendEmployeeConfirmModal').modal('hide');
+                $('#success_toaster').toast('show');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}

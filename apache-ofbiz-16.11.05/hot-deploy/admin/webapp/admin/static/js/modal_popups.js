@@ -21,12 +21,14 @@ function initializeDeleteUserModal() {
 
     $('#suspendEmployeeConfirmModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
-        var deletingPartyId = button.data('party-id');
-        var deletingPartyName = button.data('party-name');
-        if(deletingPartyName == null) deletingPartyName = "";
+        var suspendingPartyId = button.data('party-id');
+        var suspendingPartyName = button.data('party-name');
+        if(suspendingPartyName == null) suspendingPartyName = "";
 
-        var modal = $(this)
-        modal.find('#suspendPartyName').text(deletingPartyName)
+        var modal = $(this);
+        console.log("suspendingPartyId " + suspendingPartyId)
+        modal.find('#suspendPartyName').text(suspendingPartyName)
+        $("#suspendEmployee_partyId").val(suspendingPartyId)
     });
 
     $('#activateEmployeeConfirmModal').on('show.bs.modal', function (event) {

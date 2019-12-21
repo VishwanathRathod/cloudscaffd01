@@ -40,4 +40,31 @@ public class EmployeeEvents {
         return SUCCESS;
     }
 
+
+    public static String suspendEmployee(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String orgPartyId = request.getParameter("orgPartyId");
+        request.setAttribute("orgPartyId", orgPartyId);
+
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegatorByOrgPartyId(orgPartyId);
+
+        request.setAttribute("done","something");
+        /*String firstname=request.getParameter("firstname");
+        String lastname=request.getParameter("lastname");
+        Map<String, Object> inputs = UtilMisc.toMap("partyId", request.getParameter("partyId")); // party id should come from request
+        try {
+            GenericValue person = tenantDelegator.findOne("Person", inputs , false);
+            person.set("firstName",firstname);
+            person.set("lastName",lastname);
+            tenantDelegator.store(person);
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the profile details.");
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "Profile details updated successfully.");*/
+        return SUCCESS;
+    }
+
 }

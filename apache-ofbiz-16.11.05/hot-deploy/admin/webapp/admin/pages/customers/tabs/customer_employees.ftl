@@ -9,6 +9,12 @@
         </div>
     </div>
 </div>-->
+<input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
+
+<div>
+    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2" onclick="loadOrgEmployees()"><i class="fa fa-refresh" aria-hidden="true"></i>
+        Refresh</a>
+</div>
 
 <table class="table table-striped table-hover">
     <caption>Total Employees - <b>${employees!?size}</b> of 5 <span class="small text-muted">(max)</span></caption>
@@ -83,7 +89,9 @@
     </tbody>
 </table>
 
-
+<form id="suspend_org_employee_form" action="<@ofbizUrl>ajaxSuspendOrgUser</@ofbizUrl>">
+    <input type="hidden" id="suspendEmployee_partyId">
+</form>
 
 <div class="modal fade" id="activateEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="activateEmployeeModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -123,7 +131,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Suspend</button>
+                <button type="button" class="btn btn-danger" onclick="suspendOrgEmployee()">Suspend</button>
             </div>
         </div>
     </div>
