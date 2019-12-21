@@ -8,9 +8,15 @@
     <a href="<@ofbizUrl>productAPC</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'PRODUCT_APC'>active</#if>" ><i class="fa fa-cloud"></i> <span>APC</span></a>
 
     <#if security.hasEntityPermission("PORTAL", "_VIEW_USERS", session)>
-    <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_USERS'>active</#if>" >
-      <i class="fa fa-group"></i> <span>Users</span>
-    </a>
+      <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_USERS'>active</#if>" >
+        <i class="fa fa-group"></i> <span>Users</span>
+      </a>
+    </#if>
+
+    <#if security.hasEntityPermission("PORTAL", "_ADMIN", session)>
+      <a href="<@ofbizUrl>settings</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_SETTINGS'>active</#if>" >
+        <i class="fa fa-cog"></i> <span>Settings</span>
+      </a>
     </#if>
   </div>
 
