@@ -15,9 +15,13 @@ for(GenericValue product : products) {
         def priceGv = productPrices.get(0)
         entry.put("productPrice", priceGv.price)
     }
-    //TODO: Fetch ProduAttributes for this product
-    entry.put("productAttributes", "5 Users, 5 Patterns")
 
+    def productAttributes = product.getRelated("ProductAttribute", null, null,false);
+    if(UtilValidate.isNotEmpty(productAttributes)) {
+        for(GenericValue productAttr: productAttributes){
+             entry.put(productAttr.attrName, productAttr.attrValue)
+        }
+    }
     productDetails.add(entry);
 }
 context.products = productDetails;

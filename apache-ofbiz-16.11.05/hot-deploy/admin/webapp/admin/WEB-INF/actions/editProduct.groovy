@@ -1,5 +1,6 @@
 import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
+import org.apache.ofbiz.entity.GenericValue
 
 productId = request.getParameter("productId")
 context.productId = productId
@@ -14,3 +15,10 @@ if(UtilValidate.isNotEmpty(productPrices)) {
     context.priceGv = priceGv
 }
 
+def productAttributes = product.getRelated("ProductAttribute", null, null,false);
+
+if(UtilValidate.isNotEmpty(productAttributes)) {
+    for(GenericValue productAttr: productAttributes){
+        context.put(productAttr.attrName, productAttr.attrValue)
+    }
+}

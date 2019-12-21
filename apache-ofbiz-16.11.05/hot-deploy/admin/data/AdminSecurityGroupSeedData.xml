@@ -26,7 +26,11 @@ under the License.
     <!-- Security Group Permissions for AP_FULLADMIN -->
     <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="ADMINPORTAL_VIEW"/>
     <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="ADMINPORTAL_ADMIN"/>
-    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="PARTYMGR_CREATE"/>
+    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="PARTYMGR_ADMIN"/>
+    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="CATALOG_ADMIN"/>
+    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="ORDERMGR_ADMIN"/>
 
+    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="ACCTG_PREF_ADMIN"/>
+    <SecurityGroupPermission groupId="APADMIN_FULLADMIN" permissionId="PAY_INFO_ADMIN"/>
 
 </entity-engine-xml>

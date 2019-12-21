@@ -79,6 +79,10 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_customer" />
 	</request-map>
+	<request-map uri="org_employees">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="org_employees"/>
+	</request-map>
 
 	<request-map uri="org_employee_details">
 		<security https="true" auth="true" />
@@ -140,6 +144,19 @@
 		<response type="view" name="error" value="edit_product"/>
 	</request-map>
 
+	<request-map uri="ajaxSuspendOrgUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="suspendEmployee" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="ajaxActivateOrgUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="activateEmployee" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
@@ -169,6 +186,9 @@
 			  page="component://admin/widget/AdminScreens.xml#reports" />
 	<view-map name="customer_subscription" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#customer_subscriptions_tab" />
+	<view-map name="org_employees" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#customer_employees_tab" />
+
 	<view-map name="edit_product" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_product" />
 </site-conf>

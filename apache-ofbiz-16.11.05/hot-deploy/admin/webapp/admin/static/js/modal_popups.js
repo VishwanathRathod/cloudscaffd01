@@ -1,11 +1,11 @@
 
 
 $(function() {
-    initializeDeleteUserModal();
+    initializeOrgEmployeeModals();
 });
 
 
-function initializeDeleteUserModal() {
+function initializeOrgEmployeeModals() {
     $('#editEmployeeModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var editPartyId = button.data('party-id') // Extract info from data-* attributes
@@ -21,12 +21,13 @@ function initializeDeleteUserModal() {
 
     $('#suspendEmployeeConfirmModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
-        var deletingPartyId = button.data('party-id');
-        var deletingPartyName = button.data('party-name');
-        if(deletingPartyName == null) deletingPartyName = "";
+        var suspendingPartyId = button.data('party-id');
+        var suspendingPartyName = button.data('party-name');
+        if(suspendingPartyName == null) suspendingPartyName = "";
 
-        var modal = $(this)
-        modal.find('#suspendPartyName').text(deletingPartyName)
+        var modal = $(this);
+        modal.find('#suspendPartyName').text(suspendingPartyName)
+        $("#suspendEmployee_partyId").val(suspendingPartyId)
     });
 
     $('#activateEmployeeConfirmModal').on('show.bs.modal', function (event) {
@@ -36,8 +37,10 @@ function initializeDeleteUserModal() {
         if(activatePartyName == null) activatePartyName = "";
 
         var modal = $(this)
-        modal.find('#activatePartyName').text(activatePartyName)
+        modal.find('#activatePartyName').text(activatePartyName);
+        $("#enableEmployee_partyId").val(activatePartyId)
     });
+
     $('#resetPasswordEmployeeConfirmModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var resetPasswordForPartyId = button.data('party-id');

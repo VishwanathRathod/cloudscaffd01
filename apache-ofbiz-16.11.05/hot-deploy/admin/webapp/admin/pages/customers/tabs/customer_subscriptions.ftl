@@ -1,6 +1,6 @@
 <div>
     <form class="form-inline">
-        <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
+        <input type="hidden" id="orgPartyId" name="orgPartyId" value="${orgPartyId}"/>
         <div class="form-group mx-sm-3 mb-2 ">
             <label for="filterSubscriptionsByStatus" class="p-2">Status</label>
             <select class="form-control form-control-sm" id="filterSubscriptionsByStatus" name="status">
