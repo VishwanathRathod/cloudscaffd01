@@ -8,6 +8,8 @@ import org.apache.ofbiz.entity.GenericDelegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.DelegatorFactory;
+import org.apache.ofbiz.service.GenericDispatcherFactory;
+import org.apache.ofbiz.service.LocalDispatcher;
 
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class TenantCommonUtils {
         return tenantId;
     }
 
-    public static Delegator getTenantDelegator(String tenantId) {
+    public static GenericDelegator getTenantDelegator(String tenantId) {
         GenericDelegator tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#" + tenantId);
         return tenantDelegator;
     }
@@ -61,5 +63,13 @@ public class TenantCommonUtils {
         GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
         String tenantId = getTenantIdForOrgPartyId(mainDelegator, orgPartyId);
         return getTenantDelegator(tenantId);
+    }
+
+    public static LocalDispatcher getTenantDispatcherByOrgPartyId(String orgPartyId) {
+        GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+        String tenantId = getTenantIdForOrgPartyId(mainDelegator, orgPartyId);
+        GenericDelegator tenantDelegator = getTenantDelegator(tenantId);
+        LocalDispatcher tenantDispatcher = new GenericDispatcherFactory().createLocalDispatcher("default#" + tenantId, tenantDelegator);
+        return tenantDispatcher;
     }
 }

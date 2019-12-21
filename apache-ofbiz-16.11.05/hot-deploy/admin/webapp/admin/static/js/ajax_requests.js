@@ -4,12 +4,10 @@ $(function () {
 
 
 $("#new_customer_form").submit(function (event) {
-    console.log("Creating new customer....");
     event.preventDefault();
 
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
-
     console.log(postData);
 
     $("#newCustomerFormSubmitButton").attr("disabled", true);
@@ -48,7 +46,9 @@ function listSubscriptions() {
 
 function loadOrgEmployees() {
     var orgPartyId = $('#orgPartyId').val();
-    $("#customer_employees").load(getUrl("org_employees?orgPartyId=" + orgPartyId ))
+    $("#customer_employees").load(getUrl("org_employees?orgPartyId=" + orgPartyId ), function() {
+        initializeOrgEmployeeModals();
+    });
 }
 
 function suspendOrgEmployee() {
@@ -62,10 +62,35 @@ function suspendOrgEmployee() {
             type: "POST",
             data: postData,
             success: function (data, textStatus, jqXHR) {
-                //data: return data from server
-                console.log(data);
                 $('#suspendEmployeeConfirmModal').modal('hide');
-                showSuccessToast("User Suspended Successfully")
+                showSuccessToast("User Suspended Successfully");
+                setTimeout(function() {
+                    loadOrgEmployees();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
+
+
+function activateOrgEmployee() {
+    var employeePartyId = $("#enableEmployee_partyId").val()
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId };
+    var formURL = $("#enable_org_employee_form").attr("action");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#activateEmployeeConfirmModal').modal('hide');
+                showSuccessToast("User Activated Successfully");
+                setTimeout(function() {
+                    loadOrgEmployees();
+                }, 500);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);

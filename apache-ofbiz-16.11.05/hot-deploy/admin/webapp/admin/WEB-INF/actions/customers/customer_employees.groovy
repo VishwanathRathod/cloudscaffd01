@@ -3,14 +3,11 @@ import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.entity.DelegatorFactory
 import org.apache.ofbiz.entity.GenericDelegator
 import org.apache.ofbiz.entity.GenericValue
-import org.apache.ofbiz.party.party.PartyHelper
 
 String orgPartyId = parameters.orgPartyId
-
-context.orgPartyId = orgPartyId;
+context.orgPartyId = orgPartyId
 
 // Get list of employees for this customer
-
 tenantOrgParties = delegator.findByAnd("TenantOrgParty", UtilMisc.toMap("orgPartyId", orgPartyId), null, false);
 if(UtilValidate.isNotEmpty(tenantOrgParties)) {
     tenantOrg =tenantOrgParties.get(0);
@@ -39,7 +36,11 @@ if(UtilValidate.isNotEmpty(tenantOrgParties)) {
             if(userLoginEntry.enabled == "Y") {
                 entry.put("userStatus", "ACTIVE");
             } else {
-                entry.put("userStatus", "INACTIVE");
+                if( UtilValidate.isEmpty(userLoginEntry.disabledDateTime )) {
+                    entry.put("userStatus", "SUSPENDED")
+                } else {
+                    entry.put("userStatus", "INACTIVE")
+                }
             }
 
             userSecurityGroups = tenantDelegator.findByAnd("UserLoginSecurityGroup", UtilMisc.toMap("userLoginId", userLoginEntry.userLoginId), null, false)

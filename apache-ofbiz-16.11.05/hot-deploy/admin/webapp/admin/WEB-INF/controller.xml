@@ -142,8 +142,12 @@
 	<request-map uri="ajaxSuspendOrgUser">
 		<security https="true" auth="true"/>
 		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="suspendEmployee" />
-
-<!--		<event type="groovy" invoke="component://admin/webapp/admin/WEB-INF/actions/events/SuspendOrgUser.groovy"/>-->
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="ajaxActivateOrgUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="activateEmployee" />
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json"/>
 	</request-map>
