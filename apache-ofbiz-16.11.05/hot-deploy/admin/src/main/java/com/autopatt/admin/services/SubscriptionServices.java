@@ -13,6 +13,7 @@ import org.apache.ofbiz.service.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -40,10 +41,25 @@ public class SubscriptionServices {
 
         String orgPartyId = (String) context.get("orgPartyId");
         String productId = (String) context.get("productId");
-        String validFrom = (String) context.get("validFrom");
-        String validTo = (String) context.get("validTo");
-        //UtilDateTime.stringToTimeStamp();
-        Timestamp fromDate=UtilDateTime.nowTimestamp();
+        String validFromStr = (String) context.get("validFrom");
+        String validToStr = (String) context.get("validTo");
+        Timestamp validFrom = null;
+        Timestamp validTo = null;
+        try {
+            TimeZone tz = TimeZone.getDefault();
+            if (UtilValidate.isEmpty(validFromStr)) {
+                validFrom = UtilDateTime.nowTimestamp();
+            } else {
+                validFrom = UtilDateTime.stringToTimeStamp(validFromStr, "yyyy-MM-dd", tz, locale);
+            }
+            if (UtilValidate.isNotEmpty(validToStr)) {
+                validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timestamp fromDate = UtilDateTime.nowTimestamp();
 
         //load properties
         String productStoreId = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.product.store", "AUTOPATT_STORE");
@@ -95,7 +111,10 @@ public class SubscriptionServices {
             newSubscription.set("partyId", orgPartyId);
             newSubscription.set("productId", productId);
             newSubscription.set("orderId", orderId);
-            newSubscription.set("fromDate", fromDate);
+            newSubscription.set("fromDate", validFrom);
+            if (null != validTo) {
+                newSubscription.set("thruDate", validTo);
+            }
 
             Map<String, Object> createSubscriptionMap = ctx.getModelService("createSubscription").makeValid(newSubscription, ModelService.IN_PARAM);
             createSubscriptionMap.put("userLogin", userLogin);
