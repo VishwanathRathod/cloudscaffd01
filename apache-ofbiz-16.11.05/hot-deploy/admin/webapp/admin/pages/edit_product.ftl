@@ -49,18 +49,21 @@
         <div class="form-group row">
             <label for="productprice" class="col-sm-2 col-form-label ">Price <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control"  value="${priceGv.price}" name="price"  >
+                <input  type="number" step="any" class="form-control"  value="${priceGv.price}" name="price"  >
             </div>
         </div>
         <div class="form-group row">
-            <label for="productfeatures" class="col-sm-2 col-form-label">Product Features <span class="mandatory">*</span></label>
-            <div class="col-sm-5">
-            <input type="text" class="form-control" placeholder="No. of Users"  value="" name="users" />
+            <label for="productfeatures" class="col-sm-2 col-form-label">Max Admins <span class="mandatory">*</span></label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="No. of Users"  value="${maxAdmins!}" name="" />
                 </div>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="No. of Patterns" value="" name="patterns" />
+        </div>
+            <div class="form-group row">
+                <label for="productfeatures" class="col-sm-2 col-form-label">Max Users <span class="mandatory">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="No. of Patterns" value="${maxUserLogins!}" name="" />
             </div>
-            </div>
+                </div>
 
 
         <div class="form-group row">
@@ -72,4 +75,5 @@
         </div>
     </div>
     </div>
+
 </form>

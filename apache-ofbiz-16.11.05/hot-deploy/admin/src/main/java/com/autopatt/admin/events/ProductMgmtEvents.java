@@ -25,8 +25,16 @@ public class ProductMgmtEvents {
         String productName = request.getParameter("productName");
         String productId = request.getParameter("productId");
         String priceStr = request.getParameter("price");
-
-        BigDecimal price = new BigDecimal(priceStr);
+        BigDecimal price= BigDecimal.valueOf(1.0);
+        try{
+            price = new BigDecimal(priceStr);
+        System.out.println(price+"insert try catch");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(price+"insert try catch");
+            request.setAttribute("_ERROR_MESSAGE_", "Product Price should not contain Letters.");
+        }
+        System.out.println(price+"insert try catch");
 
         Map<String, Object> inputs = UtilMisc.toMap("productId", productId);
         try {
@@ -47,7 +55,9 @@ public class ProductMgmtEvents {
             return ERROR;
         }
         request.setAttribute("updateSuccess","Y");
-        request.setAttribute("_EVENT_MESSAGE_", "Product details updated successfully."); 
+        request.setAttribute("_EVENT_MESSAGE_", "Product price updated successfully.");
+        request.setAttribute("_EVENT_MESSAGE_", "Product details updated successfully.");
+
         return SUCCESS;
     }
 

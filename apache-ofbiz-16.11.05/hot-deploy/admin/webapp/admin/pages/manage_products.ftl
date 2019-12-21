@@ -31,10 +31,13 @@
          <tbody>
          <#list products as product>
          <tr>
-             <td>${product.productId}</td>
-             <td><a href="<@ofbizUrl>edit_product?productId=${product.productId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">cloud_circle</i>${product.productName}</a></td>
-             <td>${product.productPrice}</td>
-             <td>${product.productAttributes}</td>
+             <td>${product.productId!}</td>
+             <td><a href="<@ofbizUrl>edit_product?productId=${product.productId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">cloud_circle</i>${product.productName!}</a></td>
+             <td>${product.productPrice!}</td>
+             <td>
+                 Admins: ${product.maxAdmins!}<br/>
+                 Users: ${product.maxUserLogins!}<br/>
+             </td>
              <td>
                  <a href="<@ofbizUrl>edit_product?productId=${product.productId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
              </td>
