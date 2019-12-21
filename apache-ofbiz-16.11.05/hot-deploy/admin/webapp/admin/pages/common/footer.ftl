@@ -12,6 +12,7 @@
   <script src="../static/js/validations.js"></script>
   <script src="../static/js/ajax_requests.js"></script>
   <script src="../static/js/modal_popups.js"></script>
+  <script src="../static/js/toast_utils.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
@@ -35,13 +36,5 @@
     }
   </script>
 
-
-  <script>
-    $(document).ready(function(){
-
-    });
-  </script>
-
   </body>
-
 </html>

@@ -65,7 +65,7 @@ function suspendOrgEmployee() {
                 //data: return data from server
                 console.log(data);
                 $('#suspendEmployeeConfirmModal').modal('hide');
-                $('#success_toaster').toast('show');
+                showSuccessToast("User Suspended Successfully")
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
