@@ -153,10 +153,11 @@ public class EmployeeEvents {
         request.setAttribute("orgEmployeePartyId", orgEmployeePartyId);
 
         //TODO: Add user permission check
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegatorByOrgPartyId(orgPartyId);
         LocalDispatcher tenantDispatcher = TenantCommonUtils.getTenantDispatcherByOrgPartyId(orgPartyId);
         try {
             Map<String,Object> removeOrgEmpResp = tenantDispatcher.runSync("removeOrgEmployee",
-                    UtilMisc.toMap("userLogin", userLogin,
+                    UtilMisc.toMap("userLogin", UserLoginUtils.getSystemUserLogin(tenantDelegator),
                             "orgEmployeePartyId", orgEmployeePartyId));
 
             if(!ServiceUtil.isSuccess(removeOrgEmpResp)) {

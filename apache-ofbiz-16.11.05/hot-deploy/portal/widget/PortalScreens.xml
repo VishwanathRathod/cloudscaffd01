@@ -173,7 +173,28 @@
             </widgets>
         </section>
     </screen>
-    
+
+    <screen name="users_list_section">
+        <section>
+            <actions>
+                <script location="component://portal/webapp/portal/WEB-INF/actions/users/GetUsers.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="EmptyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/users/users_list_section.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
 
     <screen name="productAPC">
         <section>

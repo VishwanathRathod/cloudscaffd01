@@ -136,8 +136,6 @@ public class UserMgmtEvents {
         return SUCCESS;
     }
 
-
-    // TODO: Create new method "updateUser"
     public static String updateUser(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
@@ -167,6 +165,31 @@ public class UserMgmtEvents {
 
         // return success messsage to front-end
         request.setAttribute("updateSuccess", "Y");
+        return SUCCESS;
+    }
+
+    public static String deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String partyId = request.getParameter("userPartyId");
+
+        // TODO: Check permission
+        try {
+            Map<String,Object> removeOrgEmpResp = dispatcher.runSync("removeOrgEmployee",
+                    UtilMisc.toMap("userLogin", userLogin,
+                            "orgEmployeePartyId", partyId));
+            if(!ServiceUtil.isSuccess(removeOrgEmpResp)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
         return SUCCESS;
     }
 
