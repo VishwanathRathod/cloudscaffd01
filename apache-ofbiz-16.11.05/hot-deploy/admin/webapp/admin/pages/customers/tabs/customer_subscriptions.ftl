@@ -25,7 +25,7 @@
            onclick="listSubscriptions()">Apply</a>
         <div>
             <a href="#"
-               data-target="#newSubscribeConfirmModal"
+               data-target="#newSubscriptionModal"
                class="btn btn-outline-primary" title="add" data-toggle="modal"
                data-org-party-id="${orgPartyId!}">
                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -106,7 +106,7 @@
     </table>
 </div>
 
-<div class="modal fade" id="newSubscribeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="newSubscribeModal"
+<div class="modal fade" id="newSubscriptionModal" tabindex="-1" role="dialog" aria-labelledby="newSubscribeModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

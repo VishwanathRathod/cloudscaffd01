@@ -125,9 +125,8 @@
 	</request-map>
 	<request-map uri="newSubscription">
 		<event type="java" path="com.autopatt.admin.events.SubscriptionEvents" invoke="newSubscription" />
-		<response type="request-redirect" name="success" value="filter_subscriptions">
-			<redirect-parameter name="orgPartyId"/>
-		</response>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
 	</request-map>
 	<request-map uri="edit_product">
 		<security https="true" auth="true"/>

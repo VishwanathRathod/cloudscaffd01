@@ -47,7 +47,7 @@ function initializeDeleteUserModal() {
         var modal = $(this)
         modal.find('#resetPasswordForPartyName').text(resetPasswordForPartyName)
     });
-    $('#newSubscribeConfirmModal').on('show.bs.modal', function (event) {
+    $('#newSubscriptionModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var orgPartyId = button.data('org-party-id');
 

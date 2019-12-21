@@ -60,9 +60,9 @@ function addNewSubscription() {
             type: "POST",
             data: postData,
             success: function (data, textStatus, jqXHR) {
-                //data: return data from server
                 console.log("request completed... redirecting to.. " + getUrl("customers"))
-                //window.location.replace(getUrl("customers") + "?createInitiated=Y");
+                listSubscriptions();
+                $('#newSubscriptionModal').modal('hide');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);

@@ -42,7 +42,7 @@ public class SubscriptionServices {
         String productId = (String) context.get("productId");
         String validFrom = (String) context.get("validFrom");
         String validTo = (String) context.get("validTo");
-        UtilDateTime.stringToTimeStamp()
+        //UtilDateTime.stringToTimeStamp();
         Timestamp fromDate=UtilDateTime.nowTimestamp();
 
         //load properties
@@ -98,14 +98,14 @@ public class SubscriptionServices {
             newSubscription.set("fromDate", fromDate);
 
             Map<String, Object> createSubscriptionMap = ctx.getModelService("createSubscription").makeValid(newSubscription, ModelService.IN_PARAM);
-            createSubscriptionMap.put("userLogin", EntityQuery.use(delegator).from("UserLogin").where("userLoginId", "system").queryOne());
+            createSubscriptionMap.put("userLogin", userLogin);
 
             Map<String, Object> createSubscriptionResult = dispatcher.runSync("createSubscription", createSubscriptionMap);
             if (ServiceUtil.isError(createSubscriptionResult)) {
                 return createSubscriptionResult;
             }
             sendResp.put("subscriptionId", createSubscriptionResult.get("subscriptionId"));
-        } catch (GenericEntityException | GenericServiceException e) {
+        } catch (GenericServiceException e) {
             Debug.logError(e, module);
             return ServiceUtil.returnFailure("Unable to create subscription model, error: " + e.getMessage());
         }
