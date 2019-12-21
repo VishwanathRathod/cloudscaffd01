@@ -6,7 +6,7 @@
             <select class="form-control form-control-sm" id="filterSubscriptionsByStatus" name="status">
                 <option value="ALL">All</option>
                 <option value="ACTIVE" <#if status?? && status=="ACTIVE">selected</#if>>Active</option>
-                <option value="EXPIRED" <#if status?? && status=="EXPIRED">selected</#if>>Expired</option>
+                <option value="INACTIVE" <#if status?? && status=="INACTIVE">selected</#if>>Expired</option>
             </select>
         </div>
 
