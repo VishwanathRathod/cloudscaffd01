@@ -48,11 +48,11 @@
                     <#if emp.userStatus?? && emp.userStatus == "ACTIVE">
                         <span class="status text-success" >&#8226;</span> <span>Active</span>
                     <#elseif emp.userStatus?? && emp.userStatus == "INACTIVE">
-                        <span class="status text-info">&bull;</span> In-Active
+                        <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span> In-Active </div>
                     <#elseif emp.userStatus?? && emp.userStatus == "LOCKED">
-                        <span class="status text-warning">&bull;</span> Locked
+                        <div title="User locked due to failed logins"><span class="status text-warning">&bull;</span> Locked </div>
                     <#else>
-                        <span class="status text-danger">&bull;</span> Suspended
+                        <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
                     </#if>
                 </td>
 

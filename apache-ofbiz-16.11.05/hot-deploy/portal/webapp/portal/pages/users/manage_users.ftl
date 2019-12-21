@@ -59,11 +59,11 @@
                         <#if user.userStatus?? && user.userStatus == "ACTIVE">
                             <span class="status text-success" >&#8226;</span> <span>Active</span>
                         <#elseif user.userStatus?? && user.userStatus == "INACTIVE">
-                            <span class="status text-info">&bull;</span> In-Active
+                            <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span> In-Active</div>
                         <#elseif user.userStatus?? && user.userStatus == "LOCKED">
-                            <span class="status text-warning">&bull;</span> Locked
+                            <div title="User locked due to failed logins"><span class="status text-warning">&bull;</span> Locked </div>
                         <#else>
-                            <span class="status text-danger">&bull;</span> Suspended
+                            <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
                         </#if>
                     </td>
                     <td>
@@ -74,62 +74,6 @@
                 </tr>
             </#list>
         </#if>
-        <#--<tr>
-            <td>1</td>
-            <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Michael Holz</a></td>
-            <td>04/10/2013</td>
-            <td>Admin</td>
-            <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
-            <td>
-                <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"
-                data-party-id="michael" data-party-name="Michael Holz"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Paula Wilson</a></td>
-            <td>05/08/2014</td>
-            <td>Publisher</td>
-            <td><span class="status text-success">&bull;</span> Active</td>
-            <td>
-                <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Antonio Moreno</a></td>
-            <td>11/05/2015</td>
-            <td>Publisher</td>
-            <td><span class="status text-danger">&bull;</span> Suspended</td>
-            <td>
-                <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Mary Saveley</a></td>
-            <td>06/09/2016</td>
-            <td>Reviewer</td>
-            <td><span class="status text-success">&bull;</span> Active</td>
-            <td>
-                <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td><a href="#"><i class="material-icons" style="font-size:1.6em;">account_circle</i> Martin Sommer</a></td>
-            <td>12/08/2017</td>
-            <td>Moderator</td>
-            <td><span class="status text-warning">&bull;</span> Inactive</td>
-            <td>
-                <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteConfirmModal"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>-->
         </tbody>
     </table>
 </div>

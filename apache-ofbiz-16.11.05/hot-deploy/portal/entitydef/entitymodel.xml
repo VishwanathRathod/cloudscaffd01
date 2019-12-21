@@ -9,10 +9,10 @@
     <copyright></copyright>
     <version></version>
 
-    <!--    Enriry to manage user login access token-->
+    <!--  Entity to manage user login info to ensure One-Device only login -->
     <entity entity-name="UserLoginSessionInfo" package-name="com.autopatt.portal" title="User Login Session Info">
-        <field name="userLoginId" type="id-vlong"></field>
-        <field name="sessionId" type="id-vlong"></field>
+        <field name="userLoginId" type="id-vlong"/>
+        <field name="sessionId" type="id-vlong"/>
         <prim-key field="userLoginId"/>
     </entity>
 
@@ -26,5 +26,14 @@
             <key-map field-name="tenantId"/>
         </relation>
     </entity>
+
+    <view-entity entity-name="PartyRelationshipCount"
+                 package-name="org.apache.ofbiz.party"
+                 title="View entity to get party relationship counts">
+        <member-entity entity-alias="PR" entity-name="PartyRelationship"/>
+        <alias entity-alias="PR" name="partyIdTo" function="count"/>
+        <alias entity-alias="PR" name="partyIdFrom" group-by="true"/>
+        <alias entity-alias="PR" name="partyRelationshipTypeId" group-by="true"/>
+    </view-entity>
 
 </entitymodel>

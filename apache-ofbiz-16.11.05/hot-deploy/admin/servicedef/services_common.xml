@@ -35,7 +35,7 @@ under the License.
              location="com.autopatt.common.services.TenantUserServices" invoke="getTenantUsersCount"
              auth="true" require-new-transaction="true" transaction-timeout="300">
         <attribute name="tenantId" type="String" mode="IN"/>
-        <attribute name="count" type="Integer" mode="OUT"/>
+        <attribute name="count" type="Long" mode="OUT"/>
     </service>
 
 

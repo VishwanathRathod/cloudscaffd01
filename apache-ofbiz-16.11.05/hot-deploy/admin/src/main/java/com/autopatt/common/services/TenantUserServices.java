@@ -1,6 +1,7 @@
 package com.autopatt.common.services;
 
 import com.autopatt.admin.constants.UserStatusConstants;
+import com.autopatt.admin.utils.TenantCommonUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -37,7 +38,7 @@ public class TenantUserServices {
         String tenantId = (String) context.get("tenantId");
         List<Map> users = new ArrayList<>();
 
-        Delegator tenantDelegator = DelegatorFactory.getDelegator("default#" + tenantId);
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegator(tenantId);
         if(UtilValidate.isEmpty(tenantDelegator)) {
             return ServiceUtil.returnError("Invalid tenant Id.");
         }
@@ -124,8 +125,30 @@ public class TenantUserServices {
     public static Map<String, Object> getTenantUsersCount(DispatchContext ctx, Map<String, ? extends Object> context) {
         Map<String, Object> resp = ServiceUtil.returnSuccess();
 
-        //TODO: use a view entity with agreegation (COUNT) to get counts from PartyRelationship
-        resp.put("count", 3);
+        String tenantId = (String) context.get("tenantId");
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegator(tenantId);
+        if(UtilValidate.isEmpty(tenantDelegator)) {
+            return ServiceUtil.returnError("Invalid tenant Id.");
+        }
+        // Get Organization Party Id
+        String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY",null, tenantDelegator);
+        if(UtilValidate.isEmpty(tenantOrganizationPartyId)) {
+            return ServiceUtil.returnError("Unable to find ORGANIZATION_PARTY for tenant " + tenantId);
+        }
+
+        Long userCount = 0L;
+        // Use a view entity with agreegation (COUNT) to get counts from PartyRelationship
+        try {
+            List<GenericValue> partyRelationshipCounts = tenantDelegator.findByAnd("PartyRelationshipCount",
+                    UtilMisc.toMap("partyIdFrom", tenantOrganizationPartyId, "partyRelationshipTypeId", "EMPLOYMENT"), null, false);
+            if(UtilValidate.isNotEmpty(partyRelationshipCounts)) {
+                GenericValue partyRelCount = partyRelationshipCounts.get(0);
+                userCount = partyRelCount.getLong("partyIdTo");
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+        }
+        resp.put("count", userCount);
         return resp;
     }
 }
