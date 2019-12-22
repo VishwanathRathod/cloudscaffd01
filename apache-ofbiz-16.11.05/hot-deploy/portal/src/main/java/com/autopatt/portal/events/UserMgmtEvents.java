@@ -1,11 +1,13 @@
 package com.autopatt.portal.events;
 
+import com.autopatt.admin.utils.UserLoginUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.security.Security;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
@@ -86,7 +88,7 @@ public class UserMgmtEvents {
                 return ERROR;
             }
 
-            // All Org Users should have EMPLOYEE role (so that we can fetch all org users)
+            // All Org Users should have EMPLOYEE role
             Map<String, Object> partyRole = UtilMisc.toMap(
                     "partyId", partyId,
                     "roleTypeId", "EMPLOYEE",
@@ -98,7 +100,22 @@ public class UserMgmtEvents {
                 request.setAttribute("_ERROR_MESSAGE_", "Unable to add new user. ");
                 return ERROR;
             }
-            // TODO: Add partyRelationship with ORG Party (once Tenant is ready)
+
+            // Add partyRelationship with ORG Party (once Tenant is ready)
+            String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY",null, delegator);
+            Map<String, Object> partyRelationship = UtilMisc.toMap(
+                    "partyIdFrom", tenantOrganizationPartyId,
+                    "partyIdTo", partyId,
+                    "roleTypeIdFrom", "ORGANIZATION_ROLE",
+                    "roleTypeIdTo", "EMPLOYEE",
+                    "partyRelationshipTypeId", "EMPLOYMENT",
+                    "userLogin", UserLoginUtils.getSystemUserLogin(delegator)
+            );
+            Map<String,Object> createPartyRelationResp = dispatcher.runSync("createPartyRelationship", partyRelationship);
+            if(!ServiceUtil.isSuccess(createPartyRelationResp)) {
+                Debug.logError("Error creating new Party Relationship between " + tenantOrganizationPartyId + " and "
+                        + partyId+" in tenant " + delegator.getDelegatorTenantId(), module);
+            }
 
             // Assign SecurityGroup to user
             GenericValue userLoginSecurityGroup = delegator.makeValue("UserLoginSecurityGroup",
@@ -119,8 +136,6 @@ public class UserMgmtEvents {
         return SUCCESS;
     }
 
-
-    // TODO: Create new method "updateUser"
     public static String updateUser(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
@@ -150,6 +165,31 @@ public class UserMgmtEvents {
 
         // return success messsage to front-end
         request.setAttribute("updateSuccess", "Y");
+        return SUCCESS;
+    }
+
+    public static String deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String partyId = request.getParameter("userPartyId");
+
+        // TODO: Check permission
+        try {
+            Map<String,Object> removeOrgEmpResp = dispatcher.runSync("removeOrgEmployee",
+                    UtilMisc.toMap("userLogin", userLogin,
+                            "orgEmployeePartyId", partyId));
+            if(!ServiceUtil.isSuccess(removeOrgEmpResp)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
         return SUCCESS;
     }
 

@@ -98,6 +98,29 @@ function activateOrgEmployee() {
         });
 }
 
+function deleteOrgEmployee() {
+    var employeePartyId = $("#deleteEmployee_partyId").val()
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
+    var formURL = $("#delete_org_employee_form").attr("action");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#deleteEmployeeConfirmModal').modal('hide');
+                showSuccessToast("User Deleted Successfully");
+                setTimeout(function () {
+                    loadOrgEmployees();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
+
 function addNewSubscription() {
     console.log("debug: ");
     var orgPartyId = $('input[name="orgPartyId"]').val();

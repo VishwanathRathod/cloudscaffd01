@@ -22,16 +22,18 @@ public class AutopattSubscriptionServices {
 
     /**
      * Checks user has valid subscription or not
+     * implements permissionInterface
      *
      * @param ctx     The DispatchContext that this service is operating in.
      * @param context Map containing the input parameters.
      * @return Map with the result of the service, the output parameters.
      */
-    public static Map<String, Object> hasValidSubscription(DispatchContext ctx, Map<String, ? extends Object> context) {
+    public static Map<String, Object> hasValidSubscriptionCheck(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         String tenantId = delegator.getDelegatorTenantId();
         GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
 
+        Map<String,Object> response = UtilMisc.toMap();
         if (UtilValidate.isEmpty(tenantId)) {
             return ServiceUtil.returnFailure("Tenant Id is missing");
         }
@@ -43,13 +45,15 @@ public class AutopattSubscriptionServices {
             List<GenericValue> subscriptions = mainDelegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
             List<GenericValue> activeSubscriptions = EntityUtil.filterByDate(subscriptions);
             if (UtilValidate.isNotEmpty(activeSubscriptions)) {
-                return ServiceUtil.returnSuccess();
+                response.put("hasPermission", true);
+            } else {
+                response.put("hasPermission", false);
             }
         } catch (GenericEntityException e) {
             Debug.logError(e, module);
             return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
         }
-        return ServiceUtil.returnFailure("You don't have valid subscription");
+        return response;
     }
 
     /**

@@ -41,6 +41,17 @@ function initializeOrgEmployeeModals() {
         $("#enableEmployee_partyId").val(activatePartyId)
     });
 
+    $('#deleteEmployeeConfirmModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var deletePartyId = button.data('party-id');
+        var deletePartyName = button.data('party-name');
+        if(deletePartyName == null) deletePartyName = "";
+
+        var modal = $(this)
+        modal.find('#deleteEmployeePartyName').text(deletePartyName);
+        $("#deleteEmployee_partyId").val(deletePartyId )
+    });
+
     $('#resetPasswordEmployeeConfirmModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var resetPasswordForPartyId = button.data('party-id');

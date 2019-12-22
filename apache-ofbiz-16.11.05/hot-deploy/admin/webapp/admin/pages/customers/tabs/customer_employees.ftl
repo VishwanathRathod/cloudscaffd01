@@ -32,32 +32,27 @@
     <tbody>
     <#if employees??>
         <#list employees as emp>
-            <#assign employeeName = ""/>
-            <#if emp.firstName??>
-                <#assign employeeName = emp.firstName />
-            </#if>
-            <#if emp.lastName??>
-                <#assign employeeName = employeeName + " " + emp.lastName/>
-            </#if>
             <tr>
                 <td>${emp_index + 1}</td>
                 <td class="user-name">
                     <!-- TODO: clicking on this - show a popup modal with user details (email, phone etc) -->
                     <i class="material-icons" style="font-size:1.6em;">account_circle</i>
                     <a href="#" data-toggle="modal" data-target="#editEmployeeModal"
-                       data-party-id="${emp.partyId}" data-party-name="${employeeName!}"
-                       data-org-party-id="${orgPartyId!}">${employeeName!}</a>
+                       data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
+                       data-org-party-id="${orgPartyId!}">${emp.partyName!}</a>
                     <div class="small text-muted">${emp.userLogin.userLoginId!}</div>
                 </td>
-                <td><#if emp.createdDate??>${emp.createdDate!?date}</#if></td>
+                <td><#if emp.userLogin.createdStamp??>${emp.userLogin.createdStamp!?date}</#if></td>
                 <td>${emp.roleName!}</td>
                 <td>
                     <#if emp.userStatus?? && emp.userStatus == "ACTIVE">
                         <span class="status text-success" >&#8226;</span> <span>Active</span>
                     <#elseif emp.userStatus?? && emp.userStatus == "INACTIVE">
-                        <span class="status text-warning">&bull;</span> Inactive
+                        <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span> In-Active </div>
+                    <#elseif emp.userStatus?? && emp.userStatus == "LOCKED">
+                        <div title="User locked due to failed logins"><span class="status text-warning">&bull;</span> Locked </div>
                     <#else>
-                        <span class="status text-danger">&bull;</span> Suspended
+                        <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
                     </#if>
                 </td>
 
@@ -66,29 +61,32 @@
                         <a href="#"
                            data-target="#suspendEmployeeConfirmModal"
                            class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </a>
                         <a href="#"
                            data-target="#resetPasswordEmployeeConfirmModal"
                            class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}"><i class="fa fa-key" aria-hidden="true"></i>
                         </a>
                     <#else>
                         <a href="#"
                            data-target="#activateEmployeeConfirmModal"
                            class="btn btn-outline-primary" title="Activate" data-toggle="modal"
-                           data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"
+                           data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
                            data-org-party-id="${orgPartyId!}">
                             <i class="fa fa-unlock" aria-hidden="true"></i>
                         </a>
                     </#if>
 
-                    <#--<a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal" data-target="#deleteEmployeeConfirmModal"
-                       data-party-id="${emp.partyId}" data-party-name="${emp.firstName!} ${emp.lastName!}"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>-->
+                    <a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal"
+                       data-target="#deleteEmployeeConfirmModal"
+                       data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
+                       data-org-party-id="${orgPartyId!}">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
                 </td>
             </tr>
         </#list>
@@ -103,6 +101,11 @@
 <form id="enable_org_employee_form" action="<@ofbizUrl>ajaxActivateOrgUser</@ofbizUrl>">
     <input type="hidden" id="enableEmployee_partyId">
 </form>
+
+<form id="delete_org_employee_form" action="<@ofbizUrl>ajaxDeleteOrgUser</@ofbizUrl>">
+    <input type="hidden" id="deleteEmployee_partyId">
+</form>
+
 
 <div class="modal fade" id="activateEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="activateEmployeeModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -165,6 +168,29 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary">Reset Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteEmployeeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Remove User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to remove account for <b><span id="deleteEmployeePartyName"></span></b>?
+                <br/> <br/>
+                <div class="alert alert-danger"><i>Note: This action is not reversible.</i></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteOrgEmployee();">Remove</button>
             </div>
         </div>
     </div>

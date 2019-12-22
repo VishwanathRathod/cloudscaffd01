@@ -28,6 +28,7 @@ under the License.
 
 
     <!-- Security Group Permissions for AP_FULLADMIN -->
+    <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_ADMIN"/>
     <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_ADD_USER"/>
     <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PARTYMGR_CREATE"/>
     <SecurityGroupPermission groupId="AP_FULLADMIN" permissionId="PORTAL_UPDATE_USER"/>

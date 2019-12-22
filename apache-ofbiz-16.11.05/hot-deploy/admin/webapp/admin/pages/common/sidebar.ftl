@@ -10,7 +10,7 @@
       <i class="material-icons">pages</i> Customers</a>
 
     <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_PRODUCTS'>active</#if>">
-    <i class="material-icons">account_tree</i> Manage Products</a>
+    <i class="material-icons">account_tree</i> Manage Plans</a>
 
     <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_USERS'>active</#if>">
       <i class="material-icons">people</i> Admin Users</a>

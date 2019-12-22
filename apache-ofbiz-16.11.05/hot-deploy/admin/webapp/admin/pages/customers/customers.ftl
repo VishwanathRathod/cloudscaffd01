@@ -28,27 +28,43 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Org Number</th>
+                <th>Organization Id</th>
                 <th>Organization Name</th>
-                <th>Date Created</th>
                 <th>Subscription</th>
+                <th>Created On</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <#if tenantOrgParties?? && tenantOrgParties?size &gt; 0 >
-                <#list tenantOrgParties as org>
+            <#if customers?? && customers?size &gt; 0 >
+                <#list customers as org>
                     <tr>
                         <td>${org_index + 1}</td>
                         <td>${org.tenantId!}</td>
                         <td><a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">business</i>
                                 ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(delegator, org.orgPartyId!, false)}
                             </a></td>
+
+                        <td>
+                            <#if org.hasActiveSubscription?? && org.hasActiveSubscription>
+                                <span class="status text-success" >&bull;</span>
+                                <span>Active
+                                    <span class="small text-muted">
+                                        (
+                                        <#list org.subscribedProductIds as prodId>
+                                            ${prodId!}
+                                            <#if prodId_has_next>, </#if>
+                                        </#list>
+                                        )</span>
+                                </span>
+                            <#else>
+                                <span class="status text-danger" >&bull;</span> <span>Not Available</span>
+                            </#if>
+                        </td>
                         <td>${org.createdStamp!?date}</td>
-                        <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
                         <td width="20%">
                             <a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>" class="btn btn-outline-primary" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                            <a href="#" class="btn btn-outline-danger" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>
+                            <#--<a href="#" class="btn btn-outline-danger" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>-->
                         </td>
                     </tr>
                 </#list>

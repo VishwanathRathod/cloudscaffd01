@@ -156,6 +156,12 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json"/>
 	</request-map>
+	<request-map uri="ajaxDeleteOrgUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.admin.events.EmployeeEvents" invoke="ajaxDeleteOrgUser" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"

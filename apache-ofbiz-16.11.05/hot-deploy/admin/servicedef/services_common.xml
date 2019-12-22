@@ -20,21 +20,23 @@ under the License.
 
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
-    <description>Admin Portal Component Services</description>
+    <description>Autopatt Common Services</description>
     <vendor>OFBiz</vendor>
     <version>1.0</version>
 
-    <service name="hasValidSubscriptionCheck" engine="java"
-             location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscriptionCheck"
+    <service name="getTenantUsers" engine="java"
+            location="com.autopatt.common.services.TenantUserServices" invoke="getTenantUsers"
              auth="true" require-new-transaction="true" transaction-timeout="300">
-        <description>Assigns subscription to tenant</description>
-        <implements service="permissionInterface"/>
+        <attribute name="tenantId" type="String" mode="IN"/>
+        <attribute name="users" type="List" mode="OUT"/>
     </service>
 
-    <service name="hasValidSubscriptionToAddUser" engine="java"
-             location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscriptionToAddUser"
+    <service name="getTenantUsersCount" engine="java"
+             location="com.autopatt.common.services.TenantUserServices" invoke="getTenantUsersCount"
              auth="true" require-new-transaction="true" transaction-timeout="300">
-        <description>Assigns subscription to tenant</description>
+        <attribute name="tenantId" type="String" mode="IN"/>
+        <attribute name="count" type="Long" mode="OUT"/>
     </service>
+
 
 </services>

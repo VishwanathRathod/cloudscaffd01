@@ -19,6 +19,7 @@
 
 package com.autopatt.admin.services;
 
+import com.autopatt.admin.constants.SecurityGroupConstants;
 import com.autopatt.admin.utils.UserLoginUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.SystemUtils;
@@ -26,6 +27,7 @@ import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.*;
 import org.apache.ofbiz.entity.transaction.TransactionUtil;
 import org.apache.ofbiz.entity.util.EntityQuery;
+import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.service.*;
 import org.codehaus.plexus.util.FastMap;
 
@@ -129,7 +131,7 @@ public class CustomerOnboardingServices {
         String tenantDbOrgPartyId = createOrgPartyInTenantDB(tenantId, organizationName);
         Debug.logInfo("Organization Party Id in Tenant DB is: " + tenantDbOrgPartyId, module);
 
-        // TODO: 4. create user login for given contact in TennatDB, and build relationship
+        // 4. create user login for given contact in TennatDB, and build relationship
         String adminUserLoginPartyId = createAdminUserLoginInTenantDb(tenantId, tenantDbOrgPartyId, contactFirstName, contactLastName, contactEmail, contactPassword );
 
         // TODO: 5. Send EMail notification if marked YES
@@ -138,7 +140,6 @@ public class CustomerOnboardingServices {
         result.put("tenantId", tenantId);
         return result;
     }
-
 
     /** Service to create Tenant and TenantDataSource entries
      *
@@ -246,12 +247,25 @@ public class CustomerOnboardingServices {
                 Debug.logError("Error creating new Party Role for " + contactEmail + " in tenant " + tenantId, module);
                 return adminUserLoginPartyId;
             }
-            // TODO: Add partyRelationship with ORG Party (once Tenant is ready)
+            // Add partyRelationship with ORG Party (orgPartyId)
+            Map<String, Object> partyRelationship = UtilMisc.toMap(
+                    "partyIdFrom", orgPartyId,
+                    "partyIdTo", adminUserLoginPartyId,
+                    "roleTypeIdFrom", "ORGANIZATION_ROLE",
+                    "roleTypeIdTo", "EMPLOYEE",
+                    "partyRelationshipTypeId", "EMPLOYMENT",
+                    "userLogin", UserLoginUtils.getSystemUserLogin(tenantDelegator)
+            );
+            Map<String,Object> createPartyRelationResp = tenantDispatcher.runSync("createPartyRelationship", partyRelationship);
+            if(!ServiceUtil.isSuccess(createPartyRelationResp)) {
+                Debug.logError("Error creating new Party Relationship between " + orgPartyId + " and " +adminUserLoginPartyId+" in tenant " + tenantId, module);
+                return adminUserLoginPartyId;
+            }
 
             // Assign SecurityGroup to user
             GenericValue userLoginSecurityGroup = tenantDelegator.makeValue("UserLoginSecurityGroup",
                     UtilMisc.toMap("userLoginId", contactEmail,
-                            "groupId", "AP_FULLADMIN", // TODO: get from constants file
+                            "groupId", SecurityGroupConstants.AP_FULLADMIN,
                             "fromDate", UtilDateTime.nowTimestamp()));
             try {
                 userLoginSecurityGroup.create();
@@ -315,6 +329,9 @@ public class CustomerOnboardingServices {
                     + tenantId + " and org party id: "  + tenantOrgPartyId, module);
             e.printStackTrace();
         }
+
+        // Set in SystemProperty for easy lookup
+        EntityUtilProperties.setPropertyValue(tenantDelegator, "general", "ORGANIZATION_PARTY", tenantOrgPartyId);
         return tenantOrgPartyId;
     }
 

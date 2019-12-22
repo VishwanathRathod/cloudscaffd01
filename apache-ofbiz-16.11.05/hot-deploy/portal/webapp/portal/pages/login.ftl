@@ -27,7 +27,7 @@
       <div class="login-main">
          <div class="col-md-6 col-sm-12">
          <div>
-         
+
             <div class="login-form">
                 <div>
                     <#list errorMessageList as error>
@@ -36,13 +36,14 @@
                         </div>
                     </#list>
                 </div>
-
+                <h4>Enter Login Details</h4>
+                <div><hr/></div>
 
                 <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
 
                     <div class="form-group">
-                     <label>Account Number</label>
-                     <input type="text" class="form-control" placeholder="xyz-corp" name="userTenantId">
+                     <label>Organization Id</label>
+                     <input type="text" class="form-control" placeholder="xyzcorp" name="userTenantId">
                   </div>
 
                     <div class="form-group">
