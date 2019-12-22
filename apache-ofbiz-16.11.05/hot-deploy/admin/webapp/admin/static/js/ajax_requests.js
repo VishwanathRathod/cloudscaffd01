@@ -129,7 +129,7 @@ function addNewSubscription() {
     var validTo = $('input[name="validTo"]').val();
     console.log("debug end: ");
     var postData = {"orgPartyId": orgPartyId, productId: productId, "validFrom": validFrom, "validTo": validTo};
-    var formURL = getUrl("newSubscription");
+    var formURL = getUrl("createSubscription");
     $.ajax(
         {
             url: formURL,

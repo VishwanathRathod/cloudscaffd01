@@ -23,12 +23,12 @@
         </div>
         <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
            onclick="listSubscriptions()">Apply</a>
-        <div>
+        <div class="form-group mx-sm-3 mb-2">
             <a href="#"
                data-target="#createSubscriptionModal"
                class="btn btn-outline-primary" title="add" data-toggle="modal"
                data-org-party-id="${orgPartyId!}">
-                <i class="fa fa-plus" aria-hidden="true"></i>
+                <i class="material-icons">&#xE147;</i> <span>New Subscription</span>
             </a>
         </div>
     </form>
@@ -130,7 +130,8 @@
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
                         <label for="newSubscriptionValidFrom" class="p-2">Valid From</label>
-                        <input class="form-control form-control-sm" type="date" id="validFrom" name="validFrom" required>
+                        <input class="form-control form-control-sm" type="date" id="validFrom" name="validFrom"
+                               required>
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
                         <label for="newSubscriptionValidTo" class="p-2">Valid From</label>
@@ -139,7 +140,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="newSubscriptionSubmit" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" id="newSubscriptionSubmit" class="btn btn-secondary" data-dismiss="modal">Cancel
+                </button>
                 <button class="btn btn-primary" onclick="addNewSubscription()">Add</button>
             </div>
         </div>

@@ -52,15 +52,20 @@ public class SubscriptionServices {
                 validFrom = UtilDateTime.nowTimestamp();
             } else {
                 validFrom = UtilDateTime.stringToTimeStamp(validFromStr, "yyyy-MM-dd", tz, locale);
-                validFrom = UtilDateTime.getDayStart(validFrom);
             }
+            validFrom = UtilDateTime.getDayStart(validFrom);
             if (UtilValidate.isNotEmpty(validToStr)) {
                 validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
                 validTo = UtilDateTime.getDayEnd(validTo);
             }
+            //check from date is greater than to date
+            if (null != validTo && validFrom.after(validTo)) {
+                Debug.logError("ValidFrom date is smaller than ValidTo date", module);
+                return ServiceUtil.returnFailure("ValidFrom date is smaller than ValidTo date");
+            }
         } catch (ParseException e) {
             Debug.logError(e, module);
-            Debug.logError("Failed to parse from or to date", module);
+            Debug.logError("Failed to parse From or To date", module);
         }
         Timestamp fromDate = UtilDateTime.nowTimestamp();
 

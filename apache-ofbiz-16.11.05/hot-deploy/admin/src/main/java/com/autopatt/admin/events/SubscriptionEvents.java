@@ -41,7 +41,7 @@ public class SubscriptionEvents {
 
             if (!ServiceUtil.isSuccess(resp)) {
                 Debug.logError("Error assigning product " + productId + " subscription to org party " + orgPartyId, module);
-                request.setAttribute("_ERROR_MESSAGE_", "Error subscribing tenant. ");
+                request.setAttribute("_ERROR_MESSAGE_", resp.get("errorMessage"));
                 return ERROR;
             }
         } catch (GenericServiceException e) {
