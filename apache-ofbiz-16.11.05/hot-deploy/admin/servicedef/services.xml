@@ -74,6 +74,12 @@ under the License.
         <attribute name="subscriptions" type="List" mode="OUT" optional="false"/>
     </service>
 
-
+    <service name="updateSubscriptionThruDate" engine="java"
+             location="com.autopatt.admin.services.SubscriptionServices" invoke="updateSubscriptionThruDate"
+             auth="true" require-new-transaction="true" transaction-timeout="300">
+        <description>updates subscription thru date</description>
+        <attribute name="subscriptionId" type="String" mode="IN" optional="false"/>
+        <attribute name="validTo" type="String" mode="IN" optional="false"/>
+    </service>
 
 </services>

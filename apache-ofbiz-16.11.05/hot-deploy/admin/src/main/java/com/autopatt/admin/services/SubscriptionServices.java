@@ -6,6 +6,7 @@ import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
+import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.order.shoppingcart.CartItemModifyException;
 import org.apache.ofbiz.order.shoppingcart.ShoppingCart;
 import org.apache.ofbiz.order.shoppingcart.ShoppingCartItem;
@@ -51,13 +52,15 @@ public class SubscriptionServices {
                 validFrom = UtilDateTime.nowTimestamp();
             } else {
                 validFrom = UtilDateTime.stringToTimeStamp(validFromStr, "yyyy-MM-dd", tz, locale);
+                validFrom = UtilDateTime.getDayStart(validFrom);
             }
             if (UtilValidate.isNotEmpty(validToStr)) {
                 validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
+                validTo = UtilDateTime.getDayEnd(validTo);
             }
-
         } catch (ParseException e) {
-            e.printStackTrace();
+            Debug.logError(e, module);
+            Debug.logError("Failed to parse from or to date", module);
         }
         Timestamp fromDate = UtilDateTime.nowTimestamp();
 
@@ -111,7 +114,7 @@ public class SubscriptionServices {
             newSubscription.set("partyId", orgPartyId);
             newSubscription.set("productId", productId);
             newSubscription.set("orderId", orderId);
-            newSubscription.set("fromDate", validFrom);
+            newSubscription.set("fromDate", null != validFrom ? validFrom : UtilDateTime.nowTimestamp());
             if (null != validTo) {
                 newSubscription.set("thruDate", validTo);
             }
@@ -173,4 +176,47 @@ public class SubscriptionServices {
             return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
         }
     }
+
+    public static Map<String, Object> updateSubscriptionThruDate(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Map<String, Object> sendResp = null;
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        Delegator delegator = ctx.getDelegator();
+        Locale locale = (Locale) context.get("locale");
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+        String subscriptionId = (String) context.get("subscriptionId");
+        String validToStr = (String) context.get("validTo");
+        Timestamp validTo = null;
+        try {
+            TimeZone tz = TimeZone.getDefault();
+            if (UtilValidate.isNotEmpty(validToStr)) {
+                validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
+                validTo = UtilDateTime.getDayEnd(validTo);
+            }
+        } catch (ParseException e) {
+            Debug.logError(e, module);
+            Debug.logError("Failed to parse ValidTo date", module);
+        }
+        try {
+            GenericValue subscription = delegator.findOne("Subscription", false, "subscriptionId", subscriptionId);
+            if (UtilValidate.isEmpty(subscription)) {
+                return ServiceUtil.returnFailure("Subscription not found");
+            }
+            subscription.set("thruDate", validTo);
+            Map<String, Object> updateSubscriptionMap = ctx.getModelService("updateSubscription").makeValid(subscription, ModelService.IN_PARAM);
+            updateSubscriptionMap.put("userLogin", userLogin);
+
+            Map<String, Object> updateSubscriptionResult = dispatcher.runSync("updateSubscription", updateSubscriptionMap);
+            if (ServiceUtil.isError(updateSubscriptionResult)) {
+                return updateSubscriptionResult;
+            }
+            sendResp = ServiceUtil.returnSuccess();
+        } catch (GenericEntityException | GenericServiceException e) {
+            Debug.logError(e, module);
+            return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
+        }
+        return sendResp;
+    }
+
+
 }

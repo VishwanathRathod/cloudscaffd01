@@ -113,7 +113,7 @@ function addNewSubscription() {
             type: "POST",
             data: postData,
             success: function (data, textStatus, jqXHR) {
-                $('#newSubscriptionModal').modal('hide');
+                $('#createSubscriptionModal').modal('hide');
                 showSuccessToast("Subscription added successfully");
                 setTimeout(function () {
                     listSubscriptions();

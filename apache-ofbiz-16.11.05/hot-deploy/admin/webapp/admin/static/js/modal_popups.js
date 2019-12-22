@@ -50,7 +50,7 @@ function initializeOrgEmployeeModals() {
         var modal = $(this)
         modal.find('#resetPasswordForPartyName').text(resetPasswordForPartyName)
     });
-    $('#newSubscriptionModal').on('show.bs.modal', function (event) {
+    $('#createSubscriptionModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var orgPartyId = button.data('org-party-id');
 
