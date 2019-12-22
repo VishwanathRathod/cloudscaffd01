@@ -46,7 +46,7 @@ function listSubscriptions() {
 
 function loadOrgEmployees() {
     var orgPartyId = $('#orgPartyId').val();
-    $("#customer_employees").load(getUrl("org_employees?orgPartyId=" + orgPartyId ), function() {
+    $("#customer_employees").load(getUrl("org_employees?orgPartyId=" + orgPartyId), function () {
         initializeOrgEmployeeModals();
     });
 }
@@ -54,7 +54,7 @@ function loadOrgEmployees() {
 function suspendOrgEmployee() {
     var employeePartyId = $("#suspendEmployee_partyId").val()
     var orgPartyId = $('input[name="orgPartyId"]').val();
-    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId };
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
     var formURL = $("#suspend_org_employee_form").attr("action");
     $.ajax(
         {
@@ -64,7 +64,7 @@ function suspendOrgEmployee() {
             success: function (data, textStatus, jqXHR) {
                 $('#suspendEmployeeConfirmModal').modal('hide');
                 showSuccessToast("User Suspended Successfully");
-                setTimeout(function() {
+                setTimeout(function () {
                     loadOrgEmployees();
                 }, 500);
             },
@@ -78,7 +78,7 @@ function suspendOrgEmployee() {
 function activateOrgEmployee() {
     var employeePartyId = $("#enableEmployee_partyId").val()
     var orgPartyId = $('input[name="orgPartyId"]').val();
-    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId };
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
     var formURL = $("#enable_org_employee_form").attr("action");
     $.ajax(
         {
@@ -88,7 +88,7 @@ function activateOrgEmployee() {
             success: function (data, textStatus, jqXHR) {
                 $('#activateEmployeeConfirmModal').modal('hide');
                 showSuccessToast("User Activated Successfully");
-                setTimeout(function() {
+                setTimeout(function () {
                     loadOrgEmployees();
                 }, 500);
             },
@@ -101,7 +101,7 @@ function activateOrgEmployee() {
 function deleteOrgEmployee() {
     var employeePartyId = $("#deleteEmployee_partyId").val()
     var orgPartyId = $('input[name="orgPartyId"]').val();
-    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId };
+    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
     var formURL = $("#delete_org_employee_form").attr("action");
     $.ajax(
         {
@@ -111,8 +111,35 @@ function deleteOrgEmployee() {
             success: function (data, textStatus, jqXHR) {
                 $('#deleteEmployeeConfirmModal').modal('hide');
                 showSuccessToast("User Deleted Successfully");
-                setTimeout(function() {
+                setTimeout(function () {
                     loadOrgEmployees();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
+
+function addNewSubscription() {
+    console.log("debug: ");
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var productId = $('select[id="productId"]').val();
+    var validFrom = $('input[name="validFrom"]').val();
+    var validTo = $('input[name="validTo"]').val();
+    console.log("debug end: ");
+    var postData = {"orgPartyId": orgPartyId, productId: productId, "validFrom": validFrom, "validTo": validTo};
+    var formURL = getUrl("createSubscription");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#createSubscriptionModal').modal('hide');
+                showSuccessToast("Subscription added successfully");
+                setTimeout(function () {
+                    listSubscriptions();
                 }, 500);
             },
             error: function (jqXHR, textStatus, errorThrown) {

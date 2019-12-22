@@ -127,6 +127,11 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="customer_subscription"/>
 	</request-map>
+	<request-map uri="createSubscription">
+		<event type="java" path="com.autopatt.admin.events.SubscriptionEvents" invoke="createSubscription" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
 	<request-map uri="edit_product">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="edit_product"/>

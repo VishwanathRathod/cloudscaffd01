@@ -6,6 +6,7 @@ import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
+import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.order.shoppingcart.CartItemModifyException;
 import org.apache.ofbiz.order.shoppingcart.ShoppingCart;
 import org.apache.ofbiz.order.shoppingcart.ShoppingCartItem;
@@ -13,6 +14,7 @@ import org.apache.ofbiz.service.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -38,16 +40,17 @@ public class SubscriptionServices {
         Locale locale = (Locale) context.get("locale");
         GenericValue userLogin = (GenericValue) context.get("userLogin");
 
-        String tenantId = (String) context.get("tenantId");
+        String orgPartyId = (String) context.get("orgPartyId");
         String productId = (String) context.get("productId");
+        Timestamp validFrom = (Timestamp) context.get("validFrom");
+        Timestamp validTo = (Timestamp) context.get("validTo");
 
         //load properties
         String productStoreId = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.product.store", "AUTOPATT_STORE");
         String currency = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.currency", "USD");
 
-        Debug.logInfo("Initiating process to assign product " + productId + " subscription to tenant " + tenantId, module);
+        Debug.logInfo("Initiating process to assign product " + productId + " subscription to org party " + orgPartyId, module);
         String orderId;
-        String orgPartyId = TenantCommonUtils.getOrgPartyId(delegator, tenantId);
         try {
             ShoppingCart cart = new ShoppingCart(delegator, productStoreId, null, locale, currency);
             try {
@@ -92,17 +95,20 @@ public class SubscriptionServices {
             newSubscription.set("partyId", orgPartyId);
             newSubscription.set("productId", productId);
             newSubscription.set("orderId", orderId);
-            newSubscription.set("fromDate", UtilDateTime.nowTimestamp());
+            newSubscription.set("fromDate", validFrom);
+            if (null != validTo) {
+                newSubscription.set("thruDate", validTo);
+            }
 
             Map<String, Object> createSubscriptionMap = ctx.getModelService("createSubscription").makeValid(newSubscription, ModelService.IN_PARAM);
-            createSubscriptionMap.put("userLogin", EntityQuery.use(delegator).from("UserLogin").where("userLoginId", "system").queryOne());
+            createSubscriptionMap.put("userLogin", userLogin);
 
             Map<String, Object> createSubscriptionResult = dispatcher.runSync("createSubscription", createSubscriptionMap);
             if (ServiceUtil.isError(createSubscriptionResult)) {
                 return createSubscriptionResult;
             }
             sendResp.put("subscriptionId", createSubscriptionResult.get("subscriptionId"));
-        } catch (GenericEntityException | GenericServiceException e) {
+        } catch (GenericServiceException e) {
             Debug.logError(e, module);
             return ServiceUtil.returnFailure("Unable to create subscription model, error: " + e.getMessage());
         }
@@ -151,4 +157,37 @@ public class SubscriptionServices {
             return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
         }
     }
+
+    public static Map<String, Object> updateSubscriptionThruDate(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Map<String, Object> sendResp = null;
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        Delegator delegator = ctx.getDelegator();
+        Locale locale = (Locale) context.get("locale");
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+        String subscriptionId = (String) context.get("subscriptionId");
+        Timestamp validTo = (Timestamp) context.get("validTo");
+
+        try {
+            GenericValue subscription = delegator.findOne("Subscription", false, "subscriptionId", subscriptionId);
+            if (UtilValidate.isEmpty(subscription)) {
+                return ServiceUtil.returnFailure("Subscription not found");
+            }
+            subscription.set("thruDate", validTo);
+            Map<String, Object> updateSubscriptionMap = ctx.getModelService("updateSubscription").makeValid(subscription, ModelService.IN_PARAM);
+            updateSubscriptionMap.put("userLogin", userLogin);
+
+            Map<String, Object> updateSubscriptionResult = dispatcher.runSync("updateSubscription", updateSubscriptionMap);
+            if (ServiceUtil.isError(updateSubscriptionResult)) {
+                return updateSubscriptionResult;
+            }
+            sendResp = ServiceUtil.returnSuccess();
+        } catch (GenericEntityException | GenericServiceException e) {
+            Debug.logError(e, module);
+            return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
+        }
+        return sendResp;
+    }
+
+
 }
