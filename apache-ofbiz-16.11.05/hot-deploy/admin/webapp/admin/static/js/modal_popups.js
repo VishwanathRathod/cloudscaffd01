@@ -68,4 +68,13 @@ function initializeOrgEmployeeModals() {
         var modal = $(this)
         modal.find('#orgPartyId').text(orgPartyId)
     });
+    $('#revokeSubscriptionModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var orgPartyId = button.data('org-party-id');
+        var subscriptionId = button.data('subscription-id');
+
+        var modal = $(this)
+        modal.find('#orgPartyId').text(orgPartyId);
+        modal.find('#subscriptionId').val(subscriptionId);
+    });
 }
