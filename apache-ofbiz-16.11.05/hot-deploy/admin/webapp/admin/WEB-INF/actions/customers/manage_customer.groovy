@@ -1,6 +1,9 @@
+import com.autopatt.admin.utils.TenantCommonUtils
+import com.autopatt.admin.utils.UserLoginUtils
 import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.party.party.PartyHelper
+import org.apache.ofbiz.service.ServiceUtil
 
 String orgPartyId = parameters.orgPartyId
 
@@ -17,3 +20,18 @@ if(UtilValidate.isNotEmpty(tenantOrgParties)) {
     context.tenantId = tenantOrg.tenantId
 }
 
+def tenantDispatcher = TenantCommonUtils.getTenantDispatcherByOrgPartyId(orgPartyId)
+def hasValidSubCheckResp = tenantDispatcher.runSync("hasValidSubscriptionCheck",
+        UtilMisc.toMap("userLogin", UserLoginUtils.getSystemUserLogin(tenantDispatcher.getDelegator())))
+
+context.put("hasActiveSubscription", hasValidSubCheckResp.get("hasPermission"))
+
+def getSubscriptionsResp = dispatcher.runSync("getSubscriptions",
+        UtilMisc.toMap("orgPartyId", orgPartyId, "status", "ACTIVE", "userLogin", userLogin))
+
+List subscriptions = []
+if(ServiceUtil.isSuccess(getSubscriptionsResp)) {
+    subscriptions = getSubscriptionsResp.get("subscriptions")
+
+}
+context.put("subscriptions", subscriptions)

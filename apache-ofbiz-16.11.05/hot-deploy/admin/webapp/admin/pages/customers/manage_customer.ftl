@@ -15,7 +15,26 @@
     </div>
 
     <div class="table-content">
-        <h6><span class="badge badge-success">Subscription Active</span> - <b>Advanced Planner P2</b>, <small class="text-muted">valid till 10 June, 2020</small></h6>
+        <h6>
+            <#if hasActiveSubscription?? && hasActiveSubscription>
+                <span class="badge badge-success">Subscription Active</span><br/>
+                <#list subscriptions as subscription>
+                    <#assign subscribedProduct= (delegator.findOne("Product", {"productId" : subscription.productId}, false))/>
+                    <#if subscribedProduct??>
+                        <b>${subscribedProduct.productName!} (${subscription.productId!}) </b>
+                        <#if subscription.thruDate??>
+                            - <small class="text-muted">valid till ${subscription.thruDate!}</small>
+                        <#else>
+                            - <small class="text-muted">valid forever</small>
+                        </#if>
+                        <br/>
+                    </#if>
+                </#list>
+            <#else>
+                <span class="badge badge-danger">No Subscription Found</span>
+            </#if>
+
+        </h6>
     </div>
 
     <div class="table-content">
