@@ -20,6 +20,9 @@
 			</actions>
             <widgets>
 				<section>
+					<condition>
+						<if-service-permission service-name="hasValidSubscriptionCheck" />
+					</condition>
 					<widgets>
 						<container>
 							<!-- HTML Headers  -->
@@ -40,6 +43,18 @@
 							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/footer.ftl"/></html></platform-specific>
 						</container>
 					</widgets>
+					<fail-widgets>
+						<decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+							<decorator-section name="body">
+								<platform-specific>
+									<html>
+										<html-template
+												location="component://portal/webapp/portal/error/no_subscription_page.ftl" />
+									</html>
+								</platform-specific>
+							</decorator-section>
+						</decorator-screen>
+					</fail-widgets>
 				</section>
 			</widgets>
         </section>
@@ -67,8 +82,6 @@
 						<container>
 							<!-- HTML Headers  -->
 							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/headerHead.ftl"/></html></platform-specific>
-
-	
 							
 							<!-- body -->
 							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/layouts/GeneralLayout.ftl"/></html>

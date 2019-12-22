@@ -24,10 +24,11 @@ under the License.
     <vendor>OFBiz</vendor>
     <version>1.0</version>
 
-    <service name="hasValidSubscription" engine="java"
-             location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscription"
+    <service name="hasValidSubscriptionCheck" engine="java"
+             location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscriptionCheck"
              auth="true" require-new-transaction="true" transaction-timeout="300">
         <description>Assigns subscription to tenant</description>
+        <implements service="permissionInterface"/>
     </service>
 
     <service name="hasValidSubscriptionToAddUser" engine="java"

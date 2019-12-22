@@ -48,7 +48,7 @@
                         <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
                         <td width="20%">
                             <a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>" class="btn btn-outline-primary" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                            <a href="#" class="btn btn-outline-danger" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>
+                            <#--<a href="#" class="btn btn-outline-danger" title="Disable" data-toggle="tooltip"><i class="material-icons">remove_circle</i></a>-->
                         </td>
                     </tr>
                 </#list>
