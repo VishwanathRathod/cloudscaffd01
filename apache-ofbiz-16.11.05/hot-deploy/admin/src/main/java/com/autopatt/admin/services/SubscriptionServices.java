@@ -42,32 +42,8 @@ public class SubscriptionServices {
 
         String orgPartyId = (String) context.get("orgPartyId");
         String productId = (String) context.get("productId");
-        String validFromStr = (String) context.get("validFrom");
-        String validToStr = (String) context.get("validTo");
-        Timestamp validFrom = null;
-        Timestamp validTo = null;
-        try {
-            TimeZone tz = TimeZone.getDefault();
-            if (UtilValidate.isEmpty(validFromStr)) {
-                validFrom = UtilDateTime.nowTimestamp();
-            } else {
-                validFrom = UtilDateTime.stringToTimeStamp(validFromStr, "yyyy-MM-dd", tz, locale);
-            }
-            validFrom = UtilDateTime.getDayStart(validFrom);
-            if (UtilValidate.isNotEmpty(validToStr)) {
-                validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
-                validTo = UtilDateTime.getDayEnd(validTo);
-            }
-            //check from date is greater than to date
-            if (null != validTo && validFrom.after(validTo)) {
-                Debug.logError("ValidFrom date is greater than ValidTo date", module);
-                return ServiceUtil.returnFailure("ValidFrom date is greater than ValidTo date");
-            }
-        } catch (ParseException e) {
-            Debug.logError(e, module);
-            Debug.logError("Failed to parse From or To date", module);
-        }
-        Timestamp fromDate = UtilDateTime.nowTimestamp();
+        Timestamp validFrom = (Timestamp) context.get("validFrom");
+        Timestamp validTo = (Timestamp) context.get("validTo");
 
         //load properties
         String productStoreId = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.product.store", "AUTOPATT_STORE");
@@ -119,7 +95,7 @@ public class SubscriptionServices {
             newSubscription.set("partyId", orgPartyId);
             newSubscription.set("productId", productId);
             newSubscription.set("orderId", orderId);
-            newSubscription.set("fromDate", null != validFrom ? validFrom : UtilDateTime.nowTimestamp());
+            newSubscription.set("fromDate", validFrom);
             if (null != validTo) {
                 newSubscription.set("thruDate", validTo);
             }
@@ -190,18 +166,8 @@ public class SubscriptionServices {
         GenericValue userLogin = (GenericValue) context.get("userLogin");
 
         String subscriptionId = (String) context.get("subscriptionId");
-        String validToStr = (String) context.get("validTo");
-        Timestamp validTo = null;
-        try {
-            TimeZone tz = TimeZone.getDefault();
-            if (UtilValidate.isNotEmpty(validToStr)) {
-                validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, locale);
-                validTo = UtilDateTime.getDayEnd(validTo);
-            }
-        } catch (ParseException e) {
-            Debug.logError(e, module);
-            Debug.logError("Failed to parse ValidTo date", module);
-        }
+        Timestamp validTo = (Timestamp) context.get("validTo");
+
         try {
             GenericValue subscription = delegator.findOne("Subscription", false, "subscriptionId", subscriptionId);
             if (UtilValidate.isEmpty(subscription)) {

@@ -58,8 +58,8 @@ under the License.
         <description>Assigns subscription to tenant</description>
         <attribute name="orgPartyId" type="String" mode="IN" optional="false"/>
         <attribute name="productId" type="String" mode="IN" optional="false"/>
-        <attribute name="validFrom" type="String" mode="IN" optional="true"/>
-        <attribute name="validTo" type="String" mode="IN" optional="true"/>
+        <attribute name="validFrom" type="Timestamp" mode="IN" optional="false"/>
+        <attribute name="validTo" type="Timestamp" mode="IN" optional="true"/>
         <attribute name="subscriptionId" type="String" mode="OUT" optional="false"/>
         <attribute name="orderId" type="String" mode="OUT" optional="false"/>
     </service>
@@ -86,7 +86,7 @@ under the License.
              auth="true" require-new-transaction="true" transaction-timeout="300">
         <description>updates subscription thru date</description>
         <attribute name="subscriptionId" type="String" mode="IN" optional="false"/>
-        <attribute name="validTo" type="String" mode="IN" optional="false"/>
+        <attribute name="validTo" type="Timestamp" mode="IN" optional="true"/>
     </service>
 
 </services>
