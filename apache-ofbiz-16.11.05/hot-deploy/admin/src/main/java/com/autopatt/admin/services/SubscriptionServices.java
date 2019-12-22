@@ -60,8 +60,8 @@ public class SubscriptionServices {
             }
             //check from date is greater than to date
             if (null != validTo && validFrom.after(validTo)) {
-                Debug.logError("ValidFrom date is smaller than ValidTo date", module);
-                return ServiceUtil.returnFailure("ValidFrom date is smaller than ValidTo date");
+                Debug.logError("ValidFrom date is greater than ValidTo date", module);
+                return ServiceUtil.returnFailure("ValidFrom date is greater than ValidTo date");
             }
         } catch (ParseException e) {
             Debug.logError(e, module);
