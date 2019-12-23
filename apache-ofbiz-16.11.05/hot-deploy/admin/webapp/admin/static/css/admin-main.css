@@ -190,3 +190,37 @@ table.table .avatar {
 .is-pointer {
   cursor:pointer;
 }
+
+/* Icon Colors */
+
+.icon-green {
+  color:green;
+}
+.icon-darkgreen {
+  color:darkgreen;
+}
+.icon-orange {
+  color:darkorange;
+}
+.icon-indianred {
+  color:indianred;
+}
+.icon-darkmagenta {
+  color: darkmagenta;
+}
+.icon-chocolate {
+  color: chocolate;
+}
+.icon-midnightblue {
+  color:midnightblue;
+}
+.icon-darkgray {
+  color: dimgray;
+}
+.icon-yellowgreen {
+  color:yellowgreen;
+}
+
+.icon-color-active {
+  color:white;
+}

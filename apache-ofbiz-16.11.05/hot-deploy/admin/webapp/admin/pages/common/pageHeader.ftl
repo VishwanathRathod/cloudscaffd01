@@ -21,15 +21,15 @@ menu
         <#if userLogin??>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">account_circle</i>
+                <i class="material-icons icon-yellowgreen">account_circle</i>
                 ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(loggedInParty)}
                 <span class="sr-only">(current)</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="<@ofbizUrl>myaccount</@ofbizUrl>"><i class="material-icons">account_circle</i> My Account</a>
-            <a class="dropdown-item" href="<@ofbizUrl>changePassword</@ofbizUrl>"><i class="material-icons">security</i> Change Password</a>
+            <a class="dropdown-item" href="<@ofbizUrl>myaccount</@ofbizUrl>"><i class="material-icons icon-midnightblue">account_circle</i> My Account</a>
+            <a class="dropdown-item" href="<@ofbizUrl>changePassword</@ofbizUrl>"><i class="material-icons icon-midnightblue">security</i> Change Password</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<@ofbizUrl>logout</@ofbizUrl>"><i class="material-icons">exit_to_app</i> Logout</a>
+            <a class="dropdown-item " href="<@ofbizUrl>logout</@ofbizUrl>"><i class="material-icons icon-darkgray">exit_to_app</i> Logout</a>
             </div>
         </li>
         <#else>
