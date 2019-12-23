@@ -97,7 +97,7 @@ public class SubscriptionEvents {
         Debug.log("Received request to revoke subscription " + subscriptionId, module);
         Map<String, Object> resp = null;
 
-        if("REVOKE_LATER".equals(revokeEffective) && UtilValidate.isEmpty(validToStr)){
+        if ("REVOKE_LATER".equals(revokeEffective) && UtilValidate.isEmpty(validToStr)) {
             Debug.logError("ValidTo date is required if revoking later", module);
             request.setAttribute("_ERROR_MESSAGE_", "ValidTo date is required if revoking later");
             return ERROR;
@@ -106,10 +106,14 @@ public class SubscriptionEvents {
         Timestamp validTo = null;
         try {
             TimeZone tz = TimeZone.getDefault();
-            if("REVOKE_LATER".equals(revokeEffective)) {
+            if ("REVOKE_LATER".equals(revokeEffective)) {
                 validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, null);
                 validTo = UtilDateTime.getDayEnd(validTo);
-            }else{
+                if (UtilDateTime.nowTimestamp().after(validTo)) {
+                    request.setAttribute("_ERROR_MESSAGE_", "ValidTo date must be greater than current time");
+                    return ERROR;
+                }
+            } else {
                 validTo = UtilDateTime.nowTimestamp();
             }
         } catch (ParseException e) {
@@ -125,12 +129,65 @@ public class SubscriptionEvents {
 
             if (!ServiceUtil.isSuccess(resp)) {
                 Debug.logError("Error while revoking subscription " + subscriptionId, module);
-                request.setAttribute("_ERROR_MESSAGE_", "Error while revoking subscribing tenant. ");
+                request.setAttribute("_ERROR_MESSAGE_", resp.get("errorMessage"));
                 return ERROR;
             }
         } catch (GenericServiceException e) {
             Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Error subscribing org party. ");
+            request.setAttribute("_ERROR_MESSAGE_", "Error while revoking subscription tenant.");
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    public static String renewSubscription(HttpServletRequest request, HttpServletResponse response) {
+
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String subscriptionId = request.getParameter("subscriptionId");
+        String validToStr = request.getParameter("validTo");
+        String renewEffective = request.getParameter("renewEffective");
+
+        Debug.log("Received request to renew subscription " + subscriptionId, module);
+        Map<String, Object> resp = null;
+
+        if ("RENEW_TILL".equals(renewEffective) && UtilValidate.isEmpty(validToStr)) {
+            Debug.logError("ValidTo date is required if not renewing forever", module);
+            request.setAttribute("_ERROR_MESSAGE_", "ValidTo date is required if not renewing forever");
+            return ERROR;
+        }
+
+        Timestamp validTo = null;
+        try {
+            TimeZone tz = TimeZone.getDefault();
+            if ("RENEW_TILL".equals(renewEffective)) {
+                validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, null);
+                validTo = UtilDateTime.getDayEnd(validTo);
+                if (UtilDateTime.nowTimestamp().after(validTo)) {
+                    request.setAttribute("_ERROR_MESSAGE_", "ValidTo date must be greater than current time");
+                    return ERROR;
+                }
+            }
+        } catch (ParseException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to parse ValidTo date");
+            return ERROR;
+        }
+
+        try {
+            resp = dispatcher.runSync("updateSubscriptionThruDate",
+                    UtilMisc.<String, Object>toMap("subscriptionId", subscriptionId, "validTo", validTo,
+                            "userLogin", userLogin));
+
+            if (!ServiceUtil.isSuccess(resp)) {
+                Debug.logError("Error while revoking subscription " + subscriptionId, module);
+                request.setAttribute("_ERROR_MESSAGE_", resp.get("errorMessage"));
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Error while renewing subscription tenant.");
             return ERROR;
         }
         return SUCCESS;

@@ -139,13 +139,20 @@ public class SubscriptionServices {
                     subscriptionMap.put("fromDate", fromDate);
                     subscriptionMap.put("thruDate", thruDate);
                     subscriptionMap.put("createdDate", subscription.getTimestamp("createdStamp"));
-                    if ((thruDate == null || thruDate.after(moment)) && (fromDate == null || fromDate.before(moment) || fromDate.equals(moment))) {
-                        subscriptionMap.put("status", "ACTIVE");
-                    } else {
+                    if (fromDate != null && fromDate.after(moment)) {
+                        subscriptionMap.put("status", "FUTURE");
+                    } else if (thruDate != null && thruDate.before(moment)) {
                         subscriptionMap.put("status", "INACTIVE");
+                    } else {
+                        subscriptionMap.put("status", "ACTIVE");
                     }
                     subscriptionMap.put("orgPartyId", orgPartyId);
-                    if ("ALL".equals(status) || status.equals(subscriptionMap.get("status"))) {
+                    //filter status
+                    if ("ALL".equals(status)) {
+                        subscriptionsList.add(subscriptionMap);
+                    } else if ("INACTIVE".equals(status) && "INACTIVE".equals(subscriptionMap.get("status"))) {
+                        subscriptionsList.add(subscriptionMap);
+                    } else if ("ACTIVE".equals(status) && ("ACTIVE".equals(subscriptionMap.get("status")) || "FUTURE".equals(subscriptionMap.get("status")))) {
                         subscriptionsList.add(subscriptionMap);
                     }
                 }
