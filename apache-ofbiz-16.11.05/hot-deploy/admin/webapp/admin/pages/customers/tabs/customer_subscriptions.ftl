@@ -171,14 +171,14 @@
                 <br/>
                 <form class="form">               
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" id="radio_revoke_immediately" class="form-check-input" value="REVOKE_NOW" 
+                        <input type="radio" name="revokeNow" id="radio_revoke_immediately" class="form-check-input is-pointer" value="REVOKE_NOW" 
                         onclick="$('#revokeValidToDiv').addClass('d-none')"checked>
-                        <label class="form-check-label" for="radio_revoke_immediately">Revoke Immediately</label>
+                        <label class="form-check-label is-pointer" for="radio_revoke_immediately">Revoke Immediately</label>
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" id="radio_revoke_later" class="form-check-input" value="REVOKE_LATER"  
+                        <input type="radio" name="revokeNow" id="radio_revoke_later" class="form-check-input is-pointer" value="REVOKE_LATER"  
                         onclick="$('#revokeValidToDiv').removeClass('d-none')">
-                        <label class="form-check-label" for="radio_revoke_later">Revoke Later</label>
+                        <label class="form-check-label is-pointer" for="radio_revoke_later">Revoke Later</label>
                     </div>
                     <input type="hidden" name="subscriptionId" id="subscriptionId" value=""/>
                     <div id="revokeValidToDiv" class="form-group mx-sm-3 mb-2 d-none">

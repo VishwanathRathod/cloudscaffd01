@@ -187,3 +187,6 @@ table.table .avatar {
   color:red;
 }
 
+.is-pointer {
+  cursor:pointer;
+}
