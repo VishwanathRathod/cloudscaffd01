@@ -15,11 +15,10 @@
             </div>
         </#list>
     </div>
-    <div>&nbsp;</div>
     <div class="table-title">
         <div class="row">
             <div class="col-sm-4">
-                <h2>Edit Product</h2>
+                <h4>Edit Product</h4>
             </div>
             <div class="col-sm-8">
                 <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">keyboard_backspace</i> <span>Back</span></a>

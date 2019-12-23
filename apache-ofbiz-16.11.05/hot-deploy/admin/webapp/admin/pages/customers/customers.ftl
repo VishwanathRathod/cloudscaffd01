@@ -5,7 +5,7 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-5">
-                <h2>Customers</h2>
+                <h4>Customers</h4>
             </div>
             <div class="col-sm-7">
                 <a href="<@ofbizUrl>new_customer</@ofbizUrl>" class="btn btn-primary" title="Onboard New Customer"><i class="material-icons">&#xE147;</i> <span>New Customer</span></a>
@@ -41,10 +41,10 @@
                     <tr>
                         <td>${org_index + 1}</td>
                         <td>${org.tenantId!}</td>
-                        <td><a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">business</i>
+                        <td><a href="<@ofbizUrl>manage_customer?orgPartyId=${org.orgPartyId!}</@ofbizUrl>">
                                 ${Static["org.apache.ofbiz.party.party.PartyHelper"].getPartyName(delegator, org.orgPartyId!, false)}
-                            </a></td>
-
+                            </a>
+                        </td>
                         <td>
                             <#if org.hasActiveSubscription?? && org.hasActiveSubscription>
                                 <span class="status text-success" >&bull;</span>

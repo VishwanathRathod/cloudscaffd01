@@ -10,10 +10,9 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Products</h2>
+                <h4>Products</h4>
             </div>
-            <div class="col-sm-6">
-                </div>
+            <div class="col-sm-6"></div>
         </div>
     </div>
 
