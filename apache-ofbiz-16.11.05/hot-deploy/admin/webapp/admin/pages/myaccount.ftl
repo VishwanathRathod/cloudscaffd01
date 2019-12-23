@@ -1,10 +1,9 @@
 
 <div class="container-fluid">
-    <div>&nbsp;</div>
     <div class="table-title">
         <div class="row">
             <div class="col-sm-4">
-                <h2>My Account </h2>
+                <h4>My Account </h4>
             </div>
             <div class="col-sm-8">
             </div>

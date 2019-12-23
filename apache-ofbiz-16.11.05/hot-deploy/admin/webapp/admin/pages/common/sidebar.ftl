@@ -7,7 +7,7 @@
       <i class="material-icons icon-indianred <#if currentViewId == 'HOME'>icon-color-active</#if>">dashboard</i> Admin Home</a>
 
     <a href="<@ofbizUrl>customers</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'CUSTOMERS'>active</#if>">
-      <i class="material-icons icon-darkmagenta <#if currentViewId == 'CUSTOMERS'>icon-color-active</#if>">pages</i> Customers</a>
+      <i class="material-icons icon-darkmagenta <#if currentViewId == 'CUSTOMERS'>icon-color-active</#if>">business</i> Customers</a>
 
     <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_PRODUCTS'>active</#if>">
     <i class="material-icons icon-darkgreen <#if currentViewId == 'MANAGE_PRODUCTS'>icon-color-active</#if>">account_tree</i> Manage Plans</a>

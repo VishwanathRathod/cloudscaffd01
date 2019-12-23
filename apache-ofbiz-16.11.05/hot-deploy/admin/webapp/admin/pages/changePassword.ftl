@@ -8,11 +8,10 @@
     <#assign errorMessageList = requestAttributes._ERROR_MESSAGE_LIST_!>
 </#if>
 <div class="container-fluid">
-    <div>&nbsp;</div>
     <div class="table-title">
         <div class="row">
             <div class="col-sm-5">
-                <h2>Change Password</h2>
+                <h4>Change Password</h4>
             </div>
             <div class="col-sm-7">
             </div>
