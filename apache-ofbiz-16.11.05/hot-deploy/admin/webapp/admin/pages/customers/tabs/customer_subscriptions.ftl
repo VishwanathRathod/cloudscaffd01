@@ -81,17 +81,16 @@
                     <td width="20%">
                         <#if subscription.status?? && subscription.status == "ACTIVE">
                             <a href="#"
-                               data-target="#newSubscribeConfirmModal"
-                               class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                               data-org-party-id="${orgPartyId!}">
+                               data-target="#revokeSubscriptionModal"
+                               class="btn btn-outline-danger" title="Revoke" data-toggle="modal"
+                               data-org-party-id="${orgPartyId!}" data-subscription-id="${subscription.id!}">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </a>
                         <#else>
                             <a href="#"
-                               data-target="#activateEmployeeConfirmModal"
-                               class="btn btn-outline-primary" title="Enable" data-toggle="modal"
-                               data-party-id="${orgPartyId}" data-party-name="${subscription.productId!}"
-                               data-org-party-id="${orgPartyId!}">
+                               data-target="#renewSubscriptionModal"
+                               class="btn btn-outline-primary" title="Renew" data-toggle="modal"
+                               data-org-party-id="${orgPartyId!}" data-subscription-id="${subscription.id!}">
                                 <i class="fa fa-unlock" aria-hidden="true"></i>
                             </a>
                         </#if>
@@ -106,7 +105,8 @@
     </table>
 </div>
 
-<div class="modal fade" id="createSubscriptionModal" tabindex="-1" role="dialog" aria-labelledby="newSubscribeModal"
+<div class="modal fade" id="createSubscriptionModal" tabindex="-1" role="dialog"
+     aria-labelledby="createSubscriptionModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -134,7 +134,7 @@
                                required>
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <label for="newSubscriptionValidTo" class="p-2">Valid From</label>
+                        <label for="newSubscriptionValidTo" class="p-2">Valid To</label>
                         <input class="form-control form-control-sm" type="date" id="validTo" name="validTo" required>
                     </div>
                 </form>
@@ -143,6 +143,44 @@
                 <button type="button" id="newSubscriptionSubmit" class="btn btn-secondary" data-dismiss="modal">Cancel
                 </button>
                 <button class="btn btn-primary" onclick="addNewSubscription()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="revokeSubscriptionModal" tabindex="-1" role="dialog"
+     aria-labelledby="revokeSubscriptionModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModalLabel">Revoke Subscription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <label class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="revokeNow" value="revokeNow" onclick=$("#revokeValidToDiv").hide() >
+                        Revoke Now
+                    </label>
+                    <label class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="revokeNow" value="revokeLater"  onclick=$("#revokeValidToDiv").show() checked>
+                        Revoke Later
+                    </label>
+                    <input type="hidden" name="subscriptionId" id="subscriptionId" value="${subscriptionId}"/>
+                    <div id="revokeValidToDiv" class="form-group mx-sm-3 mb-2 ">
+                        <label for="newSubscriptionValidTo" class="p-2">Valid To</label>
+                        <input class="form-control form-control-sm" type="date" id="revokeValidTo" name="revokeValidTo">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="revokeSubscriptionCancelButton" class="btn btn-secondary"
+                        data-dismiss="modal">Cancel
+                </button>
+                <button class="btn btn-warning" onclick="revokeSubscription()">Revoke</button>
             </div>
         </div>
     </div>

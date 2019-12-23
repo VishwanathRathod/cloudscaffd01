@@ -122,12 +122,10 @@ function deleteOrgEmployee() {
 }
 
 function addNewSubscription() {
-    console.log("debug: ");
     var orgPartyId = $('input[name="orgPartyId"]').val();
     var productId = $('select[id="productId"]').val();
     var validFrom = $('input[name="validFrom"]').val();
     var validTo = $('input[name="validTo"]').val();
-    console.log("debug end: ");
     var postData = {"orgPartyId": orgPartyId, productId: productId, "validFrom": validFrom, "validTo": validTo};
     var formURL = getUrl("createSubscription");
     $.ajax(
@@ -147,3 +145,30 @@ function addNewSubscription() {
             }
         });
 }
+
+function revokeSubscription() {
+    console.log("revoke subscription ");
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var subscriptionId = $('input[id="subscriptionId"]').val();
+    var immediate = $('input[name="revokeNow"]').val();
+    var validTo = $('input[name="revokeValidTo"]').val();
+    var postData = {"orgPartyId": orgPartyId, "subscriptionId":subscriptionId, immediate: immediate, "validTo": validTo};
+    var formURL = getUrl("revokeSubscription");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#revokeSubscriptionModal').modal('hide');
+                showSuccessToast("Subscription revoked successfully");
+                setTimeout(function () {
+                    listSubscriptions();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
+

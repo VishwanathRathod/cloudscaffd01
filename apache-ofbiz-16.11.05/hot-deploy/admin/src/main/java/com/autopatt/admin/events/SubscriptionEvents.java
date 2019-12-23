@@ -92,21 +92,32 @@ public class SubscriptionEvents {
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
         String subscriptionId = request.getParameter("subscriptionId");
         String validToStr = request.getParameter("validTo");
+        String immediate = request.getParameter("immediate");
 
         Debug.log("Received request to revoke subscription " + subscriptionId, module);
         Map<String, Object> resp = null;
 
+        if("revokeLater".equals(immediate) && UtilValidate.isEmpty(validToStr)){
+            Debug.logError("ValidTo date is mandatory if revoking later", module);
+            request.setAttribute("_ERROR_MESSAGE_", "ValidTo date is mandatory if revoking later");
+            return ERROR;
+        }
+
         Timestamp validTo = null;
         try {
             TimeZone tz = TimeZone.getDefault();
-            if (UtilValidate.isNotEmpty(validToStr)) {
+            if("revokeLater".equals(immediate)) {
                 validTo = UtilDateTime.stringToTimeStamp(validToStr, "yyyy-MM-dd", tz, null);
                 validTo = UtilDateTime.getDayEnd(validTo);
+            }else{
+                validTo = UtilDateTime.nowTimestamp();
             }
         } catch (ParseException e) {
             Debug.logError(e, module);
-            Debug.logError("Failed to parse ValidTo date", module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to parse ValidTo date");
+            return ERROR;
         }
+
         try {
             resp = dispatcher.runSync("updateSubscriptionThruDate",
                     UtilMisc.<String, Object>toMap("subscriptionId", subscriptionId, "validTo", validTo,
