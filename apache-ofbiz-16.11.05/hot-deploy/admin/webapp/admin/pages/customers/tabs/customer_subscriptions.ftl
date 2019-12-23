@@ -1,38 +1,45 @@
-<div>
-    <form class="form-inline">
-        <input type="hidden" id="orgPartyId" name="orgPartyId" value="${orgPartyId}"/>
-        <div class="form-group mx-sm-3 mb-2 ">
-            <label for="filterSubscriptionsByStatus" class="p-2">Status</label>
-            <select class="form-control form-control-sm" id="filterSubscriptionsByStatus" name="status">
-                <option value="ALL">All</option>
-                <option value="ACTIVE" <#if status?? && status=="ACTIVE">selected</#if>>Active</option>
-                <option value="INACTIVE" <#if status?? && status=="INACTIVE">selected</#if>>Expired</option>
-            </select>
-        </div>
 
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="filterSubscriptionsByProduct" class="p-2">Plan</label>
-            <select class="form-control form-control-sm" id="filterSubscriptionsByProduct" name="productId">
-                <option value="ALL">All</option>
-                <option value="Demo" <#if productId?? && productId=="Demo">selected</#if>>Demo</option>
-                <option value="P1" <#if productId?? && productId=="P1">selected</#if>>Basic Planner - P1</option>
-                <option value="P2" <#if productId?? && productId=="P2">selected</#if>>Advanced Planner - P2</option>
-                <option value="EP1" <#if productId?? && productId=="EP1">selected</#if>>Enterprise Planner - EP1
-                </option>
-            </select>
-        </div>
-        <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
-           onclick="listSubscriptions()">Apply</a>
-        <div class="form-group mx-sm-3 mb-2">
-            <a href="#"
-               data-target="#createSubscriptionModal"
-               class="btn btn-outline-primary" title="add" data-toggle="modal"
-               data-org-party-id="${orgPartyId!}">
-                <i class="material-icons">&#xE147;</i> <span>New Subscription</span>
-            </a>
-        </div>
-    </form>
+    
+<div class="row ">
+    <div class="col-md-6">
+        <form class="form-inline">
+            <input type="hidden" id="orgPartyId" name="orgPartyId" value="${orgPartyId}"/>
+            <div class="form-group mx-sm-3 mb-2 ">
+                <label for="filterSubscriptionsByStatus" class="p-2">Status</label>
+                <select class="form-control form-control-sm" id="filterSubscriptionsByStatus" name="status">
+                    <option value="ALL">All</option>
+                    <option value="ACTIVE" <#if status?? && status=="ACTIVE">selected</#if>>Active</option>
+                    <option value="INACTIVE" <#if status?? && status=="INACTIVE">selected</#if>>Expired</option>
+                </select>
+            </div>
+
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="filterSubscriptionsByProduct" class="p-2">Plan</label>
+                <select class="form-control form-control-sm" id="filterSubscriptionsByProduct" name="productId">
+                    <option value="ALL">All</option>
+                    <option value="Demo" <#if productId?? && productId=="Demo">selected</#if>>Demo</option>
+                    <option value="P1" <#if productId?? && productId=="P1">selected</#if>>Basic Planner - P1</option>
+                    <option value="P2" <#if productId?? && productId=="P2">selected</#if>>Advanced Planner - P2</option>
+                    <option value="EP1" <#if productId?? && productId=="EP1">selected</#if>>Enterprise Planner - EP1
+                    </option>
+                </select>
+            </div>
+            <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+            onclick="listSubscriptions()">Apply</a>
+        </form>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group float-right justify-content-end">
+                <a href="javascript:void(0);"
+                data-target="#createSubscriptionModal"
+                class="btn btn-outline-primary btn-sm" title="Add a new subscription" data-toggle="modal"
+                data-org-party-id="${orgPartyId!}">
+                    <i class="material-icons">&#xE147;</i> <span>New Subscription</span>
+                </a>
+            </div>
+    </div>
 </div>
+
 
 <div>
     <table class="table table-striped table-hover">
