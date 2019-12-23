@@ -11,7 +11,7 @@
         </div>
 
         <div class="form-group mx-sm-3 mb-2">
-            <label for="filterSubscriptionsByProduct" class="p-2">Product</label>
+            <label for="filterSubscriptionsByProduct" class="p-2">Plan</label>
             <select class="form-control form-control-sm" id="filterSubscriptionsByProduct" name="productId">
                 <option value="ALL">All</option>
                 <option value="Demo" <#if productId?? && productId=="Demo">selected</#if>>Demo</option>
@@ -42,7 +42,7 @@
         <thead class="thead-dark">
         <tr>
             <th>#</th>
-            <th>Product</th>
+            <th>Plan</th>
             <th>Date Created</th>
             <th>Valid From</th>
             <th>Valid Till</th>
@@ -160,18 +160,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-inline">
-                    <label class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" value="revokeNow" onclick=$("#revokeValidToDiv").hide() >
-                        Revoke Now
-                    </label>
-                    <label class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" value="revokeLater"  onclick=$("#revokeValidToDiv").show() checked>
-                        Revoke Later
-                    </label>
-                    <input type="hidden" name="subscriptionId" id="subscriptionId" value="${subscriptionId}"/>
-                    <div id="revokeValidToDiv" class="form-group mx-sm-3 mb-2 ">
-                        <label for="newSubscriptionValidTo" class="p-2">Valid To</label>
+                <div>Choose when the subscription revocation should be effective:</div>
+                <br/>
+                <form class="form">               
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="revokeNow" id="radio_revoke_immediately" class="form-check-input" value="REVOKE_NOW" 
+                        onclick="$('#revokeValidToDiv').addClass('d-none')"checked>
+                        <label class="form-check-label" for="radio_revoke_immediately">Revoke Immediately</label>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="revokeNow" id="radio_revoke_later" class="form-check-input" value="REVOKE_LATER"  
+                        onclick="$('#revokeValidToDiv').removeClass('d-none')">
+                        <label class="form-check-label" for="radio_revoke_later">Revoke Later</label>
+                    </div>
+                    <input type="hidden" name="subscriptionId" id="subscriptionId" value=""/>
+                    <div id="revokeValidToDiv" class="form-group mx-sm-3 mb-2 d-none">
+                        <label for="newSubscriptionValidTo" class="p-2">Choose Date:</label>
                         <input class="form-control form-control-sm" type="date" id="revokeValidTo" name="revokeValidTo">
                     </div>
                 </form>
@@ -180,7 +184,7 @@
                 <button type="button" id="revokeSubscriptionCancelButton" class="btn btn-secondary"
                         data-dismiss="modal">Cancel
                 </button>
-                <button class="btn btn-warning" onclick="revokeSubscription()">Revoke</button>
+                <button class="btn btn-warning" onclick="revokeSubscription()">Apply</button>
             </div>
         </div>
     </div>

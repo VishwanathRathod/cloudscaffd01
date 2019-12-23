@@ -39,8 +39,10 @@ function listSubscriptions() {
     var orgPartyId = $('input[name="orgPartyId"]').val();
     var status = $('select[id="filterSubscriptionsByStatus"]').val();
     var productId = $('select[id="filterSubscriptionsByProduct"]').val();
-    console.log("orgPartyId: " + orgPartyId + "&status=" + status + "&productId=" + productId);
-    $("#customer_subscriptions").load(getUrl("filter_subscriptions?orgPartyId=" + orgPartyId + "&status=" + status + "&productId=" + productId))
+    $("#customer_subscriptions").load(getUrl("filter_subscriptions?orgPartyId=" + orgPartyId + "&status=" + status + "&productId=" + productId),
+    function() {
+        initializeOrgSubscriptionModals();
+    });
 }
 
 
@@ -147,12 +149,11 @@ function addNewSubscription() {
 }
 
 function revokeSubscription() {
-    console.log("revoke subscription ");
     var orgPartyId = $('input[name="orgPartyId"]').val();
     var subscriptionId = $('input[id="subscriptionId"]').val();
-    var immediate = $('input[name="revokeNow"]').val();
+    var revokeEffective = $('input[name="revokeNow"]:checked').val();
     var validTo = $('input[name="revokeValidTo"]').val();
-    var postData = {"orgPartyId": orgPartyId, "subscriptionId":subscriptionId, immediate: immediate, "validTo": validTo};
+    var postData = {"orgPartyId": orgPartyId, "subscriptionId":subscriptionId, "revokeEffective": revokeEffective, "validTo": validTo};
     var formURL = getUrl("revokeSubscription");
     $.ajax(
         {
@@ -169,6 +170,6 @@ function revokeSubscription() {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
             }
-        });
+        }); 
 }
 

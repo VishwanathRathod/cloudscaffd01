@@ -189,6 +189,27 @@
             </widgets>
         </section>
     </screen>
+    <screen name="system_settings">
+        <section>
+            <actions>
+                <set field="title" value="System"/>
+                <set field="currentPage" value="system"/>
+                <set field="currentViewId" value="SYSTEM_SETTINGS"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/system/settings.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
     <screen name="edit_product">
         <section>

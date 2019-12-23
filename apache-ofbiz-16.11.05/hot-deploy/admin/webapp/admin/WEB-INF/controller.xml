@@ -168,6 +168,11 @@
 		<response name="error" type="request" value="json"/>
 	</request-map>
 
+	<request-map uri="system_settings">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="system_settings"/>
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
@@ -202,4 +207,7 @@
 
 	<view-map name="edit_product" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_product" />
+
+	<view-map name="system_settings" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#system_settings" />
 </site-conf>

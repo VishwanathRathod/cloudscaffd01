@@ -23,7 +23,7 @@
                     <#if subscribedProduct??>
                         <b>${subscribedProduct.productName!} (${subscription.productId!}) </b>
                         <#if subscription.thruDate??>
-                            - <small class="text-muted">valid till ${subscription.thruDate!}</small>
+                            - <small class="text-muted">valid till ${subscription.thruDate?date} ${subscription.thruDate?time}</small>
                         <#else>
                             - <small class="text-muted">valid forever</small>
                         </#if>
@@ -31,9 +31,8 @@
                     </#if>
                 </#list>
             <#else>
-                <span class="badge badge-danger">No Subscription Found</span>
+                <span class="badge badge-danger">No Active Subscription Found</span>
             </#if>
-
         </h6>
     </div>
 

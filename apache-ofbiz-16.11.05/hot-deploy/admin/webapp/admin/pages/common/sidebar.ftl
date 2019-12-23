@@ -18,7 +18,7 @@
     <a href="<@ofbizUrl>reports</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'REPORTS'>active</#if>">
       <i class="material-icons">assessment</i> Reports</a>
 
-    <a href="<@ofbizUrl>reports</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'SYSTEM_SETTINGS'>active</#if>">
+    <a href="<@ofbizUrl>system_settings</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'SYSTEM_SETTINGS'>active</#if>">
       <i class="fa fa-cogs sidebar-icons" aria-hidden="true"></i> System</a>
 
   </div>
