@@ -4,7 +4,13 @@
 <entity-engine-xml>
 
 
+    <!-- Custom Role types for AutoPatt -->
+    <!-- Role assigned to customers subscribing to AutoPatt -->
     <RoleType description="Autopatt Customer" hasTable="N" parentTypeId="" roleTypeId="AP_CUSTOMER"/>
+    
+    <!-- Role assigned to administrators those who access Admin Portal -->
+    <RoleType description="Autopatt Admin" hasTable="N" parentTypeId="" roleTypeId="AUTOPATT_ADMIN"/>
+
 
 </entity-engine-xml>
 
