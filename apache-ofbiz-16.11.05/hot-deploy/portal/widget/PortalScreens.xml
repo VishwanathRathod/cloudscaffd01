@@ -144,6 +144,8 @@
                 <!-- <script location="component://portal/webapp/portal/WEB-INF/actions/myaccount.groovy"/> -->
             </actions>
             <widgets>
+
+
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
                         <section>
@@ -151,12 +153,26 @@
                                 <if-has-permission permission="PORTAL" action="_ADD_USER"/>
                             </condition>
                             <widgets>
-                                <platform-specific>
-                                    <html>
-                                        <html-template
-                                                location="component://portal/webapp/portal/pages/users/new_user.ftl" />
-                                    </html>
-                                </platform-specific>
+                                <section>
+                                    <condition>
+                                        <if-service-permission service-name="hasValidSubscriptionToAddUser"/>
+                                    </condition>
+                                    <widgets>
+                                        <platform-specific>
+                                            <html>
+                                                <html-template
+                                                        location="component://portal/webapp/portal/pages/users/new_user.ftl" />
+                                            </html>
+                                        </platform-specific>
+                                    </widgets>
+                                    <fail-widgets>
+                                        <platform-specific>
+                                            <html>
+                                                <html-template location="component://portal/webapp/portal/error/max_user_exceeded.ftl" />
+                                            </html>
+                                        </platform-specific>
+                                    </fail-widgets>
+                                </section>
                             </widgets>
                             <fail-widgets>
                                 <platform-specific>
@@ -167,7 +183,6 @@
                                 </platform-specific>
                             </fail-widgets>
                         </section>
-
                     </decorator-section>
                 </decorator-screen>
             </widgets>

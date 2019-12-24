@@ -1,12 +1,15 @@
 package com.autopatt.portal.services;
 
 import com.autopatt.admin.utils.TenantCommonUtils;
+import com.autopatt.admin.utils.UserLoginUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.*;
 import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.service.DispatchContext;
+import org.apache.ofbiz.service.GenericServiceException;
+import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import java.util.List;
@@ -66,6 +69,7 @@ public class AutopattSubscriptionServices {
     public static Map<String, Object> hasValidSubscriptionToAddUser(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         String tenantId = delegator.getDelegatorTenantId();
+        LocalDispatcher dispatcher = ctx.getDispatcher();
         GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
 
         if (UtilValidate.isEmpty(tenantId)) {
@@ -75,6 +79,8 @@ public class AutopattSubscriptionServices {
         if (UtilValidate.isEmpty(orgPartyId)) {
             return ServiceUtil.returnFailure("Org party Id is missing");
         }
+        Map<String,Object> response = UtilMisc.toMap();
+        response.put("hasPermission", false);
 
         try {
             List<GenericValue> subscriptions = mainDelegator.findByAnd("Subscription", UtilMisc.toMap("partyId", orgPartyId), null, false);
@@ -83,18 +89,20 @@ public class AutopattSubscriptionServices {
                 String productId = subscription.getString("productId");
                 GenericValue productAttribute = delegator.findOne("ProductAttribute", UtilMisc.toMap("productId", productId, "attrName", MAX_USER_LOGINS), false);
                 int maxUserLogins = Integer.parseInt(productAttribute.getString("attrValue"));
-                Debug.logInfo("max user logins " + maxUserLogins, module);
-                List<GenericValue> partyRoles = delegator.findByAnd("PartyRole", UtilMisc.toMap("roleTypeId", "EMPLOYEE"), null, false);
-                if (partyRoles != null && partyRoles.size() < maxUserLogins) {
-                    return ServiceUtil.returnSuccess();
+                Map<String,Object> tenantUsersCountResp = dispatcher.runSync("getTenantUsersCount", UtilMisc.toMap("userLogin", UserLoginUtils.getSystemUserLogin(mainDelegator), "tenantId", tenantId));
+                if(!ServiceUtil.isSuccess(tenantUsersCountResp)) {
+                    return ServiceUtil.returnFailure("Unable to fetch users count for tenant : " + tenantId);
                 }
-                return ServiceUtil.returnFailure("Exceeded max user limit");
+                Long tenantUsersCount = (Long) tenantUsersCountResp.get("count");
+                if (tenantUsersCount < maxUserLogins) {
+                    response.put("hasPermission", true);
+                }
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException | GenericServiceException e) {
             Debug.logError(e, module);
             return ServiceUtil.returnFailure("Failed to fetch subscription, error: " + e.getMessage());
         }
-        return ServiceUtil.returnFailure("You don't have valid subscription");
+        return response;
     }
 
 }

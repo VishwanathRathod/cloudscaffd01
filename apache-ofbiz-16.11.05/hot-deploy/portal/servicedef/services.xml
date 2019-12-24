@@ -34,7 +34,8 @@ under the License.
     <service name="hasValidSubscriptionToAddUser" engine="java"
              location="com.autopatt.portal.services.AutopattSubscriptionServices" invoke="hasValidSubscriptionToAddUser"
              auth="true" require-new-transaction="true" transaction-timeout="300">
-        <description>Assigns subscription to tenant</description>
+        <description>Check if allowed to add new user for current tenant</description>
+        <implements service="permissionInterface"/>
     </service>
 
 </services>

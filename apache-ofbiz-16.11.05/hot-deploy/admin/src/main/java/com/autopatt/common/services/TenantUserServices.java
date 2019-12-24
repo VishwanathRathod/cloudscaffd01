@@ -2,6 +2,7 @@ package com.autopatt.common.services;
 
 import com.autopatt.admin.constants.UserStatusConstants;
 import com.autopatt.admin.utils.TenantCommonUtils;
+import com.autopatt.common.utils.SecurityGroupUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -90,15 +91,10 @@ public class TenantUserServices {
                             }
                         }
 
-                        List<GenericValue> userSecurityGroups = tenantDelegator.findByAnd("UserLoginSecurityGroup",
-                                UtilMisc.toMap("userLoginId", userLoginEntry.getString("userLoginId")), null, false);
-                        if(UtilValidate.isNotEmpty(userSecurityGroups)) {
-                            GenericValue userSecurityGroup = userSecurityGroups.get(0);
-                            GenericValue securityGroup = userSecurityGroup.getRelatedOne("SecurityGroup", false);
-                            if(UtilValidate.isNotEmpty(securityGroup)) {
-                                String userRoleName = securityGroup.getString("description");
-                                userEntry.put("roleName", userRoleName);
-                            }
+                        GenericValue userSecurityGroup = SecurityGroupUtils.getUserActiveSecurityGroup(tenantDelegator, userLoginEntry.getString("userLoginId"));
+                        if(UtilValidate.isNotEmpty(userSecurityGroup)) {
+                            String userRoleName = userSecurityGroup.getString("description");
+                            userEntry.put("roleName", userRoleName);
                         }
                     }
                     users.add(userEntry);
@@ -151,10 +147,6 @@ public class TenantUserServices {
             EntityCondition condition = EntityCondition.makeCondition(condList);
 
             List<GenericValue>  partyRelationshipCounts = EntityQuery.use(tenantDelegator).from("PartyRelationshipCount").where(condition).queryList();
-
-            /*List<GenericValue> partyRelationshipCounts = tenantDelegator.findByAnd("PartyRelationshipCount",
-                    UtilMisc.toMap("partyIdFrom", tenantOrganizationPartyId, "partyRelationshipTypeId", "EMPLOYMENT"), null, false);*/
-
             if(UtilValidate.isNotEmpty(partyRelationshipCounts)) {
                 GenericValue partyRelCount = partyRelationshipCounts.get(0);
                 userCount = partyRelCount.getLong("partyIdTo");

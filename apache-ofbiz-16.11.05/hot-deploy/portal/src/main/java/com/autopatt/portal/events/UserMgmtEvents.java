@@ -1,12 +1,15 @@
 package com.autopatt.portal.events;
 
 import com.autopatt.admin.utils.UserLoginUtils;
+import com.autopatt.common.utils.SecurityGroupUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.security.Security;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -16,6 +19,7 @@ import org.apache.ofbiz.service.ServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 public class UserMgmtEvents {
@@ -43,7 +47,7 @@ public class UserMgmtEvents {
         }
 
         // check tenant has valid subscription to add new user
-        /*try {
+        try {
             Map<String, Object> resp = dispatcher.runSync("hasValidSubscriptionToAddUser",
                     UtilMisc.<String, Object>toMap("userLogin", userLogin));
             if (!ServiceUtil.isSuccess(resp)) {
@@ -52,12 +56,16 @@ public class UserMgmtEvents {
                 request.setAttribute("_ERROR_MESSAGE_", errorMessage);
                 return ERROR;
             }
+            Boolean hasPermissionToAddUser = (Boolean) resp.get("hasPermission");
+            if(!hasPermissionToAddUser) {
+                request.setAttribute("_ERROR_MESSAGE_", "Max user count exceeded for the subscription");
+                return ERROR;
+            }
         } catch (GenericServiceException e) {
             Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to fetch subscription");
             return ERROR;
-        }*/
-
+        }
 
         // TODO: Validations - check for duplicate email
 
@@ -141,29 +149,27 @@ public class UserMgmtEvents {
         HttpSession session = request.getSession();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
 
-        // get firstname and lastname from frontend
         String firstname = request.getParameter("firstname");
-        System.out.println("first name is " + firstname);
         String lastname = request.getParameter("lastname");
-        System.out.println("last name is " + lastname);
-        // get person object from db
-        Map<String, Object> inputs = UtilMisc.toMap("partyId", request.getParameter("partyId"));
+        String partyId = request.getParameter("partyId");
+        Map<String, Object> inputs = UtilMisc.toMap("partyId",partyId );
         try {
             GenericValue person = delegator.findOne("Person", inputs, false);
             // set new values for firstname, lastname
             person.set("firstName", firstname);
             person.set("lastName", lastname);
 
-            // store the person object back to db
             delegator.store(person);
+
+            // Update Security Role
+            String securityGroupId = request.getParameter("securityGroupId");
+            String partyUserLoginId = UserLoginUtils.getUserLoginIdForPartyId(delegator, partyId);
+            SecurityGroupUtils.updateUserSecurityGroup(delegator, partyUserLoginId, securityGroupId);
         } catch (GenericEntityException e) {
             e.printStackTrace();
-            // return error message to front-end
-            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the profile details.");
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the user details.");
             return ERROR;
         }
-
-        // return success messsage to front-end
         request.setAttribute("updateSuccess", "Y");
         return SUCCESS;
     }

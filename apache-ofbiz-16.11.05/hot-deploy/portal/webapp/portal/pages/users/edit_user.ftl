@@ -55,7 +55,7 @@
                     <select name="securityGroupId" class="form-control" required>
                         <#list availableSecurityGroups as secGroup>
                             <option value="${secGroup.groupId!}"
-                            <#if userSecurityGroup?? && secGroup.groupId == userSecurityGroup.groupId>selected</#if>
+                                <#if userSecurityGroup?? && secGroup.groupId == userSecurityGroup.groupId>selected</#if>
                             >${secGroup.description!}
                             </option>
                         </#list>
