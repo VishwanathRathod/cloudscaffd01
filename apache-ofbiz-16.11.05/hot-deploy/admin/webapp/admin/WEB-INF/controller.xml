@@ -137,6 +137,11 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json"/>
 	</request-map>
+	<request-map uri="renewSubscription">
+		<event type="java" path="com.autopatt.admin.events.SubscriptionEvents" invoke="renewSubscription" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
 	<request-map uri="edit_product">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="edit_product"/>

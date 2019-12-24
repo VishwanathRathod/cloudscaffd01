@@ -1,5 +1,5 @@
 
-    
+
 <div class="row ">
     <div class="col-md-6">
         <form class="form-inline">
@@ -81,12 +81,14 @@
                     <td>
                         <#if subscription.status?? && subscription.status == "ACTIVE">
                             <span class="status text-success">&#8226;</span> <span>Active</span>
+                        <#elseif subscription.status?? && subscription.status == "FUTURE">
+                            <span class="status text-success">&#8226;</span> <span>Future</span>
                         <#else>
-                            <span class="status text-danger">&bull;</span> Expired
+                            <span class="status text-danger">&bull;</span> <span>Expired</span>
                         </#if>
                     </td>
                     <td width="20%">
-                        <#if subscription.status?? && subscription.status == "ACTIVE">
+                        <#if subscription.status?? && ( subscription.status == "ACTIVE" || subscription.status == "FUTURE")>
                             <a href="#"
                                data-target="#revokeSubscriptionModal"
                                class="btn btn-outline-danger" title="Revoke" data-toggle="modal"
@@ -169,14 +171,14 @@
             <div class="modal-body">
                 <div>Choose when the subscription revocation should be effective:</div>
                 <br/>
-                <form class="form">               
+                <form class="form">
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" id="radio_revoke_immediately" class="form-check-input is-pointer" value="REVOKE_NOW" 
+                        <input type="radio" name="revokeNow" id="radio_revoke_immediately" class="form-check-input is-pointer" value="REVOKE_NOW"
                         onclick="$('#revokeValidToDiv').addClass('d-none')"checked>
                         <label class="form-check-label is-pointer" for="radio_revoke_immediately">Revoke Immediately</label>
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <input type="radio" name="revokeNow" id="radio_revoke_later" class="form-check-input is-pointer" value="REVOKE_LATER"  
+                        <input type="radio" name="revokeNow" id="radio_revoke_later" class="form-check-input is-pointer" value="REVOKE_LATER"
                         onclick="$('#revokeValidToDiv').removeClass('d-none')">
                         <label class="form-check-label is-pointer" for="radio_revoke_later">Revoke Later</label>
                     </div>
@@ -192,6 +194,48 @@
                         data-dismiss="modal">Cancel
                 </button>
                 <button class="btn btn-warning" onclick="revokeSubscription()">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="renewSubscriptionModal" tabindex="-1" role="dialog"
+     aria-labelledby="renewSubscriptionModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModalLabel">Renew Subscription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Choose till when the subscription should be active:</div>
+                <br/>
+                <form class="form">
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="renewEffective" id="radio_renew_forever" class="form-check-input is-pointer" value="RENEW_FOREVER"
+                               onclick="$('#renewTillDateDiv').addClass('d-none')"checked>
+                        <label class="form-check-label is-pointer" for="radio_renew_forever">Renew Forever</label>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2 ">
+                        <input type="radio" name="renewEffective" id="radio_renew_till" class="form-check-input is-pointer" value="RENEW_TILL"
+                               onclick="$('#renewTillDateDiv').removeClass('d-none')">
+                        <label class="form-check-label is-pointer" for="radio_renew_till">Renew till</label>
+                    </div>
+                    <input type="hidden" name="renewSubscriptionId" id="renewSubscriptionId" value=""/>
+                    <div id="renewTillDateDiv" class="form-group mx-sm-3 mb-2 d-none">
+                        <label for="renewTillDate" class="p-2">Choose Date:</label>
+                        <input class="form-control form-control-sm" type="date" id="renewTillDate" name="renewTillDate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="renewSubscriptionCancelButton" class="btn btn-secondary"
+                        data-dismiss="modal">Cancel
+                </button>
+                <button class="btn btn-warning" onclick="renewSubscription()">Apply</button>
             </div>
         </div>
     </div>

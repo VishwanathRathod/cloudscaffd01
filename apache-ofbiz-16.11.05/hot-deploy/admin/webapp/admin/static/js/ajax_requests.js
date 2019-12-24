@@ -173,3 +173,28 @@ function revokeSubscription() {
         }); 
 }
 
+function renewSubscription() {
+    var orgPartyId = $('input[name="orgPartyId"]').val();
+    var renewSubscriptionId = $('input[id="renewSubscriptionId"]').val();
+    var renewEffective = $('input[name="renewEffective"]:checked').val();
+    var validTo = $('input[name="renewTillDate"]').val();
+    var postData = {"orgPartyId": orgPartyId, "subscriptionId":renewSubscriptionId, "renewEffective": renewEffective, "validTo": validTo};
+    var formURL = getUrl("renewSubscription");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#renewSubscriptionModal').modal('hide');
+                showSuccessToast("Subscription renewed successfully");
+                setTimeout(function () {
+                    listSubscriptions();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
+
