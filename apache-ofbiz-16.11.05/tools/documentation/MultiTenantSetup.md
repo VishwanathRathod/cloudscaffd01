@@ -14,17 +14,25 @@ This is faster comparing to creating a database afresh, creating tables and load
 
 ##### Windows
 Go to folder: <OFBIZ_HOME>/tools/scripts/windows
+
 Run create-template-db.cmd script
+
 pass parameters: dbhost (localhost), db-username, db-password, and db-port
 ~~~
-create-template-db.cmd localhost root p@ssword123 3306
+create-template-db.cmd localhost ofadmin oAdmin@123 3306
 ~~~
 > Replace username, password values as per your configuration
 
 ##### Linux
 
-TO-DO
+Go to directory: <OFBIZ_HOME>/tools/scripts/linux
 
+Run create-template-db shell script
+
+~~~
+sh create-template-db localhost ofadmin oAdmin@123 3306
+~~~
+> Replace host, username, password as per configuration
 
 ### Create Tenant entry for Template DB in Ofbiz
 

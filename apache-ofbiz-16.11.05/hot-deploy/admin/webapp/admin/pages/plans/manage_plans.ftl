@@ -18,9 +18,9 @@
 
  <div class="table-content">
      <table class="table table-striped table-hover">
-         <thead>
+         <thead class="thead-dark">
          <tr>
-             <th width="15%">#</th>
+             <th width="15%">Id</th>
              <th width="25%">Plan Name</th>
              <th class="number-right">Price ($)</th>
              <th class="number-right">Max Admins</th>
@@ -34,7 +34,7 @@
              <#list plans as plan>
                  <tr>
                      <td>${plan.productId!}</td>
-                     <td><a href="<@ofbizUrl>edit_plan?planId=${plan.productId!}</@ofbizUrl>"><i class="material-icons" style="font-size:1.6em;">cloud_circle</i>${plan.productName!}</a></td>
+                     <td><a href="<@ofbizUrl>edit_plan?planId=${plan.productId!}</@ofbizUrl>">${plan.productName!}</a></td>
                      <td class="number-right">${plan.productPrice!?string.currency}</td>
                      <td class="number-right">${plan.maxAdmins!}</td>
                      <td class="number-right">${plan.maxUserLogins!}</td>

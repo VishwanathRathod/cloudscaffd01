@@ -32,38 +32,43 @@
 </div>
 
 <form action="<@ofbizUrl>UpdatePlan</@ofbizUrl>" method="post">
-        <div class="col-md-9 my-3">
+    <div class="col-md-9 my-3">
         <div class="form-group row required">
-            <label for="productid" class="col-sm-2 col-form-label">Plan Id <span class="mandatory">*</span></label>
+            <label for="productId" class="col-sm-2 col-form-label">Plan Id</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" readonly value="${product.productId!}" name="planId" required/>
+                <input id="productId" type="text" class="form-control" readonly value="${product.productId!}" name="planId" required/>
             </div>
         </div>
         <div class="form-group row required">
-            <label for="productm" class="col-sm-2 col-form-label">Plan Name <span class="mandatory">*</span></label>
+            <label for="productName" class="col-sm-2 col-form-label">Plan Name <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" value="${product.productName!}" name="productName" required/>
+                <input id="productName" type="text" class="form-control" value="${product.productName!}" name="productName" required/>
             </div>
         </div>
         <div class="form-group row">
-            <label for="productprice" class="col-sm-2 col-form-label ">Price <span class="mandatory">*</span></label>
+            <label for="productPrice" class="col-sm-2 col-form-label ">Price <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input  type="number" step="any" class="form-control"  value="${priceGv.price}" name="price"  >
+                <input id="productPrice" type="number" step="any" class="form-control"  value="${priceGv.price}" name="price"  >
             </div>
         </div>
         <div class="form-group row">
-            <label for="productfeatures" class="col-sm-2 col-form-label">Max Admins <span class="mandatory">*</span></label>
+            <label for="maxAdmins" class="col-sm-2 col-form-label">Max Admins <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="No. of Users"  value="${maxAdmins!}" name="" />
-                </div>
-        </div>
-            <div class="form-group row">
-                <label for="productfeatures" class="col-sm-2 col-form-label">Max Users <span class="mandatory">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" placeholder="No. of Patterns" value="${maxUserLogins!}" name="" />
+                <input type="number" id="maxAdmins" class="form-control" value="${maxAdmins!}" name="" />
             </div>
-                </div>
-
+        </div>
+        <div class="form-group row">
+            <label for="maxUsers" class="col-sm-2 col-form-label">Max Users <span class="mandatory">*</span></label>
+            <div class="col-sm-10">
+                <input id="maxUsers" type="number" class="form-control" value="${maxUserLogins!}" name="" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="maxPatterns" class="col-sm-2 col-form-label">Max Patterns <span class="mandatory">*</span></label>
+            <div class="col-sm-10">
+                <input id="maxUsers" type="number" class="form-control" value="${maxPatterns!"0"}" name="" />
+            </div>
+        </div>
 
         <div class="form-group row">
             <div class="col-sm-2">&nbsp;</div>
@@ -73,6 +78,4 @@
             </div>
         </div>
     </div>
-    </div>
-
 </form>

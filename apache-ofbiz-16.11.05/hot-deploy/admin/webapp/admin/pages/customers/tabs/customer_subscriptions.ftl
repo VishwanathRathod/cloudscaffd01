@@ -126,10 +126,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-inline">
+                <form class="form">
                     <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
                     <div class="form-group mx-sm-3 mb-2">
-                        <label for="newSubscriptionProduct" class="p-2">Product</label>
+                        <label for="newSubscriptionProduct" class="p-2">Choose Plan</label>
                         <select class="form-control form-control-sm" id="productId" name="productId" required>
                             <option value="Demo">Demo</option>
                             <option value="P1">Basic Planner - P1</option>
@@ -143,7 +143,7 @@
                                required>
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
-                        <label for="newSubscriptionValidTo" class="p-2">Valid To</label>
+                        <label for="newSubscriptionValidTo" class="p-2">Valid Till</label>
                         <input class="form-control form-control-sm" type="date" id="validTo" name="validTo" required>
                     </div>
                 </form>
