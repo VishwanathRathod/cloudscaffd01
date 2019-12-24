@@ -64,10 +64,13 @@ public class OrgEmployeeServices {
             List<GenericValue> userLoginSecGroups = delegator.findByAnd("UserLoginSecurityGroup", UtilMisc.toMap("userLoginId", userLoginId), null, false);
             if(UtilValidate.isNotEmpty(userLoginSecGroups)) {
                 for(GenericValue userLoginSecGroup : userLoginSecGroups) {
-                    GenericValue userLoginGv = userLoginSecGroup.getRelatedOne("UserLogin", false);
                     userLoginSecGroup.remove();
-                    userLoginGv.remove();
                 }
+            }
+            // Remove UserLogin entry
+            GenericValue partyUserLogin = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", userLoginId), false);
+            if(UtilValidate.isNotEmpty(partyUserLogin)) {
+                partyUserLogin.remove();
             }
         } catch (GenericEntityException e) {
             e.printStackTrace();
