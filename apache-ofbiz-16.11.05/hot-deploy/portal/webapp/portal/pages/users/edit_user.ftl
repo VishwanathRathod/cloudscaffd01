@@ -15,16 +15,15 @@
             </div>
         </#list>
     </div>
-    <div>&nbsp;</div>
     <div class="table-title">
         <div class="row">
             <div class="col-sm-4">
-                <h2>Edit User</h2>
+                <h4>Edit User</h4>
             </div>
            <div class="col-sm-8">
-                           <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">keyboard_backspace</i> <span>Back</span></a>
-                           <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
-                       </div>
+               <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">keyboard_backspace</i> <span>Back</span></a>
+               <#--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>-->
+           </div>
             </div>
         </div>
     </div>

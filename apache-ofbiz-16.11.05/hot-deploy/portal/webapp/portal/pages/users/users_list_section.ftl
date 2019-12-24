@@ -34,9 +34,12 @@
                     </#if>
                 </td>
                 <td>
+
                     <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-                    <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteUserConfirmModal"
+                    <#if user.partyId != userLogin.partyId>
+                        <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteUserConfirmModal"
                        data-party-id="${user.partyId!}" data-party-name="${user.partyName!}"><i class="material-icons">delete</i></a>
+                    </#if>
                 </td>
             </tr>
         </#list>

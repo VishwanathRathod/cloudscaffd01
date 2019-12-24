@@ -18,7 +18,7 @@
 
  <div class="table-content">
      <table class="table table-striped table-hover">
-         <thead class="thead-dark">
+         <thead>
          <tr>
              <th width="15%">Id</th>
              <th width="25%">Plan Name</th>

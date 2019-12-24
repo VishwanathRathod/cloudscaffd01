@@ -1,5 +1,4 @@
 <div class="container-fluid">
-    <div>&nbsp;</div>
     <#if requestParameters.createSuccess?? && requestParameters.createSuccess=="Y">
         <div class="alert alert-success" role="alert">
             <i class="material-icons">check</i> User has been addedd successfully.
@@ -21,13 +20,13 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-5">
-                <h2>Users</h2>
+                <h4>Users</h4>
             </div>
             <div class="col-sm-7">
                 <#if security.hasEntityPermission("PORTAL", "_ADD_USER", session)>
                     <a href="<@ofbizUrl>new_user</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
                 </#if>
-                <a href="javascript:void(0);" class="btn btn-outline-primary" onclick="users.loadUsers()">
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="users.loadUsers()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>Refresh
                 </a>
             </div>
