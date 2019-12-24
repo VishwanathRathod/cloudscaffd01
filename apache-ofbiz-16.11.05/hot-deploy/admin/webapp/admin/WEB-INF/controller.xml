@@ -105,6 +105,15 @@
 		</response>
 		<response name="error" type="view" value="manage_customer" />
 	</request-map>
+
+	<request-map uri="UpdateCustomerDetails">
+		<event type="java" path="com.autopatt.admin.events.CustomerEvents" invoke="UpdateCustomerDetails" />
+		<response name="success" type="request-redirect" value="manage_customer" >
+			<redirect-parameter name="orgPartyId"/>
+		</response>
+		<response name="error" type="view" value="manage_customer" />
+	</request-map>
+
 	<request-map uri="changePassword">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="changePassword" />
