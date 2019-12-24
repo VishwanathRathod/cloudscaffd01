@@ -109,6 +109,12 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="changePassword" />
 	</request-map>
+	<request-map uri="updatePassword">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.MyProfileEvents" invoke="updatePassword" />
+		<response name="success" type="view" value="home" />
+		<response name="error" type="view" value="changePassword" />
+	</request-map>
 
 	<request-map uri="manage_users">
 		<security https="true" auth="true" />
