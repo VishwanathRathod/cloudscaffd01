@@ -2,10 +2,9 @@ import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.entity.GenericValue
 
-products = delegator.findByAnd("Product", UtilMisc.toMap("productTypeId", "SERVICE"), null, false);
-//context.products = products;
+products = delegator.findByAnd("Product", UtilMisc.toMap("productTypeId", "SUBSCRIPTION_PLAN"), null, false);
 
-List<Map> productDetails = new ArrayList();
+List<Map> plansList = new ArrayList();
 for(GenericValue product : products) {
     Map entry = UtilMisc.toMap("productId", product.productId);
     entry.put("productName", product.productName);
@@ -22,6 +21,6 @@ for(GenericValue product : products) {
              entry.put(productAttr.attrName, productAttr.attrValue)
         }
     }
-    productDetails.add(entry);
+    plansList.add(entry);
 }
-context.products = productDetails;
+context.plans = plansList;

@@ -206,3 +206,7 @@ table.table .avatar {
 .icon-color-active {
   color:white;
 }
+
+.number-right {
+  text-align: right;
+}

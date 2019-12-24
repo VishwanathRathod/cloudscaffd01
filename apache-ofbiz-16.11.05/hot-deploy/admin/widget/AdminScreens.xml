@@ -143,13 +143,13 @@
             </widgets>
         </section>
     </screen>
-    <screen name="manage_products">
+    <screen name="manage_plans">
         <section>
             <actions>
-                <set field="title" value="Manage Products"/>
-                <set field="currentPage" value="manage_products"/>
-                <set field="currentViewId" value="MANAGE_PRODUCTS"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/GetProducts.groovy"/>
+                <set field="title" value="Manage Plans"/>
+                <set field="currentPage" value="manage_plans"/>
+                <set field="currentViewId" value="MANAGE_PLANS"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/plans/GetPlans.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -157,7 +157,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/manage_products.ftl" />
+                                        location="component://admin/webapp/admin/pages/plans/manage_plans.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -172,8 +172,6 @@
                 <set field="title" value="Reports"/>
                 <set field="currentPage" value="reports"/>
                 <set field="currentViewId" value="REPORTS"/>
-
-
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -211,14 +209,13 @@
         </section>
     </screen>
 
-    <screen name="edit_product">
+    <screen name="edit_plan">
         <section>
             <actions>
-                <set field="title" value="Edit Product"/>
-                <set field="currentPage" value="edit_product"/>
-                <set field="currentViewId" value="EDIT_PRODUCT"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/editProduct.groovy"/>
-
+                <set field="title" value="Edit Plan"/>
+                <set field="currentPage" value="edit_plan"/>
+                <set field="currentViewId" value="EDIT_PLAN"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/plans/EditPlan.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
@@ -226,7 +223,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://admin/webapp/admin/pages/edit_product.ftl" />
+                                        location="component://admin/webapp/admin/pages/plans/edit_plan.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>

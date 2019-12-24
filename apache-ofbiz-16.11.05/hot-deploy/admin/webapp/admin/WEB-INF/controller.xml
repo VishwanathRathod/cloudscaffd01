@@ -121,9 +121,9 @@
 		<response name="success" type="view" value="manage_users" />
 	</request-map>
 
-	<request-map uri="manage_products">
+	<request-map uri="manage_plans">
 		<security https="true" auth="true"/>
-		<response name="success" type="view" value="manage_products"/>
+		<response name="success" type="view" value="manage_plans"/>
 	</request-map>
 	<request-map uri="reports">
 		<security https="true" auth="true"/>
@@ -148,16 +148,16 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json"/>
 	</request-map>
-	<request-map uri="edit_product">
+	<request-map uri="edit_plan">
 		<security https="true" auth="true"/>
-		<response name="success" type="view" value="edit_product"/>
+		<response name="success" type="view" value="edit_plan"/>
 	</request-map>
-	<request-map uri="updateProduct">
-		<event type="java" path="com.autopatt.admin.events.ProductMgmtEvents" invoke="updateProduct" />
-		<response type="request-redirect" name="success" value="manage_products">
+	<request-map uri="UpdatePlan">
+		<event type="java" path="com.autopatt.admin.events.PlanMgmtEvents" invoke="updatePlan" />
+		<response type="request-redirect" name="success" value="manage_plans">
 			<redirect-parameter name="updateSuccess"/>
 		</response>
-		<response type="view" name="error" value="edit_product"/>
+		<response type="view" name="error" value="edit_plan"/>
 	</request-map>
 
 	<request-map uri="ajaxSuspendOrgUser">
@@ -207,8 +207,8 @@
 			  page="component://admin/widget/AdminScreens.xml#myaccount" />
 	<view-map name="changePassword" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#changePassword" />
-	<view-map name="manage_products" type="screen"
-			  page="component://admin/widget/AdminScreens.xml#manage_products" />
+	<view-map name="manage_plans" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#manage_plans" />
 	<view-map name="reports" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#reports" />
 	<view-map name="customer_subscription" type="screen"
@@ -216,8 +216,8 @@
 	<view-map name="org_employees" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#customer_employees_tab" />
 
-	<view-map name="edit_product" type="screen"
-			  page="component://admin/widget/AdminScreens.xml#edit_product" />
+	<view-map name="edit_plan" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#edit_plan" />
 
 	<view-map name="system_settings" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#system_settings" />

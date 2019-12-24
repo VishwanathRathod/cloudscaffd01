@@ -2,10 +2,10 @@ import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.entity.GenericValue
 
-productId = request.getParameter("productId")
-context.productId = productId
+planId = request.getParameter("planId")
+context.planId = planId
 
-Map inputs = UtilMisc.toMap("productId", productId)
+Map inputs = UtilMisc.toMap("productId", planId)
 product = delegator.findOne("Product", inputs, false)
 context.product = product
 

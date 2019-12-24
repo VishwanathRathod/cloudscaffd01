@@ -14,28 +14,25 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public class ProductMgmtEvents {
+public class PlanMgmtEvents {
 
     public final static String module = UserMgmtEvents.class.getName();
     public static String SUCCESS = "success";
     public static String ERROR = "error";
 
-    public static String updateProduct(HttpServletRequest request, HttpServletResponse response) {
+    public static String updatePlan(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         String productName = request.getParameter("productName");
-        String productId = request.getParameter("productId");
+        String productId = request.getParameter("planId");
         String priceStr = request.getParameter("price");
-        BigDecimal price= BigDecimal.valueOf(1.0);
+        BigDecimal price = null;
         try{
             price = new BigDecimal(priceStr);
-        System.out.println(price+"insert try catch");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(price+"insert try catch");
-            request.setAttribute("_ERROR_MESSAGE_", "Product Price should not contain Letters.");
+            request.setAttribute("_ERROR_MESSAGE_", "Invalid Price entered");
+            return ERROR;
         }
-        System.out.println(price+"insert try catch");
-
         Map<String, Object> inputs = UtilMisc.toMap("productId", productId);
         try {
             GenericValue product = delegator.findOne("Product", inputs , false);
@@ -51,13 +48,11 @@ public class ProductMgmtEvents {
 
         } catch (GenericEntityException e) {
             e.printStackTrace();
-            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the Product details.");
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to update the Plan details.");
             return ERROR;
         }
         request.setAttribute("updateSuccess","Y");
-        request.setAttribute("_EVENT_MESSAGE_", "Product price updated successfully.");
-        request.setAttribute("_EVENT_MESSAGE_", "Product details updated successfully.");
-
+        request.setAttribute("_EVENT_MESSAGE_", "Plan details updated successfully.");
         return SUCCESS;
     }
 

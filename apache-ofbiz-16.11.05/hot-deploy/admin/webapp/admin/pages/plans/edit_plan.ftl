@@ -18,7 +18,7 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-4">
-                <h4>Edit Product</h4>
+                <h4>Edit Plan</h4>
             </div>
             <div class="col-sm-8">
                 <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="btn btn-primary"><i class="material-icons">keyboard_backspace</i> <span>Back</span></a>
@@ -31,16 +31,16 @@
 
 </div>
 
-<form action="<@ofbizUrl>updateProduct</@ofbizUrl>" method="post">
+<form action="<@ofbizUrl>UpdatePlan</@ofbizUrl>" method="post">
         <div class="col-md-9 my-3">
         <div class="form-group row required">
-            <label for="productid" class="col-sm-2 col-form-label">Product Id <span class="mandatory">*</span></label>
+            <label for="productid" class="col-sm-2 col-form-label">Plan Id <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control " readonly value="${product.productId!}" name="productId" required/>
+                <input type="text" class="form-control" readonly value="${product.productId!}" name="planId" required/>
             </div>
         </div>
         <div class="form-group row required">
-            <label for="productm" class="col-sm-2 col-form-label">Product Name <span class="mandatory">*</span></label>
+            <label for="productm" class="col-sm-2 col-form-label">Plan Name <span class="mandatory">*</span></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" value="${product.productName!}" name="productName" required/>
             </div>
@@ -69,7 +69,7 @@
             <div class="col-sm-2">&nbsp;</div>
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="btn btn-secondary">Cancel</a>
+                <a href="<@ofbizUrl>manage_plans</@ofbizUrl>" class="btn btn-secondary">Cancel</a>
             </div>
         </div>
     </div>

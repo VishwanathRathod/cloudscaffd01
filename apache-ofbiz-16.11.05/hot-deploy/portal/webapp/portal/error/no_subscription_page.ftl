@@ -17,6 +17,8 @@
         <a class="btn btn-outline-primary" href="<@ofbizUrl>logout</@ofbizUrl>"> <i class="material-icons">
                 keyboard_backspace
             </i> Back to Login</a>
+        <a class="btn btn-outline-primary" href="javascript:void();" onclick="location.reload()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Retry</a>
     </div>
 
 </div>

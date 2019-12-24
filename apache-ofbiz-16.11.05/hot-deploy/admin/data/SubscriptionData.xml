@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
 
-    <ProductStore productStoreId="AUTOPATT_STORE" storeName="AUTOPATT PRODUCT STORE" companyName="AUTOPATT" defaultCurrencyUomId="USD"
-                  title="AUTOPATT PRODUCT STORE" reserveInventory="N" isImmediatelyFulfilled="Y" checkInventory="N" requireInventory="N"/>
+    <ProductStore productStoreId="AUTOPATT_STORE" storeName="AutoPatt Product Store" companyName="AUTOPATT" defaultCurrencyUomId="USD"
+                  title="AutoPatt Product Store" reserveInventory="N" isImmediatelyFulfilled="Y" checkInventory="N" requireInventory="N"/>
 
-    !--Advanced Planner-->
-    <Product productId="P2" productTypeId="SERVICE" productName="Advanced Planner" longDescription="Advanced Planner" requireInventory="N"/>
+    <!-- Advanced Planner-->
+    <Product productId="P2" productTypeId="SUBSCRIPTION_PLAN" productName="Advanced Planner" longDescription="Advanced Planner" requireInventory="N"/>
     <ProductPrice productId="P2" productPricePurposeId="USAGE_CHARGE" productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="P2" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="P2" attrName="maxUserLogins" attrValue="5"/>
 
-    <!--Advanced Planner-->
-    <Product productId="Demo" productTypeId="SERVICE" productName="Demo" longDescription="Demo" requireInventory="N"/>
+    <!-- Demo Plan -->
+    <Product productId="Demo" productTypeId="SUBSCRIPTION_PLAN" productName="Demo" longDescription="Demo" requireInventory="N"/>
     <ProductPrice productId="Demo" productPricePurposeId="USAGE_CHARGE" productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="Demo" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="Demo" attrName="maxUserLogins" attrValue="1"/>
 
-    <!--Basic Planner-->
-    <Product productId="P1" productTypeId="SERVICE" productName="Basic Planner" longDescription="Basic Planner" requireInventory="N"/>
+    <!-- Basic Planner -->
+    <Product productId="P1" productTypeId="SUBSCRIPTION_PLAN" productName="Basic Planner" longDescription="Basic Planner" requireInventory="N"/>
     <ProductPrice productId="P1" productPricePurposeId="USAGE_CHARGE" productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="P1" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="P1" attrName="maxUserLogins" attrValue="5"/>
 
-    <!--Enterprise Planner-->
-    <Product productId="EP1" productTypeId="SERVICE" productName="Enterprise Planner" longDescription="Enterprise Planner" requireInventory="N"/>
+    <!-- Enterprise Planner -->
+    <Product productId="EP1" productTypeId="SUBSCRIPTION_PLAN" productName="Enterprise Planner" longDescription="Enterprise Planner" requireInventory="N"/>
     <ProductPrice productId="EP1" productPricePurposeId="USAGE_CHARGE" productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="EP1" attrName="maxAdmins" attrValue="1"/>

@@ -9,8 +9,8 @@
     <a href="<@ofbizUrl>customers</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'CUSTOMERS'>active</#if>">
       <i class="material-icons icon-darkmagenta <#if currentViewId == 'CUSTOMERS'>icon-color-active</#if>">business</i> Customers</a>
 
-    <a href="<@ofbizUrl>manage_products</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_PRODUCTS'>active</#if>">
-    <i class="material-icons icon-darkgreen <#if currentViewId == 'MANAGE_PRODUCTS'>icon-color-active</#if>">account_tree</i> Manage Plans</a>
+    <a href="<@ofbizUrl>manage_plans</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_PLANS'>active</#if>">
+    <i class="material-icons icon-darkgreen <#if currentViewId == 'MANAGE_PLANS'>icon-color-active</#if>">account_tree</i> Manage Plans</a>
 
     <a href="<@ofbizUrl>manage_users</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'MANAGE_USERS'>active</#if>">
       <i class="material-icons icon-orange <#if currentViewId == 'MANAGE_USERS'>icon-color-active</#if>">people</i> Admin Users</a>

@@ -12,5 +12,9 @@
     <RoleType description="Autopatt Admin" hasTable="N" parentTypeId="" roleTypeId="AUTOPATT_ADMIN"/>
 
 
+    <ProductType productTypeId="SUBSCRIPTION_PLAN" description="Subscription Plan"
+                 isPhysical="N" isDigital="Y" hasTable="N" parentTypeId=""/>
+
+
 </entity-engine-xml>
 
