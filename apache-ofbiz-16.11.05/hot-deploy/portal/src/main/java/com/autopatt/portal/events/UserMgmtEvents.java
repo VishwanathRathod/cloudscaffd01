@@ -2,6 +2,8 @@ package com.autopatt.portal.events;
 
 import com.autopatt.admin.utils.UserLoginUtils;
 import com.autopatt.common.utils.SecurityGroupUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -16,6 +18,8 @@ import org.apache.ofbiz.service.ServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -221,4 +225,87 @@ public class UserMgmtEvents {
         return SUCCESS;
     }
 
+    public static String validateToken(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String token = request.getParameter("token");
+
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary("AUTOPATT"))
+                    .parseClaimsJws(token).getBody();
+            String userName = claims.getId();
+            String userTenantId = claims.getSubject();
+            Date expiration = claims.getExpiration();
+            if (UtilDateTime.nowTimestamp().after(UtilDateTime.toTimestamp(expiration))) {
+                request.setAttribute("_ERROR_MESSAGE_", "Token has been expired");
+                return ERROR;
+            }
+
+            request.setAttribute("USERNAME", userName);
+            request.setAttribute("userTenantId", userTenantId);
+        } catch (Exception e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to decrypt token");
+            return ERROR;
+        }
+
+
+        request.setAttribute("token", token);
+
+        return SUCCESS;
+    }
+
+    public static String updateForgotPassword(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String token = request.getParameter("token");
+        String newPasswordVerify = request.getParameter("newPasswordVerify");
+        String newPassword = request.getParameter("newPassword");
+
+        String emailId = null;
+        String userTenantId = null;
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary("AUTOPATT"))
+                    .parseClaimsJws(token).getBody();
+            emailId = claims.getId();
+            userTenantId = claims.getSubject();
+            Date expiration = claims.getExpiration();
+            if (UtilDateTime.nowTimestamp().after(UtilDateTime.toTimestamp(expiration))) {
+                request.setAttribute("_ERROR_MESSAGE_", "Token has been expired");
+                return ERROR;
+            }
+
+        } catch (Exception e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to decrypt token");
+            return ERROR;
+        }
+
+        request.setAttribute("token", token);
+        Map<String, Object> result = null;
+        try {
+            result = dispatcher.runSync("resetPassword",
+                    UtilMisc.<String, Object>toMap("emailId", emailId, "userTenantId", userTenantId,
+                            "newPassword", newPassword, "newPasswordVerify", newPasswordVerify));
+            if (!ServiceUtil.isSuccess(result)) {
+                if (result.containsKey("errorMessage")) {
+                    request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+                } else {
+                    request.setAttribute("_ERROR_MESSAGE_LIST_", result.get("errorMessageList"));
+                }
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to update the password");
+            return ERROR;
+        }
+        return SUCCESS;
+    }
 }

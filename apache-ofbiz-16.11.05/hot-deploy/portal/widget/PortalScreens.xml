@@ -321,5 +321,47 @@
             </widgets>
         </section>
     </screen>
+    <screen name="forgotPasswordForm">
+        <section>
+            <actions>
+                <set field="title" value="Forgot Password Form"/>
+                <set field="currentPage" value="forgotPasswordForm"/>
+                <set field="currentViewId" value="forgotPasswordForm"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordForm.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="forgotPasswordResponse">
+        <section>
+            <actions>
+                <set field="title" value="Forgot Password Response"/>
+                <set field="currentPage" value="forgotPasswordResponse"/>
+                <set field="currentViewId" value="forgotPasswordResponse"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordResponse.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 </screens>
 

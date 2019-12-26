@@ -133,6 +133,18 @@
 		<response name="success" type="view" value="forgotPasswordLinkSuccess"/>
 		<response name="error" type="view" value="forgotPasswordEmailRequest" />
 	</request-map>
+	<request-map uri="spwd">
+		<security https="true" auth="false" />
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="validateToken" />
+		<response name="success" type="view" value="forgotPasswordForm"/>
+		<response name="error" type="view" value="forgotPasswordResponse" />
+	</request-map>
+	<request-map uri="updateForgotPassword">
+		<security https="true" auth="false" />
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="updateForgotPassword" />
+		<response name="success" type="view" value="forgotPasswordResponse"/>
+		<response name="error" type="view" value="forgotPasswordForm" />
+	</request-map>
 	<request-map uri="UpdateUser">
 		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="updateUser" />
 		<response name="success" type="request-redirect" value="manage_users" >
@@ -178,4 +190,8 @@
 			  page="component://portal/widget/PortalScreens.xml#forgotPasswordEmailRequest" />
 	<view-map name="forgotPasswordLinkSuccess" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#forgotPasswordLinkSuccess" />
+	<view-map name="forgotPasswordForm" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#forgotPasswordForm" />
+	<view-map name="forgotPasswordResponse" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#forgotPasswordResponse" />
 </site-conf>
