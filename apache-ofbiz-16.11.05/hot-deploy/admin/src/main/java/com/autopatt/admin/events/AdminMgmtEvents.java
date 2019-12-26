@@ -1,5 +1,7 @@
 package com.autopatt.admin.events;
 
+import com.autopatt.admin.utils.UserLoginUtils;
+import com.autopatt.common.utils.SecurityGroupUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -85,6 +87,30 @@ public class AdminMgmtEvents {
             return ERROR;
         }
         request.setAttribute("createSuccess", "Y");
+        return SUCCESS;
+    }
+
+    public static String updateAdminUser(HttpServletRequest request, HttpServletResponse response) {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String partyId = request.getParameter("partyId");
+        Map<String, Object> inputs = UtilMisc.toMap("partyId",partyId );
+        try {
+            GenericValue person = delegator.findOne("Person", inputs, false);
+            person.set("firstName", firstname);
+            person.set("lastName", lastname);
+
+            delegator.store(person);
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the admin user details.");
+            return ERROR;
+        }
+        request.setAttribute("updateSuccess", "Y");
         return SUCCESS;
     }
 }

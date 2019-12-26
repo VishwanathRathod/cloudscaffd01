@@ -232,6 +232,28 @@
             </widgets>
         </section>
     </screen>
+    <screen name="edit_admin_user">
+        <section>
+            <actions>
+                <set field="title" value="Edit Admin User"/>
+                <set field="currentPage" value="edit_admin_user"/>
+                <set field="currentViewId" value="EDIT_ADMIN_USER"/>
+                <script location="component://admin/webapp/admin/WEB-INF/actions/editAdminUser.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/edit_admin_user.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
 
 

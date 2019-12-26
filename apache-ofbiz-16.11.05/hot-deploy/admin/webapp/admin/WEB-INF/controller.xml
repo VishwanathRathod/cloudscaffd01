@@ -172,12 +172,22 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="edit_plan"/>
 	</request-map>
+	<request-map uri="edit_admin_user">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="edit_admin_user"/>
+	</request-map>
 	<request-map uri="UpdatePlan">
 		<event type="java" path="com.autopatt.admin.events.PlanMgmtEvents" invoke="updatePlan" />
 		<response type="request-redirect" name="success" value="manage_plans">
 			<redirect-parameter name="updateSuccess"/>
 		</response>
 		<response type="view" name="error" value="edit_plan"/>
+	</request-map>
+	<request-map uri="UpdateAdminUser">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents" invoke="updateAdminUser" />
+		<response name="success" type="request-redirect" value="manage_users" />
+		<response name="error" type="view" value="edit_admin_user" />
 	</request-map>
 
 	<request-map uri="ajaxSuspendOrgUser">
@@ -240,6 +250,8 @@
 
 	<view-map name="edit_plan" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_plan" />
+	<view-map name="edit_admin_user" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#edit_admin_user" />
 
 	<view-map name="system_settings" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#system_settings" />

@@ -26,7 +26,7 @@
             <#list adminUsers as admin>
                 <tr>
                     <td>${admin_index + 1}</td>
-                    <td><a href="<@ofbizUrl>edit_admin</@ofbizUrl>">${admin.fullName!}</a>
+                    <td><a href="<@ofbizUrl>edit_admin_user?partyId=${admin.partyId!}</@ofbizUrl>">${admin.fullName!}</a>
                         <div class="small text-muted">${admin.adminUserLoginId!}</div>
                     </td>
                     <td><#if admin.createdDate??>${admin.createdDate!?date}</#if></td>
@@ -42,7 +42,7 @@
                          </#if>
                      </td>
                     <td>
-                      <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+                      <a href="<@ofbizUrl>edit_admin_user?partyId=${admin.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                       <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></a>
                     </td>
                   </tr>
