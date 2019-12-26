@@ -68,6 +68,10 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="new_customer" />
 	</request-map>
+	<request-map uri="new_admin_user">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="new_admin_user" />
+	</request-map>
 	<request-map uri="CreateCustomer">
 		<security https="true" auth="true" />
 		<event type="java" path="com.autopatt.admin.events.CustomerEvents"
@@ -201,6 +205,8 @@
 			  page="component://admin/widget/AdminCustomerScreens.xml#customers" />
 	<view-map name="new_customer" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#new_customer" />
+	<view-map name="new_admin_user" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#new_admin_user" />
 	<view-map name="manage_customer" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#manage_customer" />
 	<view-map name="org_employee_details" type="screen"

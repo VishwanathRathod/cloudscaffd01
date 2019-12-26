@@ -121,28 +121,29 @@
     </screen>
 
     <screen name="manage_users">
-        <section>
-            <actions>
-                <set field="title" value="Manage Users"/>
-                <set field="currentPage" value="manage_users"/>
-                <set field="currentViewId" value="MANAGE_USERS"/>
-                <script location="component://admin/webapp/admin/WEB-INF/actions/myaccount.groovy"/>
+    <section>
+        <actions>
+            <set field="title" value="Manage Users"/>
+            <set field="currentPage" value="manage_users"/>
+            <set field="currentViewId" value="MANAGE_USERS"/>
+            <script location="component://admin/webapp/admin/WEB-INF/actions/plans/GetAdminUsers.groovy"/>
 
-            </actions>
-            <widgets>
-                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
-                    <decorator-section name="body">
-                        <platform-specific>
-                            <html>
-                                <html-template
-                                        location="component://admin/webapp/admin/pages/manage_users.ftl" />
-                            </html>
-                        </platform-specific>
-                    </decorator-section>
-                </decorator-screen>
-            </widgets>
-        </section>
-    </screen>
+        </actions>
+        <widgets>
+            <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="body">
+                    <platform-specific>
+                        <html>
+                            <html-template
+                                    location="component://admin/webapp/admin/pages/manage_users.ftl" />
+                        </html>
+                    </platform-specific>
+                </decorator-section>
+            </decorator-screen>
+        </widgets>
+    </section>
+</screen>
+
     <screen name="manage_plans">
         <section>
             <actions>
@@ -231,6 +232,7 @@
             </widgets>
         </section>
     </screen>
+
 
 
 </screens>
