@@ -279,5 +279,47 @@
             </widgets>
         </section>
     </screen>
+    <screen name="forgotPasswordEmailRequest">
+        <section>
+            <actions>
+                <set field="title" value="Forgot Password"/>
+                <set field="currentPage" value="forgotPasswordEmailRequest"/>
+                <set field="currentViewId" value="forgotPasswordEmailRequest"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordEmailRequest.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="forgotPasswordLinkSuccess">
+        <section>
+            <actions>
+                <set field="title" value="Forgot Password"/>
+                <set field="currentPage" value="forgotPasswordEmailRequest"/>
+                <set field="currentViewId" value="forgotPasswordEmailRequest"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordLinkSuccess.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 </screens>
 

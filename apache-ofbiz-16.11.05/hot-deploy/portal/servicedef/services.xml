@@ -38,4 +38,12 @@ under the License.
         <implements service="permissionInterface"/>
     </service>
 
+    <service name="generatePasswordResetToken" engine="java"
+             location="com.autopatt.portal.services.UserManagementServices" invoke="generatePasswordResetToken"
+             auth="false" require-new-transaction="true" transaction-timeout="300">
+        <description>Service returns JWT token to reset password</description>
+        <attribute name="emailId" type="String" mode="IN" optional="false"/>
+        <attribute name="token" type="String" mode="OUT" optional="false"/>
+    </service>
+
 </services>

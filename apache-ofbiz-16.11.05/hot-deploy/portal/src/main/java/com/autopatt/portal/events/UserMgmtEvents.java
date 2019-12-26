@@ -2,10 +2,7 @@ package com.autopatt.portal.events;
 
 import com.autopatt.admin.utils.UserLoginUtils;
 import com.autopatt.common.utils.SecurityGroupUtils;
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.UtilDateTime;
-import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
@@ -57,7 +54,7 @@ public class UserMgmtEvents {
                 return ERROR;
             }
             Boolean hasPermissionToAddUser = (Boolean) resp.get("hasPermission");
-            if(!hasPermissionToAddUser) {
+            if (!hasPermissionToAddUser) {
                 request.setAttribute("_ERROR_MESSAGE_", "Max user count exceeded for the subscription");
                 return ERROR;
             }
@@ -110,7 +107,7 @@ public class UserMgmtEvents {
             }
 
             // Add partyRelationship with ORG Party (once Tenant is ready)
-            String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY",null, delegator);
+            String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY", null, delegator);
             Map<String, Object> partyRelationship = UtilMisc.toMap(
                     "partyIdFrom", tenantOrganizationPartyId,
                     "partyIdTo", partyId,
@@ -119,10 +116,10 @@ public class UserMgmtEvents {
                     "partyRelationshipTypeId", "EMPLOYMENT",
                     "userLogin", UserLoginUtils.getSystemUserLogin(delegator)
             );
-            Map<String,Object> createPartyRelationResp = dispatcher.runSync("createPartyRelationship", partyRelationship);
-            if(!ServiceUtil.isSuccess(createPartyRelationResp)) {
+            Map<String, Object> createPartyRelationResp = dispatcher.runSync("createPartyRelationship", partyRelationship);
+            if (!ServiceUtil.isSuccess(createPartyRelationResp)) {
                 Debug.logError("Error creating new Party Relationship between " + tenantOrganizationPartyId + " and "
-                        + partyId+" in tenant " + delegator.getDelegatorTenantId(), module);
+                        + partyId + " in tenant " + delegator.getDelegatorTenantId(), module);
             }
 
             // Assign SecurityGroup to user
@@ -152,7 +149,7 @@ public class UserMgmtEvents {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String partyId = request.getParameter("partyId");
-        Map<String, Object> inputs = UtilMisc.toMap("partyId",partyId );
+        Map<String, Object> inputs = UtilMisc.toMap("partyId", partyId);
         try {
             GenericValue person = delegator.findOne("Person", inputs, false);
             // set new values for firstname, lastname
@@ -183,19 +180,44 @@ public class UserMgmtEvents {
 
         // TODO: Check permission
         try {
-            Map<String,Object> removeOrgEmpResp = dispatcher.runSync("removeOrgEmployee",
+            Map<String, Object> removeOrgEmpResp = dispatcher.runSync("removeOrgEmployee",
                     UtilMisc.toMap("userLogin", userLogin,
                             "orgEmployeePartyId", partyId));
-            if(!ServiceUtil.isSuccess(removeOrgEmpResp)) {
-                request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+            if (!ServiceUtil.isSuccess(removeOrgEmpResp)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id " + partyId);
                 return ERROR;
             }
         } catch (GenericServiceException e) {
             e.printStackTrace();
-            request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id "+ partyId);
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to delete user with party id " + partyId);
             return ERROR;
         }
         request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
+        return SUCCESS;
+    }
+
+    public static String forgotPasswordSendLink(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String emailId = request.getParameter("USERNAME");
+
+        Map<String, Object> result = null;
+        try {
+            result = dispatcher.runSync("generatePasswordResetToken", UtilMisc.<String, Object>toMap("emailId", emailId));
+            if (!ServiceUtil.isSuccess(result)) {
+                request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
+            return ERROR;
+        }
+        Object token = result.get("token");
+        System.out.println(token);
+        request.setAttribute("_EVENT_MESSAGE_", token);
         return SUCCESS;
     }
 
