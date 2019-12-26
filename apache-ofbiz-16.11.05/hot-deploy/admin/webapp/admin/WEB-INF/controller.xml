@@ -79,6 +79,13 @@
 		<response name="success" type="view" value="customers" />
 		<response name="error" type="view" value="new_customer" />
 	</request-map>
+	<request-map uri="CreateAdmin">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents"
+			   invoke="createAdminUser" />
+		<response name="success" type="view" value="manage_users" />
+		<response name="error" type="view" value="new_admin_user" />
+	</request-map>
 	<request-map uri="manage_customer">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_customer" />

@@ -25,10 +25,22 @@
             <tbody>
             <#list adminUsers as admin>
                 <tr>
-                    <td>1</td>
-                    <td><a href="<@ofbizUrl>edit_admin</@ofbizUrl>">${admin.fullName!}</a></td>
-                    <td>04/10/2013</td>
-                     <td><span class="status text-success" >&bull;</span> <span>Active</span></td>
+                    <td>${admin_index + 1}</td>
+                    <td><a href="<@ofbizUrl>edit_admin</@ofbizUrl>">${admin.fullName!}</a>
+                        <div class="small text-muted">${admin.adminUserLoginId!}</div>
+                    </td>
+                    <td><#if admin.createdDate??>${admin.createdDate!?date}</#if></td>
+                     <td>
+                         <#if admin.userStatus?? && admin.userStatus == "ACTIVE">
+                             <span class="status text-success" >&#8226;</span> <span>Active</span>
+                         <#elseif admin.userStatus?? && admin.userStatus == "INACTIVE">
+                             <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span> In-Active</div>
+                         <#elseif admin.userStatus?? && admin.userStatus == "LOCKED">
+                             <div title="User locked due to failed logins"><span class="status text-warning">&bull;</span> Locked </div>
+                         <#else>
+                             <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
+                         </#if>
+                     </td>
                     <td>
                       <a href="#" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                       <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></a>
