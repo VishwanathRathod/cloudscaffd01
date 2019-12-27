@@ -40,7 +40,7 @@
                     </#list>
                 </div>
                 <p>Password has been reset successfully, Please login to proceed</p>
-                <a class="btn btn-outline-primary" href="<@ofbizUrl>login</@ofbizUrl>"> <i class="material-icons">
+                <a class="btn btn-outline-primary" href="<@ofbizUrl>checkLogin</@ofbizUrl>"> <i class="material-icons">
                         keyboard_backspace
                     </i> Back to Login</a>
                 ${eventMessage}

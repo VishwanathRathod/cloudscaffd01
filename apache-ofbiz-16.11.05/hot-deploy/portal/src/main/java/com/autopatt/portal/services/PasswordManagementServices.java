@@ -1,9 +1,7 @@
 package com.autopatt.portal.services;
 
+import com.autopatt.admin.utils.JWTHelper;
 import com.autopatt.admin.utils.TenantCommonUtils;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.ofbiz.base.crypto.HashCrypt;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -19,21 +17,17 @@ import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Map;
 
 public class PasswordManagementServices {
 
     public static final String module = PasswordManagementServices.class.getName();
     public static final String resource = "SecurityextUiLabels";
-    private static Properties PORTAL_PROPERTIES = UtilProperties.getProperties("portal.properties");
 
     public static Map<String, Object> generatePasswordResetToken(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
-        LocalDispatcher dispatcher = ctx.getDispatcher();
-        Map<String, Object> resultMap = ServiceUtil.returnSuccess();
         String userLoginId = (String) context.get("userLoginId");
         Locale locale = (Locale) context.get("locale");
         String errMsg = null;
@@ -51,31 +45,7 @@ public class PasswordManagementServices {
             errMsg = UtilProperties.getMessage(resource, "loginservices.could_not_change_password_userlogin_with_id_not_exist", messageMap, locale);
             return ServiceUtil.returnError(errMsg);
         }
-
-        String secretKey = PORTAL_PROPERTIES.getProperty("reset.password.token.jwt.secret.key", "AUTOPATT");
-        String expiryStr = PORTAL_PROPERTIES.getProperty("reset.password.token.expiry", "60");
-        try {
-            long nowMillis = System.currentTimeMillis();
-            Date now = new Date(nowMillis);
-            long expMinutes = new Long(expiryStr);
-            Date exp = new Date(nowMillis + 60000 * expMinutes);
-
-            SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-            byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
-            Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-
-            JwtBuilder builder = Jwts.builder();
-            builder.setId(userLoginId);
-            builder.setIssuedAt(now);
-            builder.setSubject(delegator.getDelegatorTenantId());
-            builder.setExpiration(exp);
-            builder.signWith(signatureAlgorithm, signingKey);
-            resultMap.put("token", builder.compact());
-            return resultMap;
-        } catch (Exception e) {
-            Debug.logError(e, module);
-            return ServiceUtil.returnFailure("Failed to generate token");
-        }
+        return JWTHelper.generateJWTToken(delegator.getDelegatorTenantId(), userLoginId);
     }
 
     public static Map<String, Object> resetPassword(DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -114,7 +84,6 @@ public class PasswordManagementServices {
 
         if ("true".equals(EntityUtilProperties.getPropertyValue("security", "password.lowercase", delegator))) {
             newPassword = newPassword.toLowerCase();
-            newPasswordVerify = newPasswordVerify.toLowerCase();
         }
 
         boolean useEncryption = "true".equals(EntityUtilProperties.getPropertyValue("security", "password.encrypt", delegator));

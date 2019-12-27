@@ -129,19 +129,19 @@
 	</request-map>
 	<request-map uri="forgotPassword">
 		<security https="true" auth="false" />
-		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="sendPasswordResetLink" />
+		<event type="java" path="com.autopatt.portal.events.PasswordMgmtEvents" invoke="sendPasswordResetLink" />
 		<response name="success" type="view" value="forgotPwdInitiated"/>
 		<response name="error" type="view" value="initForgotPwd" />
 	</request-map>
 	<request-map uri="spwd">
 		<security https="true" auth="false" />
-		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="validateToken" />
+		<event type="java" path="com.autopatt.portal.events.PasswordMgmtEvents" invoke="validateJWTToken" />
 		<response name="success" type="view" value="initResetPassword"/>
 		<response name="error" type="view" value="resetPasswordResponse" />
 	</request-map>
 	<request-map uri="resetPassword">
 		<security https="true" auth="false" />
-		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="resetPassword" />
+		<event type="java" path="com.autopatt.portal.events.PasswordMgmtEvents" invoke="resetPassword" />
 		<response name="success" type="view" value="resetPasswordResponse"/>
 		<response name="error" type="view" value="initResetPassword" />
 	</request-map>

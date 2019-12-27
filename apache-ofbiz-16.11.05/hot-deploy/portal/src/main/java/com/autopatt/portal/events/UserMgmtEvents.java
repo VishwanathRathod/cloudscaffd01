@@ -28,7 +28,6 @@ public class UserMgmtEvents {
     public final static String module = UserMgmtEvents.class.getName();
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
-    private static Properties PORTAL_PROPERTIES = UtilProperties.getProperties("portal.properties");
 
     public static String createUser(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -199,111 +198,6 @@ public class UserMgmtEvents {
             return ERROR;
         }
         request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
-        return SUCCESS;
-    }
-
-    public static String sendPasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
-        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-        HttpSession session = request.getSession();
-        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
-
-        String emailId = request.getParameter("USERNAME");
-
-        Map<String, Object> result = null;
-        try {
-            result = dispatcher.runSync("generatePasswordResetToken", UtilMisc.<String, Object>toMap("userLoginId", emailId));
-            if (!ServiceUtil.isSuccess(result)) {
-                request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
-                return ERROR;
-            }
-        } catch (GenericServiceException e) {
-            Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
-            return ERROR;
-        }
-        System.out.println(result.get("token"));
-        request.setAttribute("_EVENT_MESSAGE_", result.get("token"));
-        return SUCCESS;
-    }
-
-    public static String validateToken(HttpServletRequest request, HttpServletResponse response) {
-        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-        HttpSession session = request.getSession();
-        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
-
-        String token = request.getParameter("token");
-        try {
-            String secretKey = PORTAL_PROPERTIES.getProperty("reset.password.token.jwt.secret.key", "AUTOPATT");
-            Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
-                    .parseClaimsJws(token).getBody();
-            String userName = claims.getId();
-            String userTenantId = claims.getSubject();
-            Date expiration = claims.getExpiration();
-            if (UtilDateTime.nowTimestamp().after(UtilDateTime.toTimestamp(expiration))) {
-                request.setAttribute("_ERROR_MESSAGE_", "Token has been expired");
-                return ERROR;
-            }
-
-            request.setAttribute("USERNAME", userName);
-            request.setAttribute("userTenantId", userTenantId);
-        } catch (Exception e) {
-            Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to decrypt token");
-            return ERROR;
-        }
-        request.setAttribute("token", token);
-        return SUCCESS;
-    }
-
-    public static String resetPassword(HttpServletRequest request, HttpServletResponse response) {
-        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-        HttpSession session = request.getSession();
-        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
-
-        String token = request.getParameter("token");
-        String newPasswordVerify = request.getParameter("newPasswordVerify");
-        String newPassword = request.getParameter("newPassword");
-
-        String emailId = null;
-        String userTenantId = null;
-        try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary("AUTOPATT"))
-                    .parseClaimsJws(token).getBody();
-            emailId = claims.getId();
-            userTenantId = claims.getSubject();
-            Date expiration = claims.getExpiration();
-            if (UtilDateTime.nowTimestamp().after(UtilDateTime.toTimestamp(expiration))) {
-                request.setAttribute("_ERROR_MESSAGE_", "Token has been expired");
-                return ERROR;
-            }
-
-        } catch (Exception e) {
-            Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to decrypt token");
-            return ERROR;
-        }
-
-        request.setAttribute("token", token);
-        Map<String, Object> result = null;
-        try {
-            result = dispatcher.runSync("resetPassword",
-                    UtilMisc.<String, Object>toMap("userLoginId", emailId, "userTenantId", userTenantId,
-                            "newPassword", newPassword, "newPasswordVerify", newPasswordVerify));
-            if (!ServiceUtil.isSuccess(result)) {
-                if (result.containsKey("errorMessage")) {
-                    request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
-                } else {
-                    request.setAttribute("_ERROR_MESSAGE_LIST_", result.get("errorMessageList"));
-                }
-                return ERROR;
-            }
-        } catch (GenericServiceException e) {
-            Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to update the password");
-            return ERROR;
-        }
         return SUCCESS;
     }
 }
