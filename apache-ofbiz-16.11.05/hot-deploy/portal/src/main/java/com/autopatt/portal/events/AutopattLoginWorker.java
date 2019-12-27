@@ -101,6 +101,11 @@ public class AutopattLoginWorker {
     public static String changePassword(HttpServletRequest request, HttpServletResponse response) {
         String res = LoginWorker.login(request, response);
         if (!SUCCESS.equals(res)) {
+            boolean requirePasswordChange = "Y".equals(request.getParameter("requirePasswordChange"));
+            if(requirePasswordChange) {
+                String username = request.getParameter("USERNAME");
+                request.setAttribute("USERNAME", username);
+            }
             return res;
         }
         return overridePreviousLogInSession(request) ? SUCCESS : ERROR;

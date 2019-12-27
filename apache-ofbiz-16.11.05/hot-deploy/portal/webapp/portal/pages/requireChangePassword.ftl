@@ -41,7 +41,7 @@
 
                 <form id="login" action="<@ofbizUrl>requireChangePassword</@ofbizUrl>" method="post">
                     <input type="hidden" name="requirePasswordChange" value="Y"/>
-                    <input type="hidden" name="USERNAME" value="${requestAttributes.USERNAME}"/>
+                    <input type="hidden" name="USERNAME" value="${requestAttributes.USERNAME!}"/>
                     <input type="hidden" name="userTenantId" value="${delegator.getDelegatorTenantId()}"/>
 
                     <div class="form-group">
