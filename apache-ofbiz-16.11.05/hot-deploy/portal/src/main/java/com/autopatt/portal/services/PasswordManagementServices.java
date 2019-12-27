@@ -8,7 +8,6 @@ import org.apache.ofbiz.base.crypto.HashCrypt;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilProperties;
-import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.common.login.LoginServices;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericDelegator;
@@ -24,19 +23,18 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class UserManagementServices {
+public class PasswordManagementServices {
 
-    public static final String module = UserManagementServices.class.getName();
+    public static final String module = PasswordManagementServices.class.getName();
     public static final String resource = "SecurityextUiLabels";
+    private static Properties PORTAL_PROPERTIES = UtilProperties.getProperties("portal.properties");
 
     public static Map<String, Object> generatePasswordResetToken(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         LocalDispatcher dispatcher = ctx.getDispatcher();
         Map<String, Object> resultMap = ServiceUtil.returnSuccess();
-        String userLoginId = (String) context.get("emailId");
+        String userLoginId = (String) context.get("userLoginId");
         Locale locale = (Locale) context.get("locale");
         String errMsg = null;
         GenericValue userLogin = null;
@@ -53,14 +51,17 @@ public class UserManagementServices {
             errMsg = UtilProperties.getMessage(resource, "loginservices.could_not_change_password_userlogin_with_id_not_exist", messageMap, locale);
             return ServiceUtil.returnError(errMsg);
         }
+
+        String secretKey = PORTAL_PROPERTIES.getProperty("reset.password.token.jwt.secret.key", "AUTOPATT");
+        String expiryStr = PORTAL_PROPERTIES.getProperty("reset.password.token.expiry", "60");
         try {
             long nowMillis = System.currentTimeMillis();
             Date now = new Date(nowMillis);
-            long expMinutes = 60;
+            long expMinutes = new Long(expiryStr);
             Date exp = new Date(nowMillis + 60000 * expMinutes);
 
             SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-            byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary("AUTOPATT");
+            byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
             Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
             JwtBuilder builder = Jwts.builder();
@@ -81,7 +82,7 @@ public class UserManagementServices {
         Delegator delegator = ctx.getDelegator();
         LocalDispatcher dispatcher = ctx.getDispatcher();
         Map<String, Object> resultMap = ServiceUtil.returnSuccess();
-        String userLoginId = (String) context.get("emailId");
+        String userLoginId = (String) context.get("userLoginId");
         String userTenantId = (String) context.get("userTenantId");
         String newPassword = (String) context.get("newPassword");
         String newPasswordVerify = (String) context.get("newPasswordVerify");

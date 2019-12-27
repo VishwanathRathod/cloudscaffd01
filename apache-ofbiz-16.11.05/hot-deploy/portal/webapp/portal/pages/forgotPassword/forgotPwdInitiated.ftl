@@ -1,4 +1,3 @@
-
 <#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
 <#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
 <#if requestAttributes.serviceValidationException??><#assign serviceValidationException = requestAttributes.serviceValidationException></#if>
@@ -22,14 +21,16 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
-            <p>In order to <b>Reset your account password</b>, we require you to enter your email, we will send reset password link</p>
+            <p>Forgot Password initiated successfully</p>
         </div>
     </div>
     <div class="login-main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
-                <h3>Forgot Password</h3>
-                <div><hr/></div>
+                <h3>Forgot Password </h3>
+                <div>
+                    <hr/>
+                </div>
                 <br/>
                 <div>
                     <#list errorMessageList as error>
@@ -38,20 +39,9 @@
                         </div>
                     </#list>
                 </div>
-
-                <form id="login" action="<@ofbizUrl>forgotPassword</@ofbizUrl>" method="post">
-                    <div class="form-group">
-                        <label>Organization Id</label>
-                        <input type="text" class="form-control" placeholder="xyzcorp" name="userTenantId">
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Link</button>
-                </form>
+                <p>Forgot password initiated successfully<p/>
+                ${eventMessage}
             </div>
         </div>
     </div>
 </div>
-

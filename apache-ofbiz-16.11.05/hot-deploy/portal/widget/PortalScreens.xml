@@ -279,12 +279,12 @@
             </widgets>
         </section>
     </screen>
-    <screen name="forgotPasswordEmailRequest">
+    <screen name="initForgotPwd">
         <section>
             <actions>
                 <set field="title" value="Forgot Password"/>
-                <set field="currentPage" value="forgotPasswordEmailRequest"/>
-                <set field="currentViewId" value="forgotPasswordEmailRequest"/>
+                <set field="currentPage" value="initForgotPwd"/>
+                <set field="currentViewId" value="initForgotPwd"/>
             </actions>
             <widgets>
                 <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
@@ -292,7 +292,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordEmailRequest.ftl" />
+                                        location="component://portal/webapp/portal/pages/forgotPassword/initForgotPwd.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -300,12 +300,12 @@
             </widgets>
         </section>
     </screen>
-    <screen name="forgotPasswordLinkSuccess">
+    <screen name="forgotPwdInitiated">
         <section>
             <actions>
                 <set field="title" value="Forgot Password"/>
-                <set field="currentPage" value="forgotPasswordEmailRequest"/>
-                <set field="currentViewId" value="forgotPasswordEmailRequest"/>
+                <set field="currentPage" value="forgotPwdInitiated"/>
+                <set field="currentViewId" value="forgotPwdInitiated"/>
             </actions>
             <widgets>
                 <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
@@ -313,7 +313,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordLinkSuccess.ftl" />
+                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPwdInitiated.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -321,12 +321,12 @@
             </widgets>
         </section>
     </screen>
-    <screen name="forgotPasswordForm">
+    <screen name="initResetPassword">
         <section>
             <actions>
                 <set field="title" value="Forgot Password Form"/>
-                <set field="currentPage" value="forgotPasswordForm"/>
-                <set field="currentViewId" value="forgotPasswordForm"/>
+                <set field="currentPage" value="initResetPassword"/>
+                <set field="currentViewId" value="initResetPassword"/>
             </actions>
             <widgets>
                 <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
@@ -334,7 +334,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordForm.ftl" />
+                                        location="component://portal/webapp/portal/pages/forgotPassword/initResetPassword.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>
@@ -342,12 +342,12 @@
             </widgets>
         </section>
     </screen>
-    <screen name="forgotPasswordResponse">
+    <screen name="resetPasswordResponse">
         <section>
             <actions>
                 <set field="title" value="Forgot Password Response"/>
-                <set field="currentPage" value="forgotPasswordResponse"/>
-                <set field="currentViewId" value="forgotPasswordResponse"/>
+                <set field="currentPage" value="resetPasswordResponse"/>
+                <set field="currentViewId" value="resetPasswordResponse"/>
             </actions>
             <widgets>
                 <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
@@ -355,7 +355,7 @@
                         <platform-specific>
                             <html>
                                 <html-template
-                                        location="component://portal/webapp/portal/pages/forgotPassword/forgotPasswordResponse.ftl" />
+                                        location="component://portal/webapp/portal/pages/forgotPassword/resetPasswordResponse.ftl" />
                             </html>
                         </platform-specific>
                     </decorator-section>

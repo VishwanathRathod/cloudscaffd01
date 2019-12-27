@@ -56,7 +56,7 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                   <hr/>
-                  <a href="<@ofbizUrl>forgotPasswordEmailRequest</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
+                  <a href="<@ofbizUrl>initForgotPwd</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
 
                </form>
             </div>

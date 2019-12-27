@@ -22,11 +22,13 @@ import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class UserMgmtEvents {
     public final static String module = UserMgmtEvents.class.getName();
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+    private static Properties PORTAL_PROPERTIES = UtilProperties.getProperties("portal.properties");
 
     public static String createUser(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -200,7 +202,7 @@ public class UserMgmtEvents {
         return SUCCESS;
     }
 
-    public static String forgotPasswordSendLink(HttpServletRequest request, HttpServletResponse response) {
+    public static String sendPasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         HttpSession session = request.getSession();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
@@ -209,7 +211,7 @@ public class UserMgmtEvents {
 
         Map<String, Object> result = null;
         try {
-            result = dispatcher.runSync("generatePasswordResetToken", UtilMisc.<String, Object>toMap("emailId", emailId));
+            result = dispatcher.runSync("generatePasswordResetToken", UtilMisc.<String, Object>toMap("userLoginId", emailId));
             if (!ServiceUtil.isSuccess(result)) {
                 request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
                 return ERROR;
@@ -219,9 +221,8 @@ public class UserMgmtEvents {
             request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
             return ERROR;
         }
-        Object token = result.get("token");
-        System.out.println(token);
-        request.setAttribute("_EVENT_MESSAGE_", token);
+        System.out.println(result.get("token"));
+        request.setAttribute("_EVENT_MESSAGE_", result.get("token"));
         return SUCCESS;
     }
 
@@ -231,10 +232,10 @@ public class UserMgmtEvents {
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
 
         String token = request.getParameter("token");
-
         try {
+            String secretKey = PORTAL_PROPERTIES.getProperty("reset.password.token.jwt.secret.key", "AUTOPATT");
             Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary("AUTOPATT"))
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                     .parseClaimsJws(token).getBody();
             String userName = claims.getId();
             String userTenantId = claims.getSubject();
@@ -251,14 +252,11 @@ public class UserMgmtEvents {
             request.setAttribute("_ERROR_MESSAGE_", "Failed to decrypt token");
             return ERROR;
         }
-
-
         request.setAttribute("token", token);
-
         return SUCCESS;
     }
 
-    public static String updateForgotPassword(HttpServletRequest request, HttpServletResponse response) {
+    public static String resetPassword(HttpServletRequest request, HttpServletResponse response) {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         HttpSession session = request.getSession();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
@@ -291,7 +289,7 @@ public class UserMgmtEvents {
         Map<String, Object> result = null;
         try {
             result = dispatcher.runSync("resetPassword",
-                    UtilMisc.<String, Object>toMap("emailId", emailId, "userTenantId", userTenantId,
+                    UtilMisc.<String, Object>toMap("userLoginId", emailId, "userTenantId", userTenantId,
                             "newPassword", newPassword, "newPasswordVerify", newPasswordVerify));
             if (!ServiceUtil.isSuccess(result)) {
                 if (result.containsKey("errorMessage")) {

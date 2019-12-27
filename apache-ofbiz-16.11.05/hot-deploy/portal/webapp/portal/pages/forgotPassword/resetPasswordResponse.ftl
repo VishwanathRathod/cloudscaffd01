@@ -1,4 +1,3 @@
-
 <#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
 <#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
 <#if requestAttributes.serviceValidationException??><#assign serviceValidationException = requestAttributes.serviceValidationException></#if>
@@ -22,14 +21,16 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
-            <p>In order to <b>Reset your account password</b>, we require you to enter you email id, we send reset password link</p>
+            <p>Password has been reset successfully</p>
         </div>
     </div>
     <div class="login-main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
                 <h3>Forgot Password </h3>
-                <div><hr/></div>
+                <div>
+                    <hr/>
+                </div>
                 <br/>
                 <div>
                     <#list errorMessageList as error>
@@ -38,6 +39,10 @@
                         </div>
                     </#list>
                 </div>
+                <p>Password has been reset successfully, Please login to proceed</p>
+                <a class="btn btn-outline-primary" href="<@ofbizUrl>login</@ofbizUrl>"> <i class="material-icons">
+                        keyboard_backspace
+                    </i> Back to Login</a>
                 ${eventMessage}
             </div>
         </div>

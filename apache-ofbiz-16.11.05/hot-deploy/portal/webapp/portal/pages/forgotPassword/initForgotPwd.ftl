@@ -1,4 +1,3 @@
-
 <#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
 <#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
 <#if requestAttributes.serviceValidationException??><#assign serviceValidationException = requestAttributes.serviceValidationException></#if>
@@ -22,14 +21,17 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
-            <p>Please enter password</p>
+            <p>In order to <b>Reset your account password</b>, we require you to enter your organization and email, we
+                will send reset password link</p>
         </div>
     </div>
     <div class="login-main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
-                <h3>Forgot Password </h3>
-                <div><hr/></div>
+                <h3>Forgot Password</h3>
+                <div>
+                    <hr/>
+                </div>
                 <br/>
                 <div>
                     <#list errorMessageList as error>
@@ -38,20 +40,20 @@
                         </div>
                     </#list>
                 </div>
-                <form id="login" action="<@ofbizUrl>updateForgotPassword</@ofbizUrl>" method="post">
-                    <input  name="token" value="${requestAttributes.token}"/>
 
+                <form id="login" action="<@ofbizUrl>forgotPassword</@ofbizUrl>" method="post">
                     <div class="form-group">
-                        <label>New Password</label>
-                        <input type="password" class="form-control" placeholder="" name="newPassword" required>
+                        <label>Organization Id</label>
+                        <input type="text" class="form-control" placeholder="xyzcorp" name="userTenantId">
                     </div>
                     <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="" name="newPasswordVerify" required>
+                        <label>Email Address</label>
+                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Send Link</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
