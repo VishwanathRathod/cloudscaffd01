@@ -306,6 +306,7 @@
                 <set field="title" value="Forgot Password"/>
                 <set field="currentPage" value="forgotPwdInitiated"/>
                 <set field="currentViewId" value="forgotPwdInitiated"/>
+                <set field="myEventMessage" from-field="requestAttributes._EVENT_MESSAGE_"/>
             </actions>
             <widgets>
                 <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
