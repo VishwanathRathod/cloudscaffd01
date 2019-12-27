@@ -25,7 +25,7 @@ This command will update any entity changes, and also load latest seed and seed-
 ~~~
 gradlew loadTenant -PtenantId=<tenantId> -PtenantReaders=seed,seed-initial
 ~~~
-For the given tenantId, latest entit changes and seed data will be updated.
+For the given tenantId, latest entity changes and seed data will be updated.
 
 ### Bulk-Update Tenant Databases
 
