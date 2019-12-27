@@ -34,7 +34,7 @@
 		<security https="true" auth="false" />
 		<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
 			invoke="login" />
-		<response name="success" type="request-redirect" value="myaccount" />
+		<response name="success" type="request-redirect" value="home" />
 		<response name="requirePasswordChange" type="view"
 			value="requirePasswordChange" />
 		<response name="error" type="view" value="login" />
@@ -83,7 +83,9 @@
 		<security https="true" auth="true" />
 		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents"
 			   invoke="createAdminUser" />
-		<response name="success" type="view" value="manage_users" />
+		<response name="success" type="request-redirect" value="manage_users" >
+			<redirect-parameter name="createSuccess"/>
+		</response>
 		<response name="error" type="view" value="new_admin_user" />
 	</request-map>
 	<request-map uri="manage_customer">
@@ -189,6 +191,12 @@
 		<response name="success" type="request-redirect" value="manage_users" />
 		<response name="error" type="view" value="edit_admin_user" />
 	</request-map>
+	<request-map uri="DeleteAdminUser">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents" invoke="deleteAdminUser" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
 
 	<request-map uri="ajaxSuspendOrgUser">
 		<security https="true" auth="true"/>
@@ -235,6 +243,8 @@
 
 	<view-map name="login" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#login" />
+	<view-map name="requireChangePassword" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#requireChangePassword" />
 	<view-map name="myaccount" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#myaccount" />
 	<view-map name="changePassword" type="screen"
@@ -250,9 +260,13 @@
 
 	<view-map name="edit_plan" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_plan" />
+
 	<view-map name="edit_admin_user" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_admin_user" />
 
 	<view-map name="system_settings" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#system_settings" />
+
+	<view-map name="requirePasswordChange" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#requireChangePassword"/>
 </site-conf>

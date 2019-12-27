@@ -1,10 +1,10 @@
 package com.autopatt.admin.events;
 
 import com.autopatt.admin.utils.UserLoginUtils;
-import com.autopatt.common.utils.SecurityGroupUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
@@ -15,6 +15,7 @@ import org.apache.ofbiz.service.ServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 public class AdminMgmtEvents {
@@ -48,7 +49,7 @@ public class AdminMgmtEvents {
             userLoginCtx.put("userLoginId", email);
             userLoginCtx.put("currentPassword", password);
             userLoginCtx.put("currentPasswordVerify", password);
-            userLoginCtx.put("requirePasswordChange", "N"); // TODO: change back to Y after implementing password change screen
+            userLoginCtx.put("requirePasswordChange", "Y"); // TODO: change back to Y after implementing password change screen
             userLoginCtx.put("partyId", partyId);
 
             Map<String, Object> createUserLoginResp = dispatcher.runSync("createUserLogin", userLoginCtx);
@@ -113,4 +114,45 @@ public class AdminMgmtEvents {
         request.setAttribute("updateSuccess", "Y");
         return SUCCESS;
     }
+    public static String deleteAdminUser(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+
+        String adminPartyId = request.getParameter("adminPartyId");
+        System.out.println("Deleting... " + adminPartyId);
+
+        try {
+            // 1. Remove PartyRole for this user
+            List<GenericValue> partyRoles = delegator.findByAnd("PartyRole", UtilMisc.toMap("partyId", adminPartyId), null, false);
+            if(UtilValidate.isNotEmpty(partyRoles)) {
+                for(GenericValue partyRole: partyRoles) {
+                    partyRole.remove();
+                }
+            }
+            // 2. Get userLoginId for this partyId
+            String userLoginId = UserLoginUtils.getUserLoginIdForPartyId(delegator, adminPartyId);
+
+            // 3. Remove all UserLoginSecurityGroup for this userLoginId
+            List<GenericValue> userLoginSecGroups = delegator.findByAnd("UserLoginSecurityGroup", UtilMisc.toMap("userLoginId", userLoginId), null, false);
+            if(UtilValidate.isNotEmpty(userLoginSecGroups)) {
+                for(GenericValue userLoginSecGroup : userLoginSecGroups) {
+                    userLoginSecGroup.remove();
+                }
+            }
+            // 4. set enabled=N in UserLogin, and disabledDateTime to null
+            GenericValue partyUserLogin = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", userLoginId), false);
+            if(UtilValidate.isNotEmpty(partyUserLogin)) {
+                partyUserLogin.setString("enabled", "N");
+                partyUserLogin.set("disabledDateTime", null);
+                partyUserLogin.store();
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("_EVENT_MESSAGE_", " Admin User deleted successfully.");
+        return SUCCESS;
+    }
+
 }

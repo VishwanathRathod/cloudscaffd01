@@ -48,6 +48,27 @@
             </widgets>
         </section>
     </screen>
+    <screen name="requireChangePassword">
+        <section>
+            <actions>
+                <set field="title" value="Require Change Password"/>
+                <set field="currentPage" value="requireChangePassword"/>
+                <set field="currentViewId" value="REQUIRECHANGEPASSWORD"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/requireChangePassword.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
 
     <screen name="myaccount">
@@ -254,7 +275,4 @@
             </widgets>
         </section>
     </screen>
-
-
-
 </screens>
