@@ -21,7 +21,7 @@
 
     <div class="login-sidenav">
         <div class="login-main-text">
-            <h2>AutoPatt Admin</h2>
+            <h2>AutoPatt Admin <br> Login </h2>
             <p>In order to <b>protect your account</b>, we require you to change your password as you have just logged in using a temporary password.</p>
         </div>
     </div>

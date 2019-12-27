@@ -32,8 +32,10 @@
 	<!-- Security Request Mappings -->
 	<request-map uri="login">
 		<security https="true" auth="false" />
-		<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+		<event type="java" path="com.autopatt.admin.events.AdminLoginWorker"
 			invoke="login" />
+		<!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+			   invoke="login" />-->
 		<response name="success" type="request-redirect" value="home" />
 		<response name="requirePasswordChange" type="view"
 			value="requirePasswordChange" />
@@ -53,7 +55,14 @@
 		<response name="success" type="request-redirect" value="home" />
 		<response name="error" type="view" value="home" />
 	</request-map>
-	
+
+	<request-map uri="requireChangePassword">
+		<event type="java" path="com.autopatt.admin.events.AdminLoginWorker" invoke="changePassword" />
+		<response name="success" type="view" value="home" />
+		<response name="error" type="view" value="requirePasswordChange" />
+		<response name="requirePasswordChange" type="view" value="requirePasswordChange" />
+	</request-map>
+
 	<!-- End of Security Mappings -->
 
 	<request-map uri="home">
