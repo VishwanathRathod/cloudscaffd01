@@ -32,9 +32,11 @@
 	<!-- Security Request Mappings -->
 	<request-map uri="login">
 		<security https="true" auth="false" />
-		<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+		<event type="java" path="com.autopatt.admin.events.AdminLoginWorker"
 			invoke="login" />
-		<response name="success" type="request-redirect" value="myaccount" />
+		<!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+			   invoke="login" />-->
+		<response name="success" type="request-redirect" value="home" />
 		<response name="requirePasswordChange" type="view"
 			value="requirePasswordChange" />
 		<response name="error" type="view" value="login" />
@@ -53,7 +55,14 @@
 		<response name="success" type="request-redirect" value="home" />
 		<response name="error" type="view" value="home" />
 	</request-map>
-	
+
+	<request-map uri="requireChangePassword">
+		<event type="java" path="com.autopatt.admin.events.AdminLoginWorker" invoke="changePassword" />
+		<response name="success" type="view" value="home" />
+		<response name="error" type="view" value="requirePasswordChange" />
+		<response name="requirePasswordChange" type="view" value="requirePasswordChange" />
+	</request-map>
+
 	<!-- End of Security Mappings -->
 
 	<request-map uri="home">
@@ -68,12 +77,25 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="new_customer" />
 	</request-map>
+	<request-map uri="new_admin_user">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="new_admin_user" />
+	</request-map>
 	<request-map uri="CreateCustomer">
 		<security https="true" auth="true" />
 		<event type="java" path="com.autopatt.admin.events.CustomerEvents"
 			   invoke="createCustomer" />
 		<response name="success" type="view" value="customers" />
 		<response name="error" type="view" value="new_customer" />
+	</request-map>
+	<request-map uri="CreateAdmin">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents"
+			   invoke="createAdminUser" />
+		<response name="success" type="request-redirect" value="manage_users" >
+			<redirect-parameter name="createSuccess"/>
+		</response>
+		<response name="error" type="view" value="new_admin_user" />
 	</request-map>
 	<request-map uri="manage_customer">
 		<security https="true" auth="true" />
@@ -105,6 +127,15 @@
 		</response>
 		<response name="error" type="view" value="manage_customer" />
 	</request-map>
+
+	<request-map uri="UpdateCustomerDetails">
+		<event type="java" path="com.autopatt.admin.events.CustomerEvents" invoke="UpdateCustomerDetails" />
+		<response name="success" type="request-redirect" value="manage_customer" >
+			<redirect-parameter name="orgPartyId"/>
+		</response>
+		<response name="error" type="view" value="manage_customer" />
+	</request-map>
+
 	<request-map uri="changePassword">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="changePassword" />
@@ -152,12 +183,28 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="edit_plan"/>
 	</request-map>
+	<request-map uri="edit_admin_user">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="edit_admin_user"/>
+	</request-map>
 	<request-map uri="UpdatePlan">
 		<event type="java" path="com.autopatt.admin.events.PlanMgmtEvents" invoke="updatePlan" />
 		<response type="request-redirect" name="success" value="manage_plans">
 			<redirect-parameter name="updateSuccess"/>
 		</response>
 		<response type="view" name="error" value="edit_plan"/>
+	</request-map>
+	<request-map uri="UpdateAdminUser">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents" invoke="updateAdminUser" />
+		<response name="success" type="request-redirect" value="manage_users" />
+		<response name="error" type="view" value="edit_admin_user" />
+	</request-map>
+	<request-map uri="DeleteAdminUser">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.admin.events.AdminMgmtEvents" invoke="deleteAdminUser" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
 	</request-map>
 
 	<request-map uri="ajaxSuspendOrgUser">
@@ -192,6 +239,8 @@
 			  page="component://admin/widget/AdminCustomerScreens.xml#customers" />
 	<view-map name="new_customer" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#new_customer" />
+	<view-map name="new_admin_user" type="screen"
+			  page="component://admin/widget/AdminCustomerScreens.xml#new_admin_user" />
 	<view-map name="manage_customer" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#manage_customer" />
 	<view-map name="org_employee_details" type="screen"
@@ -203,6 +252,8 @@
 
 	<view-map name="login" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#login" />
+	<view-map name="requireChangePassword" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#requireChangePassword" />
 	<view-map name="myaccount" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#myaccount" />
 	<view-map name="changePassword" type="screen"
@@ -219,6 +270,12 @@
 	<view-map name="edit_plan" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#edit_plan" />
 
+	<view-map name="edit_admin_user" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#edit_admin_user" />
+
 	<view-map name="system_settings" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#system_settings" />
+
+	<view-map name="requirePasswordChange" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#requireChangePassword"/>
 </site-conf>

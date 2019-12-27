@@ -59,7 +59,7 @@ public class OrgEmployeeServices {
                 delegator.storeAll(partyRelationships);
             }
 
-            // Delete UserLogin & UserLoginSecurityGroup Assoc too
+            // Delete UserLoginSecurityGroup Assoc too
             String userLoginId = UserLoginUtils.getUserLoginIdForPartyId(delegator, orgEmployeePartyId);
             List<GenericValue> userLoginSecGroups = delegator.findByAnd("UserLoginSecurityGroup", UtilMisc.toMap("userLoginId", userLoginId), null, false);
             if(UtilValidate.isNotEmpty(userLoginSecGroups)) {
@@ -67,10 +67,12 @@ public class OrgEmployeeServices {
                     userLoginSecGroup.remove();
                 }
             }
-            // Remove UserLogin entry
+            // Disable UserLogin entry
             GenericValue partyUserLogin = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", userLoginId), false);
             if(UtilValidate.isNotEmpty(partyUserLogin)) {
-                partyUserLogin.remove();
+                //partyUserLogin.remove(); // Can't delete due to UserLoginHistory
+                partyUserLogin.setString("enabled", "N");
+                partyUserLogin.store();
             }
         } catch (GenericEntityException e) {
             e.printStackTrace();

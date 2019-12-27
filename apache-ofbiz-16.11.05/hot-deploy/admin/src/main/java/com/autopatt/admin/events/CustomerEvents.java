@@ -8,6 +8,8 @@ import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
+import org.apache.ofbiz.entity.GenericEntityException;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,4 +61,29 @@ public class CustomerEvents {
         }
         return SUCCESS;
     }
-}
+
+    // TODO: add that method here.. no need of new Java file always
+
+
+        public static String UpdateCustomerDetails(HttpServletRequest request, HttpServletResponse response) {
+            HttpSession session = request.getSession();
+            GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+            String orgPartyId = request.getParameter("orgPartyId");
+            request.setAttribute("orgPartyId", orgPartyId);
+            Delegator delegator = (Delegator) request.getAttribute("delegator");
+            String organizationName = request.getParameter("organizationName");
+
+            Map<String, Object> inputs = UtilMisc.toMap("partyId", orgPartyId);
+            try {
+                GenericValue partygroup = delegator.findOne("PartyGroup", inputs, false);
+                partygroup.set("groupName", organizationName);
+                delegator.store(partygroup);
+            } catch (GenericEntityException e) {
+                e.printStackTrace();
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to update the customer details.");
+                return ERROR;
+            }
+            request.setAttribute("_EVENT_MESSAGE_", "Profile details updated successfully.");
+            return SUCCESS;
+        }
+    }

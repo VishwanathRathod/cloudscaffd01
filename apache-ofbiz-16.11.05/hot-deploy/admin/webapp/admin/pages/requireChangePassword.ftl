@@ -21,7 +21,7 @@
 
     <div class="login-sidenav">
         <div class="login-main-text">
-            <h2>AutoPatt Console</h2>
+            <h2>AutoPatt Admin <br> Login </h2>
             <p>In order to <b>protect your account</b>, we require you to change your password as you have just logged in using a temporary password.</p>
         </div>
     </div>
@@ -42,7 +42,6 @@
                 <form id="login" action="<@ofbizUrl>requireChangePassword</@ofbizUrl>" method="post">
                     <input type="hidden" name="requirePasswordChange" value="Y"/>
                     <input type="hidden" name="USERNAME" value="${requestAttributes.USERNAME!}"/>
-                    <input type="hidden" name="userTenantId" value="${delegator.getDelegatorTenantId()}"/>
 
                     <div class="form-group">
                         <label>Current Password</label>

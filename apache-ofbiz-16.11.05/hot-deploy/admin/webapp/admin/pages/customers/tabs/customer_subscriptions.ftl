@@ -17,11 +17,9 @@
                 <label for="filterSubscriptionsByProduct" class="p-2">Plan</label>
                 <select class="form-control form-control-sm" id="filterSubscriptionsByProduct" name="productId">
                     <option value="ALL">All</option>
-                    <option value="Demo" <#if productId?? && productId=="Demo">selected</#if>>Demo</option>
-                    <option value="P1" <#if productId?? && productId=="P1">selected</#if>>Basic Planner - P1</option>
-                    <option value="P2" <#if productId?? && productId=="P2">selected</#if>>Advanced Planner - P2</option>
-                    <option value="EP1" <#if productId?? && productId=="EP1">selected</#if>>Enterprise Planner - EP1
-                    </option>
+                    <#list plans as plan>
+                    <option value="${plan.productId}" <#if productId?? && productId==plan.productId>selected</#if>>${plan.productId} - ${plan.productName}</option>
+                    </#list>
                 </select>
             </div>
             <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
@@ -130,12 +128,13 @@
                     <input type="hidden" name="orgPartyId" value="${orgPartyId}"/>
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="newSubscriptionProduct" class="p-2">Choose Plan</label>
+
                         <select class="form-control form-control-sm" id="productId" name="productId" required>
-                            <option value="Demo">Demo</option>
-                            <option value="P1">Basic Planner - P1</option>
-                            <option value="P2">Advanced Planner - P2</option>
-                            <option value="EP1">Enterprise Planner - EP1</option>
+                            <#list plans as plan>
+                            <option value="${plan.productId!}">${plan.productId} - ${plan.productName!}</option>
+                            </#list>
                         </select>
+
                     </div>
                     <div class="form-group mx-sm-3 mb-2 ">
                         <label for="newSubscriptionValidFrom" class="p-2">Valid From</label>
@@ -149,7 +148,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="newSubscriptionSubmit" class="btn btn-secondary" data-dismiss="modal">Cancel
+                <button type="button" id="newSubscriptionSubmit" class="btn btnome-secondary" data-dismiss="modal">Cancel
                 </button>
                 <button class="btn btn-primary" onclick="addNewSubscription()">Add</button>
             </div>

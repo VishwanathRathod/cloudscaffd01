@@ -49,7 +49,7 @@ under the License.
     <service name="resetPassword" engine="java"
              location="com.autopatt.portal.services.PasswordManagementServices" invoke="resetPassword"
              auth="false" require-new-transaction="true" transaction-timeout="300">
-        <description>Resets the passwords</description>
+        <description>Resets the password</description>
         <attribute name="userLoginId" type="String" mode="IN" optional="false"/>
         <attribute name="userTenantId" type="String" mode="IN" optional="false"/>
         <attribute name="newPassword" type="String" mode="IN" optional="false"/>

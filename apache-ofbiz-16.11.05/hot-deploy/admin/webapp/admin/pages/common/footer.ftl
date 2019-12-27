@@ -13,6 +13,7 @@
   <script src="../static/js/ajax_requests.js"></script>
   <script src="../static/js/modal_popups.js"></script>
   <script src="../static/js/toast_utils.js"></script>
+  <script src="../static/js/admin_users.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>

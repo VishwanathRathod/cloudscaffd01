@@ -136,6 +136,27 @@
             </widgets>
         </section>
     </screen>
+    <screen name="new_admin_user">
+        <section>
+            <actions>
+                <set field="title" value="New Admin"/>
+                <set field="currentPage" value="new_admin_user"/>
+                <set field="currentViewId" value="NEW_ADMIN_USER"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GeneralDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                        location="component://admin/webapp/admin/pages/new_admin_user.ftl" />
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 
     <screen name="org_employee_details">
         <section>

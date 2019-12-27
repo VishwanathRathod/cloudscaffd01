@@ -3,6 +3,7 @@
 $(function() {
     initializeOrgEmployeeModals();
     initializeOrgSubscriptionModals();
+    initializeAdminUsersModals();
 });
 
 /** Initialize Modals in Subscriptions Tab */
@@ -93,4 +94,17 @@ function initializeOrgEmployeeModals() {
         var modal = $(this)
         modal.find('#resetPasswordForPartyName').text(resetPasswordForPartyName)
     });    
+}
+
+function initializeAdminUsersModals() {
+    $('#deleteAdminUserConfirmModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var adminUserPartyId = button.data('party-id');
+        var deletePartyName = button.data('party-name');
+        if(deletePartyName == null) deletePartyName = "";
+
+        var modal = $(this)
+        modal.find('#deleteAdminUser_partyName').text(deletePartyName);
+        $("#deleteAdminUser_partyId").val(adminUserPartyId )
+    });
 }
