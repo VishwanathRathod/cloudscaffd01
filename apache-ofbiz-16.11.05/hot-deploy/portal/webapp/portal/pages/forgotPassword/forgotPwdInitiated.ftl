@@ -39,8 +39,9 @@
                         </div>
                     </#list>
                 </div>
-                <p>Forgot password initiated successfully<p/>
-                ${requestAttributes.TOKEN!}
+                <p>An email has been sent to your email address with a link to reset your password.<p/>
+
+                <a href="<@ofbizUrl>spwd?token=${requestAttributes.TOKEN!}</@ofbizUrl>">Click here to reest password</a>
             </div>
         </div>
     </div>
