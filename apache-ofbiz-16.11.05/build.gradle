@@ -134,6 +134,7 @@ dependencies {
     compile 'wsdl4j:wsdl4j:1.6.2'
     compile 'org.jsoup:jsoup:1.11.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
     // ofbiz unit-test compile libs
     testCompile 'org.mockito:mockito-core:1.+'

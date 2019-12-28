@@ -24,24 +24,22 @@
 						<if-service-permission service-name="hasValidSubscriptionCheck" />
 					</condition>
 					<widgets>
-						<container>
-							<!-- HTML Headers  -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/headerHead.ftl"/></html></platform-specific>
+						<!-- HTML Headers  -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/headerHead.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/sidebar.ftl"/></html></platform-specific>
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/sidebar.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/pageHeader.ftl"/></html></platform-specific>
-							
-							<!-- body -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/layouts/GeneralLayout.ftl"/></html>
-							</platform-specific>
-							<!-- decorator-section-include name="body"/ -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/pageHeader.ftl"/></html></platform-specific>
 
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/pageFooter.ftl"/></html></platform-specific>
+						<!-- body -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/layouts/GeneralLayout.ftl"/></html>
+						</platform-specific>
+						<!-- decorator-section-include name="body"/ -->
 
-							<!-- footer -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/footer.ftl"/></html></platform-specific>
-						</container>
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/pageFooter.ftl"/></html></platform-specific>
+
+						<!-- footer -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/footer.ftl"/></html></platform-specific>
 					</widgets>
 					<fail-widgets>
 						<decorator-screen name="LoginDecorator" location="${parameters.mainDecoratorLocation}">
@@ -79,18 +77,16 @@
             <widgets>
 				<section>
 					<widgets>
-						<container>
-							<!-- HTML Headers  -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/headerHead.ftl"/></html></platform-specific>
-							
-							<!-- body -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/layouts/GeneralLayout.ftl"/></html>
-							</platform-specific>
-							<!-- decorator-section-include name="body"/ -->
+						<!-- HTML Headers  -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/headerHead.ftl"/></html></platform-specific>
 
-							<!-- footer -->
-							<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/footer.ftl"/></html></platform-specific>
-						</container>
+						<!-- body -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/layouts/GeneralLayout.ftl"/></html>
+						</platform-specific>
+						<!-- decorator-section-include name="body"/ -->
+
+						<!-- footer -->
+						<platform-specific><html><html-template location="component://portal/webapp/portal/pages/common/footer.ftl"/></html></platform-specific>
 					</widgets>
 				</section>
 			</widgets>
