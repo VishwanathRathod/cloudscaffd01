@@ -1,9 +1,8 @@
 package com.autopatt.portal.events;
 
-import com.autopatt.admin.utils.JWTHelper;
+import com.autopatt.common.utils.JWTHelper;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -44,9 +43,10 @@ public class PasswordMgmtEvents {
     public static String validateJWTToken(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getParameter("token");
         request.setAttribute("token", token);
-        Map<String, Object> result = JWTHelper.parseJWTToken(token);
-        if (!ServiceUtil.isSuccess(result)) {
-            request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+        try {
+            JWTHelper.parseJWTToken(token);
+        } catch (Exception e) {
+            request.setAttribute("_ERROR_MESSAGE_", e.getMessage());
             return ERROR;
         }
         return SUCCESS;
@@ -59,22 +59,24 @@ public class PasswordMgmtEvents {
         String newPassword = request.getParameter("newPassword");
         request.setAttribute("token", token);
 
-        Map<String, Object> result = JWTHelper.parseJWTToken(token);
-        if (!ServiceUtil.isSuccess(result)) {
-            request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+        Map<String, String> result = null;
+        try {
+            result = JWTHelper.parseJWTToken(token);
+        } catch (Exception e) {
+            request.setAttribute("_ERROR_MESSAGE_", e.getMessage());
             return ERROR;
         }
-        String userLoginId = (String) result.get("USERNAME");
-        String userTenantId = (String) result.get("userTenantId");
+        String userLoginId = result.get("id");
+        String userTenantId = result.get("subject");
         try {
-            result = dispatcher.runSync("resetPassword",
-                    UtilMisc.<String, Object>toMap("userLoginId", userLoginId, "userTenantId", userTenantId,
+            Map<String, Object> resetPwdresult = dispatcher.runSync("resetPassword",
+                    UtilMisc.<String, String>toMap("userLoginId", userLoginId, "userTenantId", userTenantId,
                             "newPassword", newPassword, "newPasswordVerify", newPasswordVerify));
-            if (!ServiceUtil.isSuccess(result)) {
-                if (result.containsKey("errorMessage")) {
-                    request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+            if (!ServiceUtil.isSuccess(resetPwdresult)) {
+                if (resetPwdresult.containsKey("errorMessage")) {
+                    request.setAttribute("_ERROR_MESSAGE_", resetPwdresult.get("errorMessage"));
                 } else {
-                    request.setAttribute("_ERROR_MESSAGE_LIST_", result.get("errorMessageList"));
+                    request.setAttribute("_ERROR_MESSAGE_LIST_", resetPwdresult.get("errorMessageList"));
                 }
                 return ERROR;
             }

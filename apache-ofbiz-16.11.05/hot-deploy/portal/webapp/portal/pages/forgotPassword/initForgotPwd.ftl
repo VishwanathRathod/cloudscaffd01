@@ -21,8 +21,7 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
-            <p>In order to <b>Reset your account password</b>, we require you to enter your organization and email, we
-                will send reset password link</p>
+            <p>In order to <b>Reset your account password</b>, Please enter your organization and email, you will receive reset password link</p>
         </div>
     </div>
     <div class="login-main">

@@ -1,6 +1,6 @@
 package com.autopatt.portal.services;
 
-import com.autopatt.admin.utils.JWTHelper;
+import com.autopatt.common.utils.JWTHelper;
 import com.autopatt.admin.utils.TenantCommonUtils;
 import org.apache.ofbiz.base.crypto.HashCrypt;
 import org.apache.ofbiz.base.util.Debug;
@@ -18,6 +18,7 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class PasswordManagementServices {
         Locale locale = (Locale) context.get("locale");
         String errMsg = null;
         GenericValue userLogin = null;
+        Map<String, Object> resultMap = ServiceUtil.returnSuccess();
         try {
             userLogin = EntityQuery.use(delegator).from("UserLogin").where("userLoginId", userLoginId).queryOne();
         } catch (GenericEntityException e) {
@@ -45,7 +47,17 @@ public class PasswordManagementServices {
             errMsg = UtilProperties.getMessage(resource, "loginservices.could_not_change_password_userlogin_with_id_not_exist", messageMap, locale);
             return ServiceUtil.returnError(errMsg);
         }
-        return JWTHelper.generateJWTToken(delegator.getDelegatorTenantId(), userLoginId);
+        Map<String, String> inputParams = new HashMap<>();
+        inputParams.put("id", userLoginId);
+        inputParams.put("subject", delegator.getDelegatorTenantId());
+        try {
+            String token = JWTHelper.generateJWTToken(inputParams);
+            resultMap.put("token", token);
+            return resultMap;
+        } catch (Exception e) {
+            Debug.logError(e, module);
+            return ServiceUtil.returnError(e.getMessage());
+        }
     }
 
     public static Map<String, Object> resetPassword(DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -77,7 +89,7 @@ public class PasswordManagementServices {
         }
 
         ArrayList<String> errorMessageList = new ArrayList<>();
-        LoginServices.checkNewPassword(userLoginToUpdate,null,newPassword,newPasswordVerify,null,errorMessageList,true,locale);
+        LoginServices.checkNewPassword(userLoginToUpdate, null, newPassword, newPasswordVerify, null, errorMessageList, true, locale);
         if (errorMessageList.size() > 0) {
             return ServiceUtil.returnError(errorMessageList);
         }
