@@ -40,7 +40,7 @@
                     </#list>
                 </div>
                 <p>Forgot password initiated successfully<p/>
-                ${eventMessage}
+                ${requestAttributes.TOKEN!}
             </div>
         </div>
     </div>

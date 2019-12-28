@@ -47,7 +47,7 @@ public class PasswordManagementServices {
             errMsg = UtilProperties.getMessage(resource, "loginservices.could_not_change_password_userlogin_with_id_not_exist", messageMap, locale);
             return ServiceUtil.returnError(errMsg);
         }
-        Map<String, String> inputParams = new HashMap<>();
+        Map<String, Object> inputParams = new HashMap<>();
         inputParams.put("id", userLoginId);
         inputParams.put("subject", delegator.getDelegatorTenantId());
         try {

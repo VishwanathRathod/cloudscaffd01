@@ -37,6 +37,7 @@ public class PasswordMgmtEvents {
         }
         System.out.println(result.get("token"));
         request.setAttribute("_EVENT_MESSAGE_", result.get("token"));
+        request.setAttribute("TOKEN", result.get("token"));
         return SUCCESS;
     }
 
@@ -59,15 +60,15 @@ public class PasswordMgmtEvents {
         String newPassword = request.getParameter("newPassword");
         request.setAttribute("token", token);
 
-        Map<String, String> result = null;
+        Map<String, Object> result = null;
         try {
             result = JWTHelper.parseJWTToken(token);
         } catch (Exception e) {
             request.setAttribute("_ERROR_MESSAGE_", e.getMessage());
             return ERROR;
         }
-        String userLoginId = result.get("id");
-        String userTenantId = result.get("subject");
+        String userLoginId = (String) result.get("id");
+        String userTenantId = (String) result.get("subject");
         try {
             Map<String, Object> resetPwdresult = dispatcher.runSync("resetPassword",
                     UtilMisc.<String, String>toMap("userLoginId", userLoginId, "userTenantId", userTenantId,

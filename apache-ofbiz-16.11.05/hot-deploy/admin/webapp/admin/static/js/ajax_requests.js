@@ -198,3 +198,29 @@ function renewSubscription() {
         });
 }
 
+function saveEmployeeDetails() {
+    var userPartId = $("#updateEmployee_partyId").val();
+    var userOrgPartId = $("#updateEmployee_orgPartyId").val();
+    var firstName = $("#updateEmployee_firstName").val();
+    var lastName = $("#updateEmployee_lastName").val();
+    var userEmail = $("#updateEmployee_email").val();
+    var userRole = $("#updateEmployee_role").val();
+    var postData = {partyId: userPartId, orgPartyId:userOrgPartId, firstname: firstName, lastname: lastName, email: userEmail, role: userRole};
+    var formURL = $("#update-employee-form").attr("action");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#editEmployeeModal').modal('hide');
+                showSuccessToast("Employee User Updated Successfully");
+                setTimeout(function () {
+                    loadOrgEmployees();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}
