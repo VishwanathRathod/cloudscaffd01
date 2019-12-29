@@ -20,14 +20,14 @@
 
     <div class="login-sidenav">
         <div class="login-main-text">
-            <h2>AutoPatt Console</h2>
-            <p>Password has been reset successfully</p>
+            <h2>AutoPatt Admin</h2>
+            <p>In order to <b>Reset your account password</b>, Please enter your email, you will receive reset password link</p>
         </div>
     </div>
     <div class="login-main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
-                <h3>Forgot Password </h3>
+                <h3>Forgot Password</h3>
                 <div>
                     <hr/>
                 </div>
@@ -39,11 +39,16 @@
                         </div>
                     </#list>
                 </div>
-                <p>Password has been reset successfully, Please login to proceed</p>
-                <a class="btn btn-outline-primary" href="<@ofbizUrl>checkLogin</@ofbizUrl>"> <i class="material-icons">
-                        keyboard_backspace
-                    </i> Back to Login</a>
+
+                <form id="login" action="<@ofbizUrl>forgotPassword</@ofbizUrl>" method="post">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Link</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
