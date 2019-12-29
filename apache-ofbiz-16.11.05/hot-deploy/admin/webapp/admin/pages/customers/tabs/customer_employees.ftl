@@ -69,7 +69,8 @@
                            data-target="#resetPasswordEmployeeConfirmModal"
                            class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
                            data-party-id="${emp.partyId}" data-party-name="${emp.partyName!}"
-                           data-org-party-id="${orgPartyId!}"><i class="fa fa-key" aria-hidden="true"></i>
+                           data-org-party-id="${orgPartyId!}" data-user-login-id="${emp.userLogin.userLoginId!}">
+                            <i class="fa fa-key" aria-hidden="true"></i>
                         </a>
                     <#else>
                         <a href="#"
@@ -165,9 +166,11 @@
                 <br/>
                 <small>An email will be sent to user with a link to set their password.</small>
             </div>
+            <input type="hidden" name="resetPasswordUserLoginId" id="resetPasswordUserLoginId" value=""/>
+            <input type="hidden" name="resetPasswordOrgPartyId" id="resetPasswordOrgPartyId" value=""/>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Reset Password</button>
+                <button type="button" class="btn btn-primary" onclick="initResetPwdByAdmin()">Reset Password</button>
             </div>
         </div>
     </div>

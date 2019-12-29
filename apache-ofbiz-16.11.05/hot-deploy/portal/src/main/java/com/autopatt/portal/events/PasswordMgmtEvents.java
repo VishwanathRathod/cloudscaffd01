@@ -32,7 +32,7 @@ public class PasswordMgmtEvents {
             }
         } catch (GenericServiceException e) {
             Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to generate reset token");
             return ERROR;
         }
         System.out.println(result.get("token"));

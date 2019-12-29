@@ -224,3 +224,26 @@ function saveEmployeeDetails() {
             }
         });
 }
+
+function initResetPwdByAdmin() {
+    var orgPartyId = $('input[id="resetPasswordOrgPartyId"]').val();
+    var userLoginId = $('input[id="resetPasswordUserLoginId"]').val();
+    var postData = {"orgPartyId": orgPartyId, "userLoginId":userLoginId};
+    var formURL = getUrl("initResetPwdByAdmin");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#resetPasswordEmployeeConfirmModal').modal('hide');
+                showSuccessToast("Reset password initiated successfully, User will receive mail with reset link");
+                setTimeout(function () {
+                    listSubscriptions();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+}

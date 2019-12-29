@@ -1,8 +1,10 @@
 package com.autopatt.admin.events;
 
+import com.autopatt.admin.utils.TenantCommonUtils;
 import com.autopatt.common.utils.JWTHelper;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -32,7 +34,7 @@ public class PasswordMgmtEvents {
             }
         } catch (GenericServiceException e) {
             Debug.logError(e, module);
-            request.setAttribute("_ERROR_MESSAGE_", "Failed to authenticate with current password");
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to generate reset token");
             return ERROR;
         }
         System.out.println(result.get("token"));
@@ -88,4 +90,31 @@ public class PasswordMgmtEvents {
         }
         return SUCCESS;
     }
+
+    public static String sendPasswordResetLinkByAdmin(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        String userLoginId = request.getParameter("userLoginId");
+        String orgPartyId = request.getParameter("orgPartyId");
+        String userTenantId = TenantCommonUtils.getTenantIdForOrgPartyId(delegator, orgPartyId);
+
+        Map<String, Object> result = null;
+        try {
+            result = dispatcher.runSync("generatePasswordResetToken",
+                    UtilMisc.<String, Object>toMap("userLoginId", userLoginId, "userTenantId", userTenantId));
+            if (!ServiceUtil.isSuccess(result)) {
+                request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to generate reset token by admin");
+            return ERROR;
+        }
+        System.out.println(result.get("token"));
+        request.setAttribute("_EVENT_MESSAGE_", result.get("token"));
+        request.setAttribute("TOKEN", result.get("token"));
+        return SUCCESS;
+    }
+
 }
