@@ -21,7 +21,7 @@
     <div class="login-sidenav">
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
-            <p>Password has been reset successfully</p>
+            <p>Please enter new password</p>
         </div>
     </div>
     <div class="login-main">
@@ -39,10 +39,19 @@
                         </div>
                     </#list>
                 </div>
-                <p>Password has been reset successfully, Please login to proceed</p>
-                <a class="btn btn-outline-primary" href="<@ofbizUrl>checkLogin</@ofbizUrl>"> <i class="material-icons">
-                        keyboard_backspace
-                    </i> Back to Login</a>
+                <form id="login" action="<@ofbizUrl>resetPassword</@ofbizUrl>" method="post">
+                    <input type="hidden" name="token" value="${requestAttributes.token}"/>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control" placeholder="" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="" name="newPasswordVerify" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
             </div>
         </div>
     </div>

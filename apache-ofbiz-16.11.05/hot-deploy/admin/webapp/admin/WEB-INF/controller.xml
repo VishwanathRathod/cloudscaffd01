@@ -231,6 +231,30 @@
 		<response name="success" type="view" value="system_settings"/>
 	</request-map>
 
+<!--	forgot password related maps-->
+	<request-map uri="initForgotPwd">
+		<security https="true" auth="false" />
+		<response name="success" type="view" value="initForgotPwd" />
+	</request-map>
+	<request-map uri="forgotPassword">
+		<security https="true" auth="false" />
+		<event type="java" path="com.autopatt.admin.events.PasswordMgmtEvents" invoke="sendPasswordResetLink" />
+		<response name="success" type="view" value="forgotPwdInitiated"/>
+		<response name="error" type="view" value="initForgotPwd" />
+	</request-map>
+	<request-map uri="spwd">
+		<security https="true" auth="false" />
+		<event type="java" path="com.autopatt.admin.events.PasswordMgmtEvents" invoke="validateJWTToken" />
+		<response name="success" type="view" value="initResetPassword"/>
+		<response name="error" type="view" value="resetPasswordResponse" />
+	</request-map>
+	<request-map uri="resetPassword">
+		<security https="true" auth="false" />
+		<event type="java" path="com.autopatt.admin.events.PasswordMgmtEvents" invoke="resetPassword" />
+		<response name="success" type="view" value="resetPasswordResponse"/>
+		<response name="error" type="view" value="initResetPassword" />
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
@@ -278,4 +302,13 @@
 
 	<view-map name="requirePasswordChange" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#requireChangePassword"/>
+
+	<view-map name="initForgotPwd" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#initForgotPwd" />
+	<view-map name="forgotPwdInitiated" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#forgotPwdInitiated" />
+	<view-map name="initResetPassword" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#initResetPassword" />
+	<view-map name="resetPasswordResponse" type="screen"
+			  page="component://admin/widget/AdminScreens.xml#resetPasswordResponse" />
 </site-conf>

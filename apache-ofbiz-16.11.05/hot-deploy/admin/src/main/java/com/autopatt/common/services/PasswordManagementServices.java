@@ -1,20 +1,19 @@
-package com.autopatt.portal.services;
+package com.autopatt.common.services;
 
-import com.autopatt.common.utils.JWTHelper;
 import com.autopatt.admin.utils.TenantCommonUtils;
+import com.autopatt.common.utils.JWTHelper;
 import org.apache.ofbiz.base.crypto.HashCrypt;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilProperties;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.common.login.LoginServices;
 import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericDelegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.service.DispatchContext;
-import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import java.util.ArrayList;
@@ -62,7 +61,6 @@ public class PasswordManagementServices {
 
     public static Map<String, Object> resetPassword(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
-        LocalDispatcher dispatcher = ctx.getDispatcher();
         Map<String, Object> resultMap = ServiceUtil.returnSuccess();
         String userLoginId = (String) context.get("userLoginId");
         String userTenantId = (String) context.get("userTenantId");
@@ -71,11 +69,13 @@ public class PasswordManagementServices {
         Locale locale = (Locale) context.get("locale");
         String errMsg = null;
 
-        GenericDelegator tenantDelegator = TenantCommonUtils.getTenantDelegator(userTenantId);
+        if (UtilValidate.isNotEmpty(userTenantId)) {
+            delegator = TenantCommonUtils.getTenantDelegator(userTenantId);
+        }
 
         GenericValue userLoginToUpdate = null;
         try {
-            userLoginToUpdate = EntityQuery.use(tenantDelegator).from("UserLogin").where("userLoginId", userLoginId).queryOne();
+            userLoginToUpdate = EntityQuery.use(delegator).from("UserLogin").where("userLoginId", userLoginId).queryOne();
         } catch (GenericEntityException e) {
             Debug.logError(e, module);
             Map<String, String> messageMap = UtilMisc.toMap("errorMessage", e.getMessage());
