@@ -3,12 +3,11 @@ package com.autopatt.portal.events;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.DelegatorFactory;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
-import org.apache.ofbiz.service.GenericServiceException;
-import org.apache.ofbiz.service.LocalDispatcher;
-import org.apache.ofbiz.service.ModelService;
-import org.apache.ofbiz.service.ServiceUtil;
+import org.apache.ofbiz.service.*;
+import org.apache.ofbiz.webapp.WebAppUtil;
 import org.apache.ofbiz.webapp.control.LoginWorker;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-public class AutopattLoginWorker {
+public class AutopattLoginWorker extends LoginWorker{
 
     public final static String module = AutopattLoginWorker.class.getName();
 
@@ -57,6 +56,24 @@ public class AutopattLoginWorker {
     }
 
     public static String login(HttpServletRequest request, HttpServletResponse response) {
+
+        String userTenantId = request.getParameter("userTenantId");
+        if(UtilValidate.isNotEmpty(userTenantId)) {
+            userTenantId = userTenantId.trim();
+            String delegatorName = "default#" + userTenantId;
+            Delegator tenantDelegator = DelegatorFactory.getDelegator(delegatorName);
+            if(UtilValidate.isNotEmpty(tenantDelegator)) {
+                LocalDispatcher tenantDispatcher = new GenericDispatcherFactory().createLocalDispatcher("default#" + userTenantId, tenantDelegator);
+                setWebContextObjects(request, response, tenantDelegator,tenantDispatcher);
+            } else {
+                request.setAttribute("_ERROR_MESSAGE_", "Invalid Organization Id");
+                return "error";
+            }
+        } else {
+            request.setAttribute("_ERROR_MESSAGE_", "Invalid Organization Id");
+            return "error";
+        }
+
         String res = LoginWorker.login(request, response);
         request.setAttribute("USERNAME", request.getParameter("USERNAME"));
         if (!SUCCESS.equals(res)) {

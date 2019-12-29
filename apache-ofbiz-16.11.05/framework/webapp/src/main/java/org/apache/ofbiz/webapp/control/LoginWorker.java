@@ -576,7 +576,7 @@ public class LoginWorker {
         }
     }
 
-    private static void setWebContextObjects(HttpServletRequest request, HttpServletResponse response, Delegator delegator, LocalDispatcher dispatcher) {
+    protected static void setWebContextObjects(HttpServletRequest request, HttpServletResponse response, Delegator delegator, LocalDispatcher dispatcher) {
         HttpSession session = request.getSession();
         // NOTE: we do NOT want to set this in the servletContext, only in the request and session
         // We also need to setup the security objects since they are dependent on the delegator
@@ -722,9 +722,9 @@ public class LoginWorker {
         if (delegatorName != null) {
             //Commented it as multi tenancy support is now available for front-store application as well.
             // if there is a tenantId in the delegatorName remove it now so that tenant selection doesn't last beyond logout
-            /*if (delegatorName.indexOf('#') > 0) {
+            if (delegatorName.indexOf('#') > 0) {
                 delegatorName = delegatorName.substring(0, delegatorName.indexOf('#'));
-            }*/
+            }
             session.setAttribute("delegatorName", delegatorName);
 
             delegator = DelegatorFactory.getDelegator(delegatorName);
