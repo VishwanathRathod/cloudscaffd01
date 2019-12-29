@@ -26,19 +26,18 @@
             <label for="roleacc" class="col-sm-10 col-form-label">Role</label>
             <div class="col-sm-10">
                 <select name="securityGroupId" id="updateEmployee_role" class="form-control" required>
-                    <option value="AP_PLANNER">Planner</option>
-                    <option value="AP_APPROVER">Approver</option>
-                    <option value="AP_DEPLOYER">Deployer</option>
-                    <option value="AP_FULLADMIN">Administrator</option>
+                    <#list availableSecurityGroups as secGroup>
+                        <option value="${secGroup.groupId!}"
+                                <#if userSecurityGroup?? && secGroup.groupId == userSecurityGroup.groupId>selected</#if>
+                        >${secGroup.description!}
+                        </option>
+                    </#list>
                 </select>
-
             </div>
         </div>
         <div class="modal-footer">
-
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-primary" onclick="saveEmployeeDetails()">Update</button>
-
         </div>
     </div>
 </form>

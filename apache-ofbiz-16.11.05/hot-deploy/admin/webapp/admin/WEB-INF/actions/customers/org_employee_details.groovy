@@ -2,6 +2,8 @@ import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.entity.DelegatorFactory
 import org.apache.ofbiz.entity.GenericDelegator
+import com.autopatt.common.utils.SecurityGroupUtils
+import org.apache.ofbiz.entity.GenericValue
 
 String orgPartyId = parameters.orgPartyId
 String partyId = parameters.partyId
@@ -27,7 +29,11 @@ if(UtilValidate.isNotEmpty(tenantOrgParties)) {
         partyUserLogin = partyUserLogins.get(0)
         context.email = partyUserLogin.userLoginId
 
+        GenericValue userSecurityGroup = SecurityGroupUtils.getUserActiveSecurityGroup(tenantDelegator, (String) partyUserLogin.userLoginId)
+        context.userSecurityGroup = userSecurityGroup
     }
 }
 
 
+availableSecurityGroups = SecurityGroupUtils.getAvailableSecurityGroups(delegator)
+context.availableSecurityGroups = availableSecurityGroups

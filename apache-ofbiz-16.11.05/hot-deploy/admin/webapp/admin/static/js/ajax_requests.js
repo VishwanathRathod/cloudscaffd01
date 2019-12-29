@@ -205,7 +205,7 @@ function saveEmployeeDetails() {
     var lastName = $("#updateEmployee_lastName").val();
     var userEmail = $("#updateEmployee_email").val();
     var userRole = $("#updateEmployee_role").val();
-    var postData = {partyId: userPartId, orgPartyId:userOrgPartId, firstname: firstName, lastname: lastName, email: userEmail, role: userRole};
+    var postData = {partyId: userPartId, orgPartyId:userOrgPartId, firstname: firstName, lastname: lastName, email: userEmail, securityGroupId: userRole};
     var formURL = $("#update-employee-form").attr("action");
     $.ajax(
         {
