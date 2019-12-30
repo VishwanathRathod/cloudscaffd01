@@ -291,7 +291,7 @@
 	<view-map name="manage_plans" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#manage_plans" />
 	<view-map name="reports" type="screen"
-			  page="component://admin/widget/AdminScreens.xml#reports" />
+			  page="component://admin/widget/AdminReportsScreens.xml#reports" />
 	<view-map name="customer_subscription" type="screen"
 			  page="component://admin/widget/AdminCustomerScreens.xml#customer_subscriptions_tab" />
 	<view-map name="org_employees" type="screen"
