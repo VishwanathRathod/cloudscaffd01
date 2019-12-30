@@ -29,10 +29,15 @@ public class PasswordManagementServices {
     public static Map<String, Object> generatePasswordResetToken(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         String userLoginId = (String) context.get("userLoginId");
+        String userTenantId = (String) context.get("userTenantId");
         Locale locale = (Locale) context.get("locale");
         String errMsg = null;
         GenericValue userLogin = null;
         Map<String, Object> resultMap = ServiceUtil.returnSuccess();
+
+        if (UtilValidate.isNotEmpty(userTenantId)) {
+            delegator = TenantCommonUtils.getTenantDelegator(userTenantId);
+        }
         try {
             userLogin = EntityQuery.use(delegator).from("UserLogin").where("userLoginId", userLoginId).queryOne();
         } catch (GenericEntityException e) {

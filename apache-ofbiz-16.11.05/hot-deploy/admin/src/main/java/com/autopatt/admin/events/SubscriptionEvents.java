@@ -4,7 +4,6 @@ import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
-import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -181,7 +178,7 @@ public class SubscriptionEvents {
                             "userLogin", userLogin));
 
             if (!ServiceUtil.isSuccess(resp)) {
-                Debug.logError("Error while revoking subscription " + subscriptionId, module);
+                Debug.logError("Error while renewing subscription " + subscriptionId, module);
                 request.setAttribute("_ERROR_MESSAGE_", resp.get("errorMessage"));
                 return ERROR;
             }

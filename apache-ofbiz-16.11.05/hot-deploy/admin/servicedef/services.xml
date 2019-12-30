@@ -94,6 +94,7 @@ under the License.
              auth="false" require-new-transaction="true" transaction-timeout="300">
         <description>Service returns JWT token to reset password</description>
         <attribute name="userLoginId" type="String" mode="IN" optional="false"/>
+        <attribute name="userTenantId" type="String" mode="IN" optional="true"/>
         <attribute name="token" type="String" mode="OUT" optional="false"/>
     </service>
 
