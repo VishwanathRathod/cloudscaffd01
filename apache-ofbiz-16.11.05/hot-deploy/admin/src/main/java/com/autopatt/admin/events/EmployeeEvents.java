@@ -1,5 +1,6 @@
 package com.autopatt.admin.events;
 import com.autopatt.common.utils.SecurityGroupUtils;
+import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
@@ -27,6 +28,99 @@ public class EmployeeEvents {
     public final static String module = EmployeeEvents.class.getName();
     public static String SUCCESS = "success";
     public static String ERROR = "error";
+
+    public static String createEmployee(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String orgPartyId = request.getParameter("orgPartyId");
+        request.setAttribute("orgPartyId", orgPartyId);
+
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegatorByOrgPartyId(orgPartyId);
+        LocalDispatcher tenantDispatcher = TenantCommonUtils.getTenantDispatcherByOrgPartyId(orgPartyId);
+
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String empEmail = request.getParameter("email");
+        String empPassword = request.getParameter("empPassword");
+        String securityGroupId = request.getParameter("securityGroupId");
+
+        // Use system userlogin to perform operations which require authorized user
+        GenericValue sysUserLogin = UserLoginUtils.getSystemUserLogin(tenantDelegator);
+
+        // 1. Create Party & Person
+        try {
+            Map<String, Object> createPersonResp = tenantDispatcher.runSync("createPerson", UtilMisc.<String, Object>toMap("firstName", firstName,
+                    "lastName", lastName,
+                    "userLogin", sysUserLogin));
+            if (!ServiceUtil.isSuccess(createPersonResp)) {
+                Debug.logError("Error creating new employee user for " + empEmail, module);
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to add new employee user. ");
+                return ERROR;
+            }
+            String partyId = (String) createPersonResp.get("partyId");
+
+            // 2. Create UserLogin
+            Map<String, Object> userLoginCtx = UtilMisc.toMap("userLogin", sysUserLogin);
+            userLoginCtx.put("userLoginId", empEmail);
+            userLoginCtx.put("currentPassword", empPassword);
+            userLoginCtx.put("currentPasswordVerify", empPassword);
+            userLoginCtx.put("requirePasswordChange", "Y"); // enforce password change for new user
+            userLoginCtx.put("partyId", partyId);
+
+            Map<String, Object> createUserLoginResp = tenantDispatcher.runSync("createUserLogin", userLoginCtx);
+            if (!ServiceUtil.isSuccess(createUserLoginResp)) {
+                Debug.logError("Error creating employee userLogin for " + empEmail, module);
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to add new employee user. ");
+                return ERROR;
+            }
+
+            // 3. Add Role
+            Map<String, Object> partyRole = UtilMisc.toMap(
+                    "partyId", partyId,
+                    "roleTypeId", "EMPLOYEE",
+                    "userLogin", sysUserLogin
+            );
+            Map<String, Object> createPartyRoleResp = tenantDispatcher.runSync("createPartyRole", partyRole);
+            if (!ServiceUtil.isSuccess(createPartyRoleResp)) {
+                Debug.logError("Error creating party role for employee" + empEmail, module);
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to add new employee user. ");
+                return ERROR;
+            }
+
+            // 4. Add partyRelationship with ORG Party --- this is little complex, let me know
+            String tenantOrganizationPartyId = EntityUtilProperties.getPropertyValue("general", "ORGANIZATION_PARTY", null, tenantDelegator);
+            Map<String, Object> partyRelationship = UtilMisc.toMap(
+                    "partyIdFrom", tenantOrganizationPartyId,
+                    "partyIdTo", partyId,
+                    "roleTypeIdFrom", "ORGANIZATION_ROLE",
+                    "roleTypeIdTo", "EMPLOYEE",
+                    "partyRelationshipTypeId", "EMPLOYMENT",
+                    "userLogin", sysUserLogin
+            );
+            Map<String, Object> createPartyRelationResp = tenantDispatcher.runSync("createPartyRelationship", partyRelationship);
+            if (!ServiceUtil.isSuccess(createPartyRelationResp)) {
+                Debug.logError("Error creating new employee Party Relationship between " + tenantOrganizationPartyId + " and "
+                        + partyId + " in tenant " + tenantDelegator.getDelegatorTenantId(), module);
+            }
+
+            // 5. Assign SecurityGroup to user
+            GenericValue userLoginSecurityGroup = tenantDelegator.makeValue("UserLoginSecurityGroup",
+                    UtilMisc.toMap("userLoginId", empEmail,
+                            "groupId", securityGroupId,
+                            "fromDate", UtilDateTime.nowTimestamp()));
+            try {
+                userLoginSecurityGroup.create();
+            } catch (GenericEntityException e) {
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to assign role to the user. ");
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            return ERROR;
+        }
+        request.setAttribute("createSuccess", "Y");
+        return SUCCESS;
+    }
 
     public static String updateEmployee(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();

@@ -247,3 +247,35 @@ table.table .avatar {
 .icon-color-active {
   color:white;
 }
+.dashboard-widget{
+padding-top: 10px;
+}
+.widget-body{
+  max-width: 20rem;
+  background-color:#ddfcf7;
+}
+.card-padding{
+  padding: 1px;
+}
+#table-user-icon{
+  width:22px; height:auto;
+}
+.progress-bar-style{
+  aria-valuenow:"25";
+  aria-valuemin:"0"; aria-valuemax:"100";
+}
+.card-user-icon{
+  width: 77px;
+  padding-right: 2px;
+}
+.card-subscription-icon{
+  width: 75px;
+}
+.card-product-icon{
+  width: 85px;
+  padding-right: 10px;
+}
+.table-style{
+  width:50%;
+  background-color:#f4fcff;
+}

@@ -224,6 +224,40 @@ function saveEmployeeDetails() {
             }
         });
 }
+function addEmployeeDetails() {
+    var userOrgPartId = $("#createEmployee_orgPartyId").val();
+    var firstName = $("#createEmployee_firstName").val();
+    var lastName = $("#createEmployee_lastName").val();
+    var empEmail = $("#createEmployee_email").val();
+    var empRole = $("#createEmployee_role").val();
+    var empPassword = $("#createEmployee_password").val();
+    var postData = {
+        orgPartyId: userOrgPartId,
+        firstName: firstName,
+        lastName: lastName,
+        email: empEmail,
+        securityGroupId: empRole,
+        empPassword: empPassword
+    };
+    var formURL = getUrl("createEmployee");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $('#createEmployeeModal').modal('hide');
+                showSuccessToast("Employee has been added successfully");
+                setTimeout(function () {
+                    loadOrgEmployees();
+                }, 500);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+    console.log(postData);
+}
 
 function initResetEmployeePwd() {
     var orgPartyId = $('input[id="resetPasswordOrgPartyId"]').val();

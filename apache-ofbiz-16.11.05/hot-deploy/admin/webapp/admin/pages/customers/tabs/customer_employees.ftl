@@ -14,6 +14,16 @@
 <div>
     <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2" onclick="loadOrgEmployees()"><i class="fa fa-refresh" aria-hidden="true"></i>
         Refresh</a>
+    <div class="float-right">
+        <div class="form-group float-right justify-content-end">
+            <a href="javascript:void(0);"
+               data-target="#createEmployeeModal"
+               class="btn btn-outline-primary btn-sm" title="Add a new Employee" data-toggle="modal"
+               data-org-party-id="${orgPartyId!}">
+                <i class="material-icons">&#xE147;</i> <span>New Employee</span>
+            </a>
+        </div>
+    </div>
 </div>
 
 <table class="table table-striped table-hover">
@@ -216,6 +226,67 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="createEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="createEmployeeModal" aria-hidden="true">
+    <form id="createEmployee-form">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Create Employee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="createEmployee_orgPartyId" name="orgPartyId" value="${orgPartyId!}"/>
+            <div class="modal-body">
+                <div class="col-md-12 my-3">
+                    <div class="form-group row required">
+                        <label for="createEmployee_firstName" class="col-sm-10 col-form-label">First Name <span class="mandatory">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" id="createEmployee_firstName" class="form-control" name="firstName" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="createEmployee_lastName" class="col-sm-10 col-form-label">Last Name <span class="mandatory">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" id="createEmployee_lastName" class="form-control"  name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="createEmployee_email" class="col-sm-10 col-form-label"> E-mail </label>
+                        <div class="col-sm-10">
+                            <input type="text" id="createEmployee_email" class="form-control"  name="empEmail"   required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="createEmployee_password" class="col-sm-10 col-form-label">Password  <span class="mandatory">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="createEmployee_password" name="empPassword"  required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="createEmployee_role" class="col-sm-10 col-form-label">Role</label>
+                        <div class="col-sm-10">
+                            <select name="securityGroupId" id="createEmployee_role" class="form-control" required>
+                                <option value="AP_PLANNER">Planner</option>
+                                <option value="AP_APPROVER">Approver</option>
+                                <option value="AP_DEPLOYER">Deployer</option>
+                                <option value="AP_FULLADMIN">Administrator</option>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="addEmployeeDetails();">Create</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
 
 
 
