@@ -66,7 +66,7 @@
         <div class="form-group row">
             <label for="maxPatterns" class="col-sm-2 col-form-label">Max Patterns <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input id="maxUsers" type="number" class="form-control" value="${maxPatterns!"0"}" name="" />
+                <input id="maxPatterns" type="number" class="form-control" value="${maxPatterns!"0"}" name="maxPatterns" />
             </div>
         </div>
 

@@ -10,6 +10,7 @@
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="P2" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="P2" attrName="maxUserLogins" attrValue="5"/>
+    <ProductAttribute productId="P2" attrName="maxPatterns" attrValue="6"/>
 
     <!-- Demo Plan -->
     <Product productId="Demo" productTypeId="SUBSCRIPTION_PLAN" productName="Demo" longDescription="Demo" requireInventory="N"/>
@@ -17,6 +18,7 @@
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="Demo" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="Demo" attrName="maxUserLogins" attrValue="1"/>
+    <ProductAttribute productId="Demo" attrName="maxPatterns" attrValue="2"/>
 
     <!-- Basic Planner -->
     <Product productId="P1" productTypeId="SUBSCRIPTION_PLAN" productName="Basic Planner" longDescription="Basic Planner" requireInventory="N"/>
@@ -24,6 +26,7 @@
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="P1" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="P1" attrName="maxUserLogins" attrValue="5"/>
+    <ProductAttribute productId="P1" attrName="maxPatterns" attrValue="4"/>
 
     <!-- Enterprise Planner -->
     <Product productId="EP1" productTypeId="SUBSCRIPTION_PLAN" productName="Enterprise Planner" longDescription="Enterprise Planner" requireInventory="N"/>
@@ -31,6 +34,7 @@
                   currencyUomId="USD" productStoreGroupId="_NA_" price="0" fromDate="2019-12-09 00:00:00"/>
     <ProductAttribute productId="EP1" attrName="maxAdmins" attrValue="1"/>
     <ProductAttribute productId="EP1" attrName="maxUserLogins" attrValue="5"/>
+    <ProductAttribute productId="EP1" attrName="maxPatterns" attrValue="10"/>
 
 
 </entity-engine-xml>
