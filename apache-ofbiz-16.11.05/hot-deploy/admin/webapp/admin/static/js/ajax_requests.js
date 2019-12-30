@@ -225,11 +225,11 @@ function saveEmployeeDetails() {
         });
 }
 
-function initResetPwdByAdmin() {
+function initResetEmployeePwd() {
     var orgPartyId = $('input[id="resetPasswordOrgPartyId"]').val();
     var userLoginId = $('input[id="resetPasswordUserLoginId"]').val();
     var postData = {"orgPartyId": orgPartyId, "userLoginId":userLoginId};
-    var formURL = getUrl("initResetPwdByAdmin");
+    var formURL = getUrl("initResetEmployeePwd");
     $.ajax(
         {
             url: formURL,

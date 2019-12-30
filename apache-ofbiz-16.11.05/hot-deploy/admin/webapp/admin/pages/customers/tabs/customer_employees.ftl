@@ -170,7 +170,7 @@
             <input type="hidden" name="resetPasswordOrgPartyId" id="resetPasswordOrgPartyId" value=""/>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="initResetPwdByAdmin()">Reset Password</button>
+                <button type="button" class="btn btn-primary" onclick="initResetEmployeePwd()">Reset Password</button>
             </div>
         </div>
     </div>
