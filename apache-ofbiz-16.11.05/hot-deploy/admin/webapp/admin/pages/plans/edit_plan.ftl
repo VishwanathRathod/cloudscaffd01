@@ -54,13 +54,13 @@
         <div class="form-group row">
             <label for="maxAdmins" class="col-sm-2 col-form-label">Max Admins <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input type="number" id="maxAdmins" class="form-control" value="${maxAdmins!}" name="" />
+                <input type="number" id="maxAdmins" class="form-control" value="${maxAdmins!}" name="maxAdmins" />
             </div>
         </div>
         <div class="form-group row">
             <label for="maxUsers" class="col-sm-2 col-form-label">Max Users <span class="mandatory">*</span></label>
             <div class="col-sm-10">
-                <input id="maxUsers" type="number" class="form-control" value="${maxUserLogins!}" name="" />
+                <input id="maxUsers" type="number" class="form-control" value="${maxUserLogins!}" name="maxUserLogins" />
             </div>
         </div>
         <div class="form-group row">

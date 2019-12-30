@@ -25,6 +25,9 @@ public class PlanMgmtEvents {
         String productName = request.getParameter("productName");
         String productId = request.getParameter("planId");
         String priceStr = request.getParameter("price");
+        String attrName=request.getParameter("maxAdmin");
+        String attrValue=request.getParameter("maxUserLogins");
+
         BigDecimal price = null;
         try{
             price = new BigDecimal(priceStr);
@@ -44,6 +47,14 @@ public class PlanMgmtEvents {
                 GenericValue priceGv = productPrices.get(0);
                 priceGv.set("price", price);
                 delegator.store(priceGv);
+            }
+
+            List<GenericValue> productAttributes= product.getRelated("ProductAttribute",null,null,false);
+            if(UtilValidate.isNotEmpty(productAttributes)){
+                for(GenericValue productAttr : productAttributes){
+                    productAttr.set("attrValue",request.getParameter(productAttr.getString("attrName")));
+                    delegator.store(productAttr);
+                }
             }
 
         } catch (GenericEntityException e) {
