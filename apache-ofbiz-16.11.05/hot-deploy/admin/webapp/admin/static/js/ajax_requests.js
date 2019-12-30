@@ -239,7 +239,6 @@ function initResetEmployeePwd() {
                 $('#resetPasswordEmployeeConfirmModal').modal('hide');
                 showSuccessToast("Reset password initiated successfully, User will receive mail with reset link");
                 setTimeout(function () {
-                    listSubscriptions();
                 }, 500);
             },
             error: function (jqXHR, textStatus, errorThrown) {

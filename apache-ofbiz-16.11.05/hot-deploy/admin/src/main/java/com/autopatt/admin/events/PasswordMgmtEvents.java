@@ -20,7 +20,7 @@ public class PasswordMgmtEvents {
     public static final String ERROR = "error";
     public final static String module = PasswordMgmtEvents.class.getName();
 
-    public static String sendEmployeePasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
+    public static String sendPasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         HttpSession session = request.getSession();
         String emailId = request.getParameter("USERNAME");
@@ -91,7 +91,7 @@ public class PasswordMgmtEvents {
         return SUCCESS;
     }
 
-    public static String sendPasswordResetLinkByAdmin(HttpServletRequest request, HttpServletResponse response) {
+    public static String sendEmployeePasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         String userLoginId = request.getParameter("userLoginId");
