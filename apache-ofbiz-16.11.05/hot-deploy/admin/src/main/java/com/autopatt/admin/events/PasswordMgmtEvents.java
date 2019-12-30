@@ -2,6 +2,7 @@ package com.autopatt.admin.events;
 
 import com.autopatt.admin.utils.TenantCommonUtils;
 import com.autopatt.common.utils.JWTHelper;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.entity.Delegator;
@@ -109,6 +110,25 @@ public class PasswordMgmtEvents {
         } catch (GenericServiceException e) {
             Debug.logError(e, module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to generate reset token by admin");
+            return ERROR;
+        }
+
+        String newPassword = "P@" + RandomStringUtils.random(15, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890@".toCharArray());
+        try {
+            Map<String, Object> resetPwdresult = dispatcher.runSync("resetPassword",
+                    UtilMisc.<String, String>toMap("userLoginId", userLoginId, "userTenantId", userTenantId,
+                            "newPassword", newPassword, "newPasswordVerify", newPassword));
+            if (!ServiceUtil.isSuccess(resetPwdresult)) {
+                if (resetPwdresult.containsKey("errorMessage")) {
+                    request.setAttribute("_ERROR_MESSAGE_", resetPwdresult.get("errorMessage"));
+                } else {
+                    request.setAttribute("_ERROR_MESSAGE_LIST_", resetPwdresult.get("errorMessageList"));
+                }
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to update the password");
             return ERROR;
         }
         System.out.println(result.get("token"));
