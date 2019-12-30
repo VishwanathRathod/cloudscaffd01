@@ -35,7 +35,9 @@
             </div>
         </div>
     </div>
-    <table class="table  table-sm table-style">
+
+    <#if security.hasEntityPermission("PORTAL", "_VIEW_USERS", session)>
+        <table class="table  table-sm table-style">
         <thead>
         <tr>
             <th>#</th>
@@ -67,6 +69,7 @@
         </#if>
         </tbody>
     </table>
+    </#if>
 
 </div>
 
