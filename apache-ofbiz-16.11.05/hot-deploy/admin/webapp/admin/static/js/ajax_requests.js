@@ -280,3 +280,12 @@ function initResetEmployeePwd() {
             }
         });
 }
+
+function filterUsersForReport() {
+    var status = $('select[id="filterUsersByStatus"]').val();
+    var tenantId = $('select[id="filterUsersByTenant"]').val();
+    $("#users_report").load(getUrl("filterUsersForReport?status=" + status + "&tenantId=" + tenantId),
+        function () {
+            showSuccessToast("Users loaded successfully");
+        });
+}
