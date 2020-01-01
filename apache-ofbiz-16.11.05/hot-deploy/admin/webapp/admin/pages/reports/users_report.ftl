@@ -32,7 +32,7 @@
 
     <hr/>
     <table class="table table-striped table-hover">
-        <caption>Total Users - <b>${users!?size}</b> of 5 <span class="small text-muted">(max)</span></caption>
+        <caption>Total Users - <b>${users!?size}</b></caption>
         <thead class="thead-dark">
         <tr>
             <th>#</th>
