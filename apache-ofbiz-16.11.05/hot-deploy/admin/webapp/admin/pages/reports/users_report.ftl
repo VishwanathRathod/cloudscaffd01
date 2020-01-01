@@ -38,9 +38,10 @@
             <th>#</th>
             <th>Tenant</th>
             <th>Name</th>
+            <th>Email</th>
             <th>Date Created</th>
             <th>Role</th>
-            <th>Status</th>
+            <th >Status</th>
         </tr>
         </thead>
         <tbody>
@@ -50,16 +51,15 @@
                     <td>${user_index + 1}</td>
                     <td>${user.tenantId!}</td>
                     <td class="user-name">
-                        <!-- TODO: clicking on this - show a popup modal with user details (email, phone etc) -->
-                        <i class="material-icons" style="font-size:1.6em;">account_circle</i>
-                        <a href="#" data-toggle="modal" data-target="#editEmployeeModal"
-                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
-                           data-org-party-id="${orgPartyId!}">${user.partyName!}</a>
-                        <div class="small text-muted">${user.userLogin.userLoginId!}</div>
+                        ${user.partyName!}
                     </td>
+                    <td class="user-name">
+                        <div class="">${user.userLogin.userLoginId!}</div>
+                    </td>
+
                     <td><#if user.userLogin.createdStamp??>${user.userLogin.createdStamp!?date}</#if></td>
                     <td>${user.roleName!}</td>
-                    <td>
+                    <td width="15%">
                         <#if user.userStatus?? && user.userStatus == "ACTIVE">
                             <span class="status text-success" >&#8226;</span> <span>Active</span>
                         <#elseif user.userStatus?? && user.userStatus == "INACTIVE">
