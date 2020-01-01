@@ -52,7 +52,7 @@
                     <td class="user-name">
                         <!-- TODO: clicking on this - show a popup modal with user details (email, phone etc) -->
                         <i class="material-icons" style="font-size:1.6em;">account_circle</i>
-                        <a href="#" data-toggle="modal" data-target="#edituserloyeeModal"
+                        <a href="#" data-toggle="modal" data-target="#editEmployeeModal"
                            data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
                            data-org-party-id="${orgPartyId!}">${user.partyName!}</a>
                         <div class="small text-muted">${user.userLogin.userLoginId!}</div>
