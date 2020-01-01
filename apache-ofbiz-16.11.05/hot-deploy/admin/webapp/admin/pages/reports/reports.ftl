@@ -24,7 +24,7 @@
             </li>
         </ul>
 
-        <div class="tab-content p-4" id="customerTabContent">
+        <div class="tab-content p-4" id="users_report">
             <div class="tab-pane fade show active" id="users_report" role="tabpanel" aria-labelledby="users_report-tab">
                 ${screens.render("component://admin/widget/AdminReportsScreens.xml#users_report")}
             </div>

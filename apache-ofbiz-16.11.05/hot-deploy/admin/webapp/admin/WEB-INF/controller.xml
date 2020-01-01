@@ -235,6 +235,10 @@
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="system_settings"/>
 	</request-map>
+	<request-map uri="filterUsersForReport">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="filterUsersForReport"/>
+	</request-map>
 
 <!--	forgot password related maps-->
 	<request-map uri="initForgotPwd">
@@ -322,4 +326,6 @@
 			  page="component://admin/widget/AdminScreens.xml#initResetPassword" />
 	<view-map name="resetPasswordResponse" type="screen"
 			  page="component://admin/widget/AdminScreens.xml#resetPasswordResponse" />
+	<view-map name="filterUsersForReport" type="screen"
+			  page="component://admin/widget/AdminReportsScreens.xml#users_report" />
 </site-conf>
