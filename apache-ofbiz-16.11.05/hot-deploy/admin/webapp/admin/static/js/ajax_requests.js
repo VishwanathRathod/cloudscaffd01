@@ -289,3 +289,13 @@ function filterUsersForReport() {
             showSuccessToast("Users loaded successfully");
         });
 }
+
+function filterSubscriptionsForReport() {
+    var status = $('select[id="filterSubscriptionsReportByStatus"]').val();
+    var tenantId = $('select[id="filterSubscriptionReportByTenant"]').val();
+    var planId = $('select[id="filterSubscriptionsReportByProduct"]').val();
+    $("#subscriptions_report").load(getUrl("filterSubscriptionsForReport?status=" + status + "&tenantId=" + tenantId + "&planId=" + planId),
+        function () {
+            showSuccessToast("Subscriptions loaded successfully");
+        });
+}

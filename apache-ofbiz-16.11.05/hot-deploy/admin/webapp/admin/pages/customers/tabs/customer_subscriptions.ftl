@@ -101,6 +101,7 @@
                                 <i class="fa fa-unlock" aria-hidden="true"></i>
                             </a>
                         </#if>
+                    </td>
                 </tr>
             </#list>
         <#else>

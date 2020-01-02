@@ -15,7 +15,7 @@
 
                 <div class="form-group mx-sm-3 mb-2">
                     <label for="filterUsersByTenant" class="p-2">Tenant</label>
-                    <select class="form-control form-control-sm" id="filterUsersByTenant" name="tenantId">
+                    <select class="form-control form-control-sm" id="filterUsersByTenant" name="filterUsersByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
                             <option value="${tenant.tenantId}" <#if tenantId?? && tenantId==tenant.tenantId>selected</#if>>

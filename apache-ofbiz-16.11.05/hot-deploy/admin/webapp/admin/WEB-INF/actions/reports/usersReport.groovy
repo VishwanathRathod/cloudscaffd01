@@ -2,8 +2,6 @@ import org.apache.ofbiz.base.util.UtilMisc
 import org.apache.ofbiz.base.util.UtilValidate
 import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.service.ServiceUtil
-import org.apache.ofbiz.entity.DelegatorFactory
-import org.apache.ofbiz.entity.GenericDelegator
 
 String statusParam = null == parameters.status ? "ALL" : parameters.status
 String tenantIdParam = null == parameters.tenantId ? "ALL" : parameters.tenantId
@@ -25,8 +23,6 @@ if (UtilValidate.isNotEmpty(tenantOrgParties)) {
         if (!"ALL".equals(tenantIdParam) && !tenantIdParam.equals(tenantId)) {
             continue;
         }
-        tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#" + tenantOrg.tenantId);
-        partyRoles = tenantDelegator.findByAnd("PartyRole", UtilMisc.toMap("roleTypeId", "EMPLOYEE"), null, false);
 
         getTenantUsersResp = dispatcher.runSync("getTenantUsers", ["userLogin": userLogin, "tenantId": tenantId]);
         if (!ServiceUtil.isSuccess(getTenantUsersResp)) {
