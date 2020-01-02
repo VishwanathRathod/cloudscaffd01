@@ -18,42 +18,42 @@
 
 <div class="container-fluid">
 
-  <div class="login-sidenav">
-         <div class="login-main-text">
+    <div class="login-sidenav">
+        <#include "./common/preauth_logo.ftl"/>
+        <div class="login-main-text">
             <h2>AutoPatt Admin <br> Login </h2>
             <p>AutoPatt Admin interface for Administrators only!</p>
-         </div>
-      </div>
-      <div class="login-main">
-         <div class="col-md-6 col-sm-12">
-         <div>
-         
-            <div class="login-form">
-                <div>
-                    <#list errorMessageList as error>
-                        <div class="alert alert-danger" role="alert">
-                            ${error}
-                        </div>
-                    </#list>
-                </div>
-                <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
-                  <div class="form-group">
-                    
-                     <label>Admin Email Address</label>
-                     <input type="text" class="form-control" placeholder="Email" name="USERNAME">
-                  </div>
-                  <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
-                  </div>
-                  <button type="submit" class="btn btn-login">Login</button>
-                  <hr/>
-                  <a href="<@ofbizUrl>initForgotPwd</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
-
-               </form>
+        </div>
+    </div>
+    <div class="login-main">
+        <div class="col-md-6 col-sm-12">
+        <div>
+        <div class="login-form">
+            <div>
+                <#list errorMessageList as error>
+                    <div class="alert alert-danger" role="alert">
+                        ${error}
+                    </div>
+                </#list>
             </div>
-         </div>
-      </div>
+            <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
+              <div class="form-group">
+
+                 <label>Admin Email Address</label>
+                 <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+              </div>
+              <div class="form-group">
+                 <label>Password</label>
+                 <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+              <hr/>
+              <a href="<@ofbizUrl>initForgotPwd</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
+
+           </form>
+        </div>
+        </div>
+  </div>
 </div>
 
 

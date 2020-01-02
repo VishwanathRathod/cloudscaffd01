@@ -1,76 +1,4 @@
-<style>
 
-    .main-head{
-        height: 150px;
-        background: #FFF;
-
-    }
-
-    .login-sidenav {
-        height: 100%;
-        background-color: whitesmoke;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
-
-
-    .login-main {
-        padding: 0px 10px;
-    }
-
-    @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-    }
-
-    @media screen and (max-width: 450px) {
-        .login-form{
-            margin-top: 10%;
-        }
-
-        .register-form{
-            margin-top: 10%;
-        }
-    }
-
-    @media screen and (min-width: 768px){
-        .login-main{
-            margin-left: 40%;
-        }
-
-        .login-sidenav{
-            width: 40%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-        }
-
-        .login-form{
-            margin-top: 40%;
-        }
-
-        .register-form{
-            margin-top: 20%;
-        }
-    }
-
-
-    .login-main-text{
-        margin-top: 20%;
-        padding: 60px;
-        color: black;
-    }
-
-    .login-main-text h2{
-        font-weight: 300;
-    }
-
-    .btn-login{
-        background-color: darkblue !important;
-        color: #fff;
-        width: 150px;
-    }
-</style>
 <#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
 <#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
 <#if requestAttributes.serviceValidationException??><#assign serviceValidationException = requestAttributes.serviceValidationException></#if>
@@ -92,6 +20,7 @@
 <div class="container-fluid">
 
     <div class="login-sidenav">
+        <#include "./common/preauth_logo.ftl"/>
         <div class="login-main-text">
             <h2>AutoPatt Admin <br> Login </h2>
             <p>In order to <b>protect your account</b>, we require you to change your password as you have just logged in using a temporary password.</p>

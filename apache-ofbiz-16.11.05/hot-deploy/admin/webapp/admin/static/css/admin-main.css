@@ -17,15 +17,22 @@ body {
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
+  padding: 5px;
+  vertical-align: middle;
+  font-size: 1rem;
   color:lightblue;
+  text-align: center;
 }
 
+#sidebar-wrapper .sidebar-heading  a, a:hover {
+  text-decoration: none;
+}
 #sidebar-wrapper .list-group {
   width: 15rem;
 }
-
+.sidebar-logo {
+  padding: 0 10px;
+}
 #page-content-wrapper {
   min-width: 100vw;
 }
@@ -266,19 +273,16 @@ table.table .avatar {
   }
 }
 
-
+.login-logo {
+  padding: 0 50px;
+}
 .login-main-text{
-  margin-top: 20%;
-  padding: 60px;
-  color: black;
+  margin-top: 5%;
+  padding: 50px;
+  color: #111;
 }
 
 .login-main-text h2{
   font-weight: 300;
 }
 
-.btn-login{
-  background-color: darkblue !important;
-  color: #fff;
-  width: 150px;
-}

@@ -1,7 +1,14 @@
 
 <!-- Sidebar -->
 <div class="bg-dark border-right" id="sidebar-wrapper" >
-  <div class="sidebar-heading">AutoPatt Admin</div>
+
+  <div class="sidebar-logo">
+    <a href="<@ofbizUrl>home</@ofbizUrl>">
+    <img src="../static/logo/AutoPatt_mini.png" width="45px" align="left"/></a>
+      <div class="sidebar-heading"><a href="<@ofbizUrl>home</@ofbizUrl>" class="sidebar-heading">AutoPatt Admin</a></div>
+
+  </div>
+  <#--<div class="sidebar-heading"><a href="<@ofbizUrl>home</@ofbizUrl>" class="sidebar-heading">AutoPatt Admin</a></div>-->
   <div class="list-group ">
     <a href="<@ofbizUrl>home</@ofbizUrl>" class="list-group-item list-group-item-action <#if currentViewId == 'HOME'>active</#if>">
       <i class="material-icons icon-indianred <#if currentViewId == 'HOME'>icon-color-active</#if>">dashboard</i> Admin Home</a>

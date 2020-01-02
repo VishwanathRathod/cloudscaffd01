@@ -19,6 +19,7 @@
 <div class="container-fluid">
 
     <div class="login-sidenav">
+        <#include "../common/preauth_logo.ftl"/>
         <div class="login-main-text">
             <h2>AutoPatt Admin</h2>
             <p>In order to <b>Reset your account password</b>, Please enter your email, you will receive reset password link</p>
@@ -43,9 +44,10 @@
                 <form id="login" action="<@ofbizUrl>forgotPassword</@ofbizUrl>" method="post">
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
+                        <input type="email" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Link</button>
+                    <a class="btn btn-secondary" href="<@ofbizUrl>home</@ofbizUrl>">Back</a>
                 </form>
             </div>
         </div>

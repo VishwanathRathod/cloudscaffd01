@@ -19,6 +19,7 @@
 <div class="container-fluid">
 
     <div class="login-sidenav">
+        <#include "../common/preauth_logo.ftl"/>
         <div class="login-main-text">
             <h2>AutoPatt Console</h2>
             <p>Forgot Password initiated successfully</p>
@@ -42,6 +43,7 @@
                 <p>An email has been sent to your email address with a link to reset your password.<p/>
 
                 <a href="<@ofbizUrl>spwd?token=${requestAttributes.TOKEN!}</@ofbizUrl>">Click here to reest password</a>
+                <br/>
                 <i>Link above will be available in the email, this link will go away once we implement email service</i>
             </div>
         </div>
