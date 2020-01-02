@@ -11,7 +11,7 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="filterSubscriptionReportByTenant" class="p-2">Tenant</label>
+                    <label for="filterSubscriptionReportByTenant" class="p-2">Customer</label>
                     <select class="form-control form-control-sm" id="filterSubscriptionReportByTenant" name="filterSubscriptionReportByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
@@ -46,7 +46,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>#</th>
-                <th>Tenant</th>
+                <th>Customer</th>
                 <th>Plan</th>
                 <th>Date Created</th>
                 <th>Valid From</th>
@@ -61,7 +61,6 @@
                         <td>${subscription_index + 1}</td>
                         <td>${subscription.tenantId!}</td>
                         <td class="user-name">
-                            <i class="material-icons" style="font-size:1.6em;">cloud_circle</i>
                             ${subscription.productId}
                             <#assign subscribedProduct= (delegator.findOne("Product", {"productId" : subscription.productId}, false))/>
                             <#if subscribedProduct??>
@@ -76,7 +75,7 @@
                                 NA
                             </#if>
                         </td>
-                        <td>
+                        <td width="15%">
                             <#if subscription.status?? && subscription.status == "ACTIVE">
                                 <span class="status text-success">&#8226;</span> <span>Active</span>
                             <#elseif subscription.status?? && subscription.status == "FUTURE">

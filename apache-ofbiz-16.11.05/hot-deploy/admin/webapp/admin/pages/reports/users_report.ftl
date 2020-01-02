@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="filterUsersByTenant" class="p-2">Tenant</label>
+                    <label for="filterUsersByTenant" class="p-2">Customer</label>
                     <select class="form-control form-control-sm" id="filterUsersByTenant" name="filterUsersByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
@@ -36,7 +36,7 @@
         <thead class="thead-dark">
         <tr>
             <th>#</th>
-            <th>Tenant</th>
+            <th>Customer</th>
             <th>Name</th>
             <th>Email</th>
             <th>Date Created</th>
