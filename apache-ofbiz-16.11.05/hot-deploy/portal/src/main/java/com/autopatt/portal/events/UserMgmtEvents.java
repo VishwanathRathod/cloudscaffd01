@@ -3,11 +3,10 @@ package com.autopatt.portal.events;
 import com.autopatt.admin.utils.UserLoginUtils;
 import com.autopatt.common.utils.SecurityGroupUtils;
 import org.apache.ofbiz.base.util.Debug;
+import org.apache.ofbiz.base.util.ScriptHelper;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericEntityException;
-import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.*;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.security.Security;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -192,6 +191,26 @@ public class UserMgmtEvents {
             return ERROR;
         }
         request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
+        return SUCCESS;
+    }
+    public static String updateCompanyDetails(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String orgPartyId = request.getParameter("orgPartyId");
+        request.setAttribute("orgPartyId", orgPartyId);
+        GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+        String organizationName = request.getParameter("organizationName");
+
+        Map<String, Object> inputs = UtilMisc.toMap("partyId", orgPartyId);
+        try {
+            GenericValue partyGroup = mainDelegator.findOne("PartyGroup", inputs, false);
+            partyGroup.set("groupName", organizationName);
+            mainDelegator.store(partyGroup);
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to update the company details.");
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "Profile details updated successfully.");
         return SUCCESS;
     }
 }

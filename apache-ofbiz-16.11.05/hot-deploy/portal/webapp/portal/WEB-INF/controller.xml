@@ -89,6 +89,10 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="manage_users" />
 	</request-map>
+	<request-map uri="settings">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="settings" />
+	</request-map>
 	<request-map uri="users_list_section">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="users_list_section" />
@@ -152,6 +156,13 @@
 		</response>
 		<response name="error" type="request-redirect" value="manage_users" />
 	</request-map>
+	<request-map uri="UpdateCompanyDetails">
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="updateCompanyDetails" />
+		<response name="success" type="request-redirect" value="settings" >
+			<redirect-parameter name="updateSuccess"/>
+		</response>
+		<response name="error" type="request-redirect" value="settings" />
+	</request-map>
 	<request-map uri="DeleteUser">
 		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="deleteUser" />
 		<response name="success" type="request" value="json"/>
@@ -177,6 +188,8 @@
 
 	<view-map name="manage_users" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#manage_users" />
+	<view-map name="settings" type="screen"
+			  page="component://portal/widget/PortalScreens.xml#settings" />
 	<view-map name="users_list_section" type="screen"
 			  page="component://portal/widget/PortalScreens.xml#users_list_section" />
 
