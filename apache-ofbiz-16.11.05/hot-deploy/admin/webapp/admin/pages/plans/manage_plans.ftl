@@ -23,10 +23,10 @@
              <th width="15%">Id</th>
              <th width="25%">Plan Name</th>
              <th class="number-right">Price ($)</th>
-             <th class="number-right">Max Admins</th>
+<#--             <th class="number-right">Max Admins</th>-->
              <th class="number-right">Max Users</th>
              <th class="number-right">Max Patterns</th>
-             <th width="15%" >Actions</th>
+             <th  >Actions</th>
          </tr>
          </thead>
          <tbody>
@@ -36,10 +36,10 @@
                      <td>${plan.productId!}</td>
                      <td><a href="<@ofbizUrl>edit_plan?planId=${plan.productId!}</@ofbizUrl>">${plan.productName!}</a></td>
                      <td class="number-right">${plan.productPrice!?string.currency}</td>
-                     <td class="number-right">${plan.maxAdmins!}</td>
+                     <#--<td class="number-right">${plan.maxAdmins!}</td>-->
                      <td class="number-right">${plan.maxUserLogins!}</td>
                      <td class="number-right">${plan.maxPatterns!"0"}</td>
-                     <td>
+                     <td width="15%">
                          <a href="<@ofbizUrl>edit_plan?planId=${plan.productId!}</@ofbizUrl>" class="btn btn-outline-primary"
                             title="Edit Plan" data-toggle="tooltip"><i class="material-icons">edit</i></a>
                      </td>

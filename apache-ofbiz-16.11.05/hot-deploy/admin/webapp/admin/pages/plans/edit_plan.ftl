@@ -51,12 +51,12 @@
                 <input id="productPrice" type="number" step="any" class="form-control"  value="${priceGv.price}" name="price"  >
             </div>
         </div>
-        <div class="form-group row">
+<#--        <div class="form-group row">
             <label for="maxAdmins" class="col-sm-2 col-form-label">Max Admins <span class="mandatory">*</span></label>
             <div class="col-sm-10">
                 <input type="number" id="maxAdmins" class="form-control" value="${maxAdmins!}" name="maxAdmins" />
             </div>
-        </div>
+        </div>-->
         <div class="form-group row">
             <label for="maxUsers" class="col-sm-2 col-form-label">Max Users <span class="mandatory">*</span></label>
             <div class="col-sm-10">
