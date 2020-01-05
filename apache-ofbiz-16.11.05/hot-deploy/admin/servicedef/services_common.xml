@@ -39,4 +39,42 @@ under the License.
     </service>
 
 
+    <service name="generateExcel" engine="java"
+             location="com.autopatt.common.services.ExcelServices" invoke="generateExcel" auth="true">
+        <description>
+            This is the generic service which will export report in excel format
+            Here is the template for parameters:
+
+            Report-Title
+            reportTitle: { title1, title2 }
+
+            Report-Meta-Info
+            reportMetaInfo: { key1: value1, key2: value2,... }
+
+            Report-Groups
+            reportGroups: It should be list of map
+            [
+            {
+            reportGroupHeader: { key1: Header1, key2: Header2,... },
+            reportGroupRecords:[{ key1: value1, key2: key2,... },{ key1: value1, key2: key2,... }],
+            reportGroupSummary:{ key1: value1, key2: key2,... }
+            }
+            ]
+
+            Report-Group-Total
+            reportTotalSummary: [{key: value}, {key: value}]
+
+            Report-Summary
+            reportSummary: { key1: value1, key2: value2,... }
+        </description>
+        <attribute name="groupByReport" mode="IN" type="String" optional="true" />
+        <attribute name="sheetName" mode="IN" type="String" optional="true" />
+        <attribute name="reportTitle" mode="IN" type="List" optional="true" />
+        <attribute name="reportMetaInfo" mode="IN" type="List" optional="true" />
+        <attribute name="reportGroups" mode="IN" type="List" optional="true" />
+        <attribute name="reportTotalSummary" mode="IN" type="List" optional="true" />
+        <attribute name="reportSummary" mode="IN" type="List" optional="true" />
+        <attribute name="hssWorkbook" mode="OUT" type="org.apache.poi.hssf.usermodel.HSSFWorkbook" optional="false"/>
+    </service>
+
 </services>

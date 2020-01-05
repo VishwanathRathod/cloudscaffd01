@@ -274,6 +274,12 @@
 		<response name="error" type="request" value="json"/>
 	</request-map>
 
+	<request-map uri="SampleExcelReport">
+		<security https="true" auth="true"/>
+		<event type="groovy" path="component://admin/webapp/admin/WEB-INF/actions/reports/sampleExcel.groovy"/>
+		<response name="success" type="none" />
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
