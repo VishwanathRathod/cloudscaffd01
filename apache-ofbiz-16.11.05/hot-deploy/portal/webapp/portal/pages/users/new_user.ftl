@@ -68,11 +68,6 @@
                             >${secGroup.description!}
                             </option>
                         </#list>
-
-                        <option value="AP_PLANNER">Planner</option>
-                        <option value="AP_APPROVER">Approver</option>
-                        <option value="AP_DEPLOYER">Deployer</option>
-                        <option value="AP_FULLADMIN">Administrator</option>
                     </select>
                 </div>
             </div>
