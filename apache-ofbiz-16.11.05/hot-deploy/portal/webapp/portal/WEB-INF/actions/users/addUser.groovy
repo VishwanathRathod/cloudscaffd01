@@ -1,0 +1,4 @@
+import com.autopatt.common.utils.SecurityGroupUtils
+
+availableSecurityGroups = SecurityGroupUtils.getAvailableSecurityGroups(delegator)
+context.availableSecurityGroups = availableSecurityGroups

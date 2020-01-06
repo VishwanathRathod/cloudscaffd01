@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-md-9 my-3">
-        <form action="<@ofbizUrl>CreateUser</@ofbizUrl>" method="post">
+        <form  id="create_user_form" action="<@ofbizUrl>CreateUser</@ofbizUrl>" method="post">
             <div class="form-group row required">
                 <label for="userFirstName" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
                 <div class="col-sm-10">
@@ -42,9 +42,10 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="userEmail" class="col-sm-2 col-form-label">Email <span class="mandatory">*</span></label>
+                <label for="userEmail" class="col-sm-2 col-form-label">Email <span id="result" class="mandatory">*</span></label>
                 <div class="col-sm-10">
-                <input type="email" class="form-control" id="userEmail" name="email" placeholder="tony@company.com" required>
+                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="tony@company.com" onblur="checkIfEmailExists()" required>
+                    <span id="email_notavailable" class="text-danger d-none">This Email address has already been used</span>
                 </div>
             </div>
             <div class="form-group row">

@@ -65,6 +65,18 @@ public class UserMgmtEvents {
         // TODO: Validations - check for duplicate email
 
         try {
+            GenericValue person = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
+            if (person != null) {
+                request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+                return ERROR;
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Unable to add user, email already exists");
+            return ERROR;
+        }
+
+        try {
             // Create Party & Person
             Map<String, Object> createPersonResp = dispatcher.runSync("createPerson", UtilMisc.<String, Object>toMap("firstName", firstName,
                     "lastName", lastName,
@@ -211,6 +223,27 @@ public class UserMgmtEvents {
             return ERROR;
         }
         request.setAttribute("_EVENT_MESSAGE_", "Profile details updated successfully.");
+        return SUCCESS;
+    }
+
+    public static String checkEmailAlreadyExists(HttpServletRequest request, HttpServletResponse response) {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        String email = request.getParameter("email");
+        try {
+            // TODO: handle deleted user's email check
+
+            GenericValue person = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
+            if (person == null) {
+                request.setAttribute("EMAIL_EXISTS", "NO");
+            } else {
+                request.setAttribute("EMAIL_EXISTS", "YES");
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "Available to use");
         return SUCCESS;
     }
 }
