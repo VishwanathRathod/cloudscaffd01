@@ -4,9 +4,7 @@ import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
-import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericEntityException;
-import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -274,4 +272,27 @@ public class EmployeeEvents {
         request.setAttribute("_EVENT_MESSAGE_", "User deleted successfully.");
         return SUCCESS;
     }
+
+    public static String checkEmailForEmp(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String tenantId = request.getParameter("tenantId");
+        GenericDelegator tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#");
+        String email = request.getParameter("email");
+        Map<String, Object> inputs = UtilMisc.toMap("userLoginId", email);
+        try {
+            GenericValue person = tenantDelegator.findOne("UserLogin", inputs, false);
+            if (person == null) {
+                request.setAttribute("EMAIL_EXISTS", "NO");
+            } else {
+                request.setAttribute("EMAIL_EXISTS", "YES");
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "Available to use");
+        return SUCCESS;
+    }
+
 }

@@ -5,9 +5,7 @@ import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
-import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericEntityException;
-import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.*;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -152,6 +150,27 @@ public class AdminMgmtEvents {
             e.printStackTrace();
         }
         request.setAttribute("_EVENT_MESSAGE_", " Admin User deleted successfully.");
+        return SUCCESS;
+    }
+
+    public static String checkIfEmailAlreadyExists(HttpServletRequest request, HttpServletResponse response) {
+        GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+        String email = request.getParameter("email");
+        try {
+            // TODO: handle deleted user's email check
+
+            GenericValue person = mainDelegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
+            if (person == null) {
+                request.setAttribute("EMAIL_EXISTS", "NO");
+            } else {
+                request.setAttribute("EMAIL_EXISTS", "YES");
+            }
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "Available to use");
         return SUCCESS;
     }
 
