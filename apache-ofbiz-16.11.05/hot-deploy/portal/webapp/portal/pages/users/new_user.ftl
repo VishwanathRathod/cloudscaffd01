@@ -31,36 +31,39 @@
         <form  id="create_user_form" action="<@ofbizUrl>CreateUser</@ofbizUrl>" method="post">
             <div class="form-group row required">
                 <label for="userFirstName" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="Tony" required>
+                <div class="col-sm-8">
+                <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userLastName" class="col-sm-2 col-form-label">Last Name <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="userLastName" name="lastname" placeholder="Stark" required>
+                <div class="col-sm-8">
+                <input type="text" class="form-control" id="userLastName" name="lastname" placeholder="" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userEmail" class="col-sm-2 col-form-label">Email <span id="result" class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="tony@company.com" onblur="checkIfEmailExists()" required>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="username@domain.com" onblur="checkIfEmailExists()" required>
                     <span id="email_notavailable" class="text-danger d-none">This Email address has already been used</span>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userPassword" class="col-sm-2 col-form-label">Password  <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                <input type="password" class="form-control" id="userPassword" name="password" placeholder="Initial Password" required>
+                <div class="col-sm-5">
+                    <div class="input-container">
+                        <input type="password" class="form-control" id="password" placeholder="Initial Password" name="password" required>
+                        <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                    </div>
                 <small id="passwordHelpBlock" class="form-text text-muted">
-                User will be prompted to change password when they login for the first time.
+                User will be prompted to change their password when they login for the first time
                 </small>
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-sm-2">Role <span class="mandatory">*</span></div>
-                <div class="col-sm-10">
+                <div class="col-sm-5">
                     <select name="securityGroupId" class="form-control" required>
                         <#list availableSecurityGroups as secGroup>
                             <option value="${secGroup.groupId!}"

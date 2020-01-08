@@ -31,29 +31,32 @@
         <form action="<@ofbizUrl>CreateAdmin</@ofbizUrl>" method="post">
             <div class="form-group row required">
                 <label for="userFirstName" class="col-sm-2 col-form-label">First Name <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="Aditya" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="userFirstName" name="firstname" placeholder="" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userLastName" class="col-sm-2 col-form-label">Last Name <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="userLastName" name="lastname" placeholder="prabhakar" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="userLastName" name="lastname" placeholder="" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userEmail" class="col-sm-2 col-form-label">Email <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="aditya@company.com" onblur="checkEmail()" required>
+                <div class="col-sm-6">
+                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="username@domain.com" onblur="checkEmail()" required>
                     <span id="email_notAvailable" class="text-danger d-none">This Email address has already been used</span>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userPassword" class="col-sm-2 col-form-label">Password  <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="userPassword" name="password" placeholder="Initial Password" required>
+                <div class="col-sm-6">
+                    <div class="input-container">
+                        <input type="password" class="form-control" id="password" placeholder="Initial Password" name="password" required>
+                        <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                    </div>
                     <small id="passwordHelpBlock" class="form-text text-muted">
-                        Admin will be prompted to change password when they login for the first time.
+                        User will be prompted to change their password when they login for the first time.
                     </small>
                 </div>
             </div>

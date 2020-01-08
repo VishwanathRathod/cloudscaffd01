@@ -262,7 +262,10 @@
                     <div class="form-group row">
                         <label for="createEmployee_password" class="col-sm-10 col-form-label">Password  <span class="mandatory">*</span></label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="createEmployee_password" name="empPassword"  required>
+                            <div class="input-container">
+                                <input type="password" class="form-control" id="pwd" name="empPassword" required>
+                                <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">

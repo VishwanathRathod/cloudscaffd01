@@ -28,25 +28,34 @@
         <div class="col-md-8 my-4">
             <div class="form-group row required">
                 <label for="CrrPswd" class="col-sm-3 col-form-label" >Current Password <span class="mandatory">*</span></label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" placeholder="Current Password" name="PASSWORD" required>
+                <div class="col-sm-5">
+                    <div class="input-container">
+                        <input type="password" class="form-control" id="password" name="PASSWORD" required>
+                        <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="nwpswd" class="col-sm-3 col-form-label">New Password <span class="mandatory">*</span></label>
-                <div class="col-sm-9">
-                <input type="password" class="form-control" placeholder="New Password" name="newPassword" required>
+                <div class="col-sm-5">
+                    <div class="input-container">
+                            <input type="password" class="form-control" id="newPassword" name="PASSWORD" required>
+                        <i class="fa fa-eye p_eye" aria-hidden="true" id="newPassword_eye"></i>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="cnfnewswd" class="col-sm-3 col-form-label">Confirm New Password <span class="mandatory">*</span></label>
-                <div class="col-sm-9">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="newPasswordVerify" required>
+                <div class="col-sm-5">
+                    <div class="input-container">
+                        <input type="password" class="form-control" id="newPasswordVerify" name="newPasswordVerify" required>
+                        <i class="fa fa-eye p_eye" aria-hidden="true" id="newPasswordVerify_eye"></i>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-3">&nbsp;</div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-5">
                   <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
                 </div>

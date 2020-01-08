@@ -43,16 +43,25 @@
 
                     <div class="form-group">
                      <label>Organization Id</label>
-                     <input type="text" class="form-control" placeholder="xyzcorp" name="userTenantId">
+                        <div class="input-container">
+                            <input type="text" class="form-control" placeholder="xyzcorp" name="userTenantId">
+                            <i class="fa fa-building-o organization" aria-hidden="true"></i>
+                        </div>
                   </div>
 
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
+                        <div class="input-container">
+                            <input type="text" class="form-control" placeholder="user@xyzcorp.com" name="USERNAME">
+                            <i class="fa fa-envelope envelop" aria-hidden="true"></i>
+                        </div>
                     </div>
                     <div class="form-group">
                      <label>Password</label>
-                     <input type="password" class="form-control" placeholder="" name="PASSWORD">
+                        <div class="input-container">
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="PASSWORD" required>
+                            <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                        </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                   <hr/>

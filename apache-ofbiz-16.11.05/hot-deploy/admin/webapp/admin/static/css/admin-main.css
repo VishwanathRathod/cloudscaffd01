@@ -17,7 +17,7 @@ body {
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 5px;
+  padding: 4px;
   vertical-align: middle;
   font-size: 1rem;
   color:lightblue;
@@ -29,9 +29,16 @@ body {
 }
 #sidebar-wrapper .list-group {
   width: 15rem;
+  padding-top: 6px;
+}
+#wrapper.collapse #sidebar-wrapper .list-group{
+  position: relative;
+  width: 70px;
+  transition: all 0.3s ease;
 }
 .sidebar-logo {
-  padding: 0 10px;
+  padding : 0 11px;
+  padding-top : 2px;
 }
 #page-content-wrapper {
   min-width: 100vw;
@@ -41,7 +48,7 @@ body {
   margin-left: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 307px) {
   #sidebar-wrapper {
     margin-left: 0;
   }
@@ -285,4 +292,28 @@ table.table .avatar {
 .login-main-text h2{
   font-weight: 300;
 }
+.input-container{
+  display: flex;
+  align-items:center;
+  border:1px solid #aaaa;
+  border-radius: 5px;
+}
+.input-container input{
+  border:0;
+  outline:none;
+}
+.fa-eye{
+  margin: 10px;
+  color: #aaa;
+}
+.fa.active{
+  color:#1779ff;
+}
+.envelop{
+  margin:10px;
+  color: #1779ff;
+}
 
+.p_eye {
+  cursor: pointer;
+}

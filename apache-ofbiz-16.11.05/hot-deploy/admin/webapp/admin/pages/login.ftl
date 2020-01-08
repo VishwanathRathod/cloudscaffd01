@@ -38,14 +38,22 @@
             </div>
             <form id="login" action="<@ofbizUrl>login</@ofbizUrl>" method="post">
               <div class="form-group">
-
                  <label>Admin Email Address</label>
-                 <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+                  <div class="input-container">
+                      <input type="text" class="form-control" placeholder="Email" name="USERNAME">
+                      <i class="fa fa-envelope envelop" aria-hidden="true"></i>
+                  </div>
               </div>
+
               <div class="form-group">
+
                  <label>Password</label>
-                 <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
-              </div>
+                  <div class="input-container">
+                  <input type="password" class="form-control" id="password" placeholder="Password" name="PASSWORD" >
+                      <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                  </div>
+                </div>
+
               <button type="submit" class="btn btn-primary">Login</button>
               <hr/>
               <a href="<@ofbizUrl>initForgotPwd</@ofbizUrl>" class="text-decoration-underline tz-text">I forgot my password!</a>
