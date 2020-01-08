@@ -8,10 +8,7 @@ import org.apache.ofbiz.service.ServiceUtil
 import java.sql.Timestamp
 
 String statusParam = null == parameters.status ? "ALL" : parameters.status
-String tenantIdParam = null == parameters.tenantId ? "ALL" : parameters.tenantId
-
-context.status = statusParam
-context.tenantId = tenantIdParam
+String tenantIdParam = null == parameters.filterUsersByTenant ? "ALL" : parameters.filterUsersByTenant
 
 tenantOrgParties = delegator.findByAnd("TenantOrgParty", null, UtilMisc.toList("createdStamp"), false);
 

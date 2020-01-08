@@ -1,7 +1,7 @@
 <div>
     <div class="row ">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form class="form-inline" action="<@ofbizUrl>usersExcelReport</@ofbizUrl>" method="post">
                 <div class="form-group mx-sm-3 mb-2 ">
                     <label for="filterUsersByStatus" class="p-2">Status</label>
                     <select class="form-control form-control-sm" id="filterUsersByStatus" name="status">
@@ -26,8 +26,8 @@
                 </div>
                 <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
                    onclick="filterUsersForReport()">Apply</a>
+                <button type="submit" class="btn btn-primary" class="btn btn-outline-primary btn-sm mb-2 pull-right">Download</button>
             </form>
-            <a href="<@ofbizUrl>/usersExcelReport</@ofbizUrl>" class="btn btn-outline-primary btn-sm mb-2">Download</a>
         </div>
     </div>
 
