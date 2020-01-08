@@ -27,6 +27,7 @@
                 <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
                    onclick="filterUsersForReport()">Apply</a>
             </form>
+            <a href="<@ofbizUrl>/usersExcelReport</@ofbizUrl>" class="btn btn-outline-primary btn-sm mb-2">Download</a>
         </div>
     </div>
 

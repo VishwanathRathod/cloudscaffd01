@@ -35,6 +35,7 @@
                 <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
                    onclick="filterSubscriptionsForReport()">Apply</a>
             </form>
+            <a href="<@ofbizUrl>/subscriptionsExcelReport</@ofbizUrl>" class="btn btn-outline-primary btn-sm mb-2">Download</a>
         </div>
     </div>
     <hr/>

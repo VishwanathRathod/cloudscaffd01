@@ -292,6 +292,17 @@
 		<response name="success" type="none" />
 	</request-map>
 
+	<request-map uri="usersExcelReport">
+		<security https="true" auth="true"/>
+		<event type="groovy" path="component://admin/webapp/admin/WEB-INF/actions/reports/usersExcelReport.groovy"/>
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="subscriptionsExcelReport">
+		<security https="true" auth="true"/>
+		<event type="groovy" path="component://admin/webapp/admin/WEB-INF/actions/reports/subscriptionsExcelReport.groovy"/>
+		<response name="success" type="none" />
+	</request-map>
+
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"
 		page="component://admin/widget/AdminScreens.xml#home" />
