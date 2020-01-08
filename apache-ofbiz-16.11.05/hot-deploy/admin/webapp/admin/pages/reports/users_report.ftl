@@ -1,6 +1,6 @@
 <div>
     <div class="row ">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <form class="form-inline" action="<@ofbizUrl>usersExcelReport</@ofbizUrl>" method="post">
                 <div class="form-group mx-sm-3 mb-2 ">
                     <label for="filterUsersByStatus" class="p-2">Status</label>
@@ -18,15 +18,21 @@
                     <select class="form-control form-control-sm" id="filterUsersByTenant" name="filterUsersByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
-                            <option value="${tenant.tenantId}" <#if tenantId?? && tenantId==tenant.tenantId>selected</#if>>
+                            <option value="${tenant.tenantId}"
+                                    <#if tenantId?? && tenantId==tenant.tenantId>selected</#if>>
                                 ${tenant.tenantId}
                             </option>
                         </#list>
                     </select>
                 </div>
-                <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
-                   onclick="filterUsersForReport()">Apply</a>
-                <button type="submit" class="btn btn-primary" class="btn btn-outline-primary btn-sm mb-2 pull-right">Download</button>
+                <div class="form-group  mx-sm-3">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+                       onclick="filterUsersForReport()">Apply</a>
+                </div>
+                <div class="form-group mx-sm-3">
+                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i
+                                class="material-icons">&#xE24D;</i> <span>Export to Excel</span></button>
+                </div>
             </form>
         </div>
     </div>
@@ -42,7 +48,7 @@
             <th>Email</th>
             <th>Date Created</th>
             <th>Role</th>
-            <th >Status</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -62,13 +68,18 @@
                     <td>${user.roleName!}</td>
                     <td width="15%">
                         <#if user.userStatus?? && user.userStatus == "ACTIVE">
-                            <span class="status text-success" >&#8226;</span> <span>Active</span>
+                            <span class="status text-success">&#8226;</span> <span>Active</span>
                         <#elseif user.userStatus?? && user.userStatus == "INACTIVE">
-                            <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span> In-Active </div>
+                            <div title="User hasn't logged in yet"><span class="status text-info">&bull;</span>
+                                In-Active
+                            </div>
                         <#elseif user.userStatus?? && user.userStatus == "LOCKED">
-                            <div title="User locked due to failed logins"><span class="status text-warning">&bull;</span> Locked </div>
+                            <div title="User locked due to failed logins"><span
+                                        class="status text-warning">&bull;</span> Locked
+                            </div>
                         <#else>
-                            <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
+                            <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended
+                            </div>
                         </#if>
                     </td>
                 </tr>
