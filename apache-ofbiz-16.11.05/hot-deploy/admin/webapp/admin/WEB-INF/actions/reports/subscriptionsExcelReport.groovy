@@ -8,12 +8,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import java.sql.Timestamp
 
 String statusParam = null == parameters.status ? "ACTIVE" : parameters.status
-String tenantIdParam = null == parameters.tenantId ? "ALL" : parameters.tenantId
-String planIdParam = null == parameters.planId ? "ALL" : parameters.planId
-
-context.status = statusParam
-context.tenantId = tenantIdParam
-context.planId = planIdParam
+String tenantIdParam = null == parameters.filterSubscriptionReportByTenant ? "ALL" : parameters.filterSubscriptionReportByTenant
+String planIdParam = null == parameters.filterSubscriptionsReportByProduct ? "ALL" : parameters.filterSubscriptionsReportByProduct
 
 tenantOrgParties = delegator.findByAnd("TenantOrgParty", null, UtilMisc.toList("createdStamp"), false);
 
