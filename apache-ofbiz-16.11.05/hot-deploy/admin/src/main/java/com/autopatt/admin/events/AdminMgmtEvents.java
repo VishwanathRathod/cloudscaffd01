@@ -50,6 +50,18 @@ public class AdminMgmtEvents {
             userLoginCtx.put("requirePasswordChange", "Y"); // TODO: change back to Y after implementing password change screen
             userLoginCtx.put("partyId", partyId);
 
+            try {
+                GenericValue person = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
+                if (person != null) {
+                    request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+                    return ERROR;
+                }
+            } catch (GenericEntityException e) {
+                e.printStackTrace();
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to add user, email already exists");
+                return ERROR;
+            }
+
             Map<String, Object> createUserLoginResp = dispatcher.runSync("createUserLogin", userLoginCtx);
             if (!ServiceUtil.isSuccess(createUserLoginResp)) {
                 Debug.logError("Error creating userLogin for " + email, module);

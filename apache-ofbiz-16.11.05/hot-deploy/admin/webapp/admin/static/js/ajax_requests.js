@@ -245,18 +245,22 @@ function addEmployeeDetails() {
             url: formURL,
             type: "POST",
             data: postData,
-            success: function (data, textStatus, jqXHR) {
-                $('#createEmployeeModal').modal('hide');
-                showSuccessToast("Employee has been added successfully");
-                setTimeout(function () {
-                    loadOrgEmployees();
-                }, 500);
+            success: function(resp) {
+                if(resp.Success === "Y") {
+                    $('#createEmployeeModal').modal('hide');
+                    showSuccessToast("Employee has been added successfully");
+                    setTimeout(function () {
+                        loadOrgEmployees();
+                    }, 500);
+                } else {
+                    //$('#createEmployeeModal').modal('show');
+                    // TODO: Show error toast
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
             }
         });
-    console.log(postData);
 }
 
 function initResetEmployeePwd() {
@@ -297,6 +301,29 @@ function filterSubscriptionsForReport() {
     $("#subscriptions_report").load(getUrl("filterSubscriptionsForReport?status=" + status + "&tenantId=" + tenantId + "&planId=" + planId),
         function () {
             showSuccessToast("Subscriptions loaded successfully");
+        });
+}
+function checkEmailEmp() {
+    var email = $("#createEmployee_email").val()
+    var postData = {email: email};
+    var formURL = getUrl("checkEmailForEmp");
+    $("#email_notExists").addClass("d-none");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(resp) {
+                if(resp.EMAIL_EXISTS === "YES") {
+                    $("#email_notExists").removeClass("d-none");
+                } else {
+                    //$("#emailInfo").html("FALSE");
+                }
+            },
+            error: function (EMAIL_EXISTS) {
+
+
+            }
         });
 }
 function checkEmailEmp() {

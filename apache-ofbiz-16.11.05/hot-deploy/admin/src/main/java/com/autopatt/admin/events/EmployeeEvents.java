@@ -57,6 +57,19 @@ public class EmployeeEvents {
             }
             String partyId = (String) createPersonResp.get("partyId");
 
+            // checking email
+            try {
+                GenericValue person = tenantDelegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", empEmail), false);
+                if (person != null) {
+                    request.setAttribute("_ERROR_MESSAGE_", "Email already exists");
+                    return ERROR;
+                }
+            } catch (GenericEntityException e) {
+                e.printStackTrace();
+                request.setAttribute("_ERROR_MESSAGE_", "Unable to add user, email already exists");
+                return ERROR;
+            }
+
             // 2. Create UserLogin
             Map<String, Object> userLoginCtx = UtilMisc.toMap("userLogin", sysUserLogin);
             userLoginCtx.put("userLoginId", empEmail);
@@ -114,9 +127,10 @@ public class EmployeeEvents {
             }
         } catch (GenericServiceException e) {
             e.printStackTrace();
+            request.setAttribute("Success", "N");
             return ERROR;
         }
-        request.setAttribute("createSuccess", "Y");
+        request.setAttribute("Success", "Y");
         return SUCCESS;
     }
 
@@ -275,12 +289,10 @@ public class EmployeeEvents {
 
     public static String checkEmailForEmp(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String tenantId = request.getParameter("tenantId");
         GenericDelegator tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#");
         String email = request.getParameter("email");
-        Map<String, Object> inputs = UtilMisc.toMap("userLoginId", email);
         try {
-            GenericValue person = tenantDelegator.findOne("UserLogin", inputs, false);
+            GenericValue person = tenantDelegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email),false);
             if (person == null) {
                 request.setAttribute("EMAIL_EXISTS", "NO");
             } else {

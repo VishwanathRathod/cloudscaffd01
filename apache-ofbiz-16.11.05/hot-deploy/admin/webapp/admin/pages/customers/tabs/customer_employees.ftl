@@ -253,11 +253,10 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="createEmployee_email" class="col-sm-10 col-form-label"> E-mail <span class="mandatory">*</span></label>
+                        <label for="createEmployee_email" class="col-sm-10 col-form-label"> E-mail </label>
                         <div class="col-sm-10">
-                            <input type="text" id="createEmployee_email" class="form-control"  name="empEmail" onblur="checkEmailEmp()"  required>
-                            <span id="email_notExists" class="text-danger d-none">This Email address has already been used</span>
-                        </div>
+                            <input type="email" class="form-control" id="createEmployee_email" name="email"  onblur="checkEmailEmp()" required>
+                            <span id="email_notExists" class="text-danger d-none">This Email address has already been used</span>                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="createEmployee_password" class="col-sm-10 col-form-label">Password  <span class="mandatory">*</span></label>
