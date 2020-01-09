@@ -1,6 +1,6 @@
 <div>
     <div class="row ">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <form class="form-inline" action="<@ofbizUrl>subscriptionsExcelReport</@ofbizUrl>" method="post">
                 <div class="form-group mx-sm-3 mb-2 ">
                     <label for="filterSubscriptionsReportByStatus" class="p-2">Status</label>
@@ -15,7 +15,8 @@
                     <select class="form-control form-control-sm" id="filterSubscriptionReportByTenant" name="filterSubscriptionReportByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
-                            <option value="${tenant.tenantId}" <#if tenantId?? && tenantId==tenant.tenantId>selected</#if>>
+                            <option value="${tenant.tenantId}"
+                                    <#if tenantId?? && tenantId==tenant.tenantId>selected</#if>>
                                 ${tenant.tenantId}
                             </option>
                         </#list>
@@ -32,9 +33,14 @@
                         </#list>
                     </select>
                 </div>
-                <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
-                   onclick="filterSubscriptionsForReport()">Apply</a>
-                <button type="submit" class="btn btn-primary" class="btn btn-outline-primary btn-sm mb-2 pull-right">Download</button>
+                <div class="form-group mx-sm-3">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+                       onclick="filterSubscriptionsForReport()">Apply</a>
+                </div>
+                <div class="form-group mx-sm-3">
+                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i
+                                class="material-icons">&#xE24D;</i> <span>Export to Excel</span></button>
+                </div>
             </form>
         </div>
     </div>
