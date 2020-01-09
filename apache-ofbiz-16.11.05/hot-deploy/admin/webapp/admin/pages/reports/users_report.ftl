@@ -1,9 +1,9 @@
 <div>
-    <div class="row ">
-        <div class="col-md-12">
-            <form class="form-inline" action="<@ofbizUrl>usersExcelReport</@ofbizUrl>" method="post">
+    <form action="<@ofbizUrl>usersExcelReport</@ofbizUrl>" method="post">
+        <div class="row">
+            <div class="col-md-6 form-inline">
                 <div class="form-group mx-sm-3 mb-2 ">
-                    <label for="filterUsersByStatus" class="p-2">Status</label>
+                    <label for="filterUsersByStatus" class="px-2">Status</label>
                     <select class="form-control form-control-sm" id="filterUsersByStatus" name="status">
                         <option value="ALL">All</option>
                         <option value="ACTIVE" <#if status?? && status=="ACTIVE">selected</#if>>Active</option>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="filterUsersByTenant" class="p-2">Customer</label>
+                    <label for="filterUsersByTenant" class="px-2">Customer</label>
                     <select class="form-control form-control-sm" id="filterUsersByTenant" name="filterUsersByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
@@ -25,17 +25,20 @@
                         </#list>
                     </select>
                 </div>
-                <div class="form-group  mx-sm-3">
-                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+                <div class="form-group mx-sm-3 mb-2">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm px-1"
                        onclick="filterUsersForReport()">Apply</a>
                 </div>
-                <div class="form-group mx-sm-3">
-                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i
-                                class="material-icons">&#xE24D;</i> <span>Export to Excel</span></button>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group float-right justify-content-end">
+                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                        <span>Export to Excel</span></button>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 
     <hr/>
     <table class="table table-striped table-hover">

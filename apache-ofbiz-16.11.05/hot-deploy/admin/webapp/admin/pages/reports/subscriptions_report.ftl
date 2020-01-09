@@ -1,9 +1,9 @@
 <div>
-    <div class="row ">
-        <div class="col-md-12">
-            <form class="form-inline" action="<@ofbizUrl>subscriptionsExcelReport</@ofbizUrl>" method="post">
-                <div class="form-group mx-sm-3 mb-2 ">
-                    <label for="filterSubscriptionsReportByStatus" class="p-2">Status</label>
+    <form action="<@ofbizUrl>subscriptionsExcelReport</@ofbizUrl>" method="post">
+        <div class="row">
+            <div class="col-md-6 form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="filterSubscriptionsReportByStatus" class="px-2">Status</label>
                     <select class="form-control form-control-sm" id="filterSubscriptionsReportByStatus" name="status">
                         <option value="ALL">All</option>
                         <option value="ACTIVE" <#if status?? && status=="ACTIVE">selected</#if>>Active</option>
@@ -11,7 +11,7 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="filterSubscriptionReportByTenant" class="p-2">Customer</label>
+                    <label for="filterSubscriptionReportByTenant" class="px-2">Customer</label>
                     <select class="form-control form-control-sm" id="filterSubscriptionReportByTenant" name="filterSubscriptionReportByTenant">
                         <option value="ALL">All</option>
                         <#list tenants as tenant>
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="filterSubscriptionsReportByProduct" class="p-2">Plan</label>
+                    <label for="filterSubscriptionsReportByProduct" class="px-2">Plan</label>
                     <select class="form-control form-control-sm" id="filterSubscriptionsReportByProduct" name="filterSubscriptionsReportByProduct">
                         <option value="ALL">All</option>
                         <#list plans as plan>
@@ -33,17 +33,20 @@
                         </#list>
                     </select>
                 </div>
-                <div class="form-group mx-sm-3">
-                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-2"
+                <div class="form-group mx-sm-3 mb-2">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm px-1"
                        onclick="filterSubscriptionsForReport()">Apply</a>
                 </div>
-                <div class="form-group mx-sm-3">
-                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i
-                                class="material-icons">&#xE24D;</i> <span>Export to Excel</span></button>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group float-right justify-content-end">
+                    <button type="submit" class="btn btn-outline-primary btn-sm mb-2"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                         <span>Export to Excel</span></button>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
+
     <hr/>
     <div>
         <table class="table table-striped table-hover">
