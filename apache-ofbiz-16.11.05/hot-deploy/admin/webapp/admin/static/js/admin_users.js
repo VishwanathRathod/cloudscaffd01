@@ -25,38 +25,19 @@ function _removeUser() {
             }
         });
 }
-function checkEmail() {
-    var email = $("#userEmail").val()
-    var postData = {email: email};
-    var formURL = getUrl("checkIfEmailAlreadyExists");
-    $("#email_notAvailable").addClass("d-none");
-    $.ajax(
-        {
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(resp) {
-                if(resp.EMAIL_EXISTS === "YES") {
-                    $("#email_notAvailable").removeClass("d-none");
-                } else {
-                }
-            },
-            error: function (EMAIL_EXISTS) {
-            }
-        });
-}
-function checkEmail() {
-    var email = $("#userEmail").val()
-    var postData = {email: email};
-    var formURL = getUrl("checkIfEmailAlreadyExists");
-    $("#email_notAvailable").addClass("d-none");
-    $.ajax(
-        {
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(resp) {
 
+// Check if email already exists for admin user
+function checkIfAdminEmailExists() {
+    var email = $("#userEmail").val()
+    var postData = {email: email};
+    var formURL = getUrl("checkIfEmailAlreadyExists");
+    $("#email_notAvailable").addClass("d-none");
+    $.ajax(
+        {
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(resp) {
                 if(resp.EMAIL_EXISTS === "YES") {
                     $("#email_notAvailable").removeClass("d-none");
                 } else {

@@ -9,5 +9,7 @@ function showSuccessToast(msg) {
 }
 
 function showErrorToast(msg) {
-    //TODO:
+    if(!msg) msg = "Error performing this transaction."
+    $("#error_toaster_message").text(msg)
+    $('#error_toaster').toast('show');
 }

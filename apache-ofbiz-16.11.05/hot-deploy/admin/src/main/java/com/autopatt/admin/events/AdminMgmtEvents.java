@@ -166,12 +166,12 @@ public class AdminMgmtEvents {
     }
 
     public static String checkIfEmailAlreadyExists(HttpServletRequest request, HttpServletResponse response) {
-        GenericDelegator mainDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         String email = request.getParameter("email");
         try {
             // TODO: handle deleted user's email check
 
-            GenericValue person = mainDelegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
+            GenericValue person = delegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email), false);
             if (person == null) {
                 request.setAttribute("EMAIL_EXISTS", "NO");
             } else {

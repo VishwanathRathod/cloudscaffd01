@@ -254,7 +254,7 @@ function addEmployeeDetails() {
                     }, 500);
                 } else {
                     //$('#createEmployeeModal').modal('show');
-                    // TODO: Show error toast
+                    showErrorToast("Email already exists")
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -303,9 +303,11 @@ function filterSubscriptionsForReport() {
             showSuccessToast("Subscriptions loaded successfully");
         });
 }
+
 function checkEmailEmp() {
+    var userOrgPartId = $("#createEmployee_orgPartyId").val();
     var email = $("#createEmployee_email").val()
-    var postData = {email: email};
+    var postData = {email: email, orgPartyId: userOrgPartId};
     var formURL = getUrl("checkEmailForEmp");
     $("#email_notExists").addClass("d-none");
     $.ajax(
@@ -321,28 +323,7 @@ function checkEmailEmp() {
                 }
             },
             error: function (EMAIL_EXISTS) {
-
-
-            }
-        });
-}
-function checkEmailEmp() {
-    var email = $("#createEmployee_email").val()
-    var postData = {email: email};
-    var formURL = getUrl("checkEmailForEmp");
-    $("#email_notExists").addClass("d-none");
-    $.ajax(
-        {
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(resp) {
-                if(resp.EMAIL_EXISTS === "YES") {
-                    $("#email_notExists").removeClass("d-none");
-                } else {
-                }
-            },
-            error: function (EMAIL_EXISTS) {
+                //TODO: handle error
             }
         });
 }

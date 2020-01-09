@@ -289,7 +289,11 @@ public class EmployeeEvents {
 
     public static String checkEmailForEmp(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        GenericDelegator tenantDelegator = (GenericDelegator) DelegatorFactory.getDelegator("default#");
+        String orgPartyId = request.getParameter("orgPartyId");
+        request.setAttribute("orgPartyId", orgPartyId);
+
+        Delegator tenantDelegator = TenantCommonUtils.getTenantDelegatorByOrgPartyId(orgPartyId);
+
         String email = request.getParameter("email");
         try {
             GenericValue person = tenantDelegator.findOne("UserLogin", UtilMisc.toMap("userLoginId", email),false);
