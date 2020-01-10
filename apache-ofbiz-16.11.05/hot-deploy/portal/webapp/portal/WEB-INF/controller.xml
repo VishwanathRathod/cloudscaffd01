@@ -176,6 +176,24 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json"/>
 	</request-map>
+	<request-map uri="ajaxActivateUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="activateUser" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="ajaxSuspendUser">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="suspendUser" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+	<request-map uri="initResetUserPwd">
+		<security https="true" auth="true" />
+		<event type="java" path="com.autopatt.portal.events.UserMgmtEvents" invoke="sendUserPasswordResetLink" />
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
 
 	<!-- View Mappings - START -->
 	<view-map name="home" type="screen"

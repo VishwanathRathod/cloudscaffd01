@@ -33,12 +33,41 @@
                         <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
                     </#if>
                 </td>
-                <td>
+                <td width="20%">
 
                     <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
+
+                    <#if user.userStatus?? && user.userStatus == "ACTIVE">
+                        <a href="#"
+                           data-target="#suspendUserConfirmModal"
+                           class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
+                           data-org-party-id="${orgPartyId!}">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </a>
+                        <a href="#"
+                           data-target="#resetPasswordUserConfirmModal"
+                           class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
+                           data-org-party-id="${orgPartyId!}" data-user-login-id="${user.userLogin.userLoginId!}">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </a>
+                    <#else>
+                        <a href="#"
+                           data-target="#activateUserConfirmModal"
+                           class="btn btn-outline-primary" title="Activate" data-toggle="modal"
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
+                           data-org-party-id="${orgPartyId!}">
+                            <i class="fa fa-unlock" aria-hidden="true"></i>
+                        </a>
+                    </#if>
                     <#if user.partyId != userLogin.partyId>
-                        <a href="#" class="delete" title="Remove" data-toggle="modal" data-target="#deleteUserConfirmModal"
-                       data-party-id="${user.partyId!}" data-party-name="${user.partyName!}"><i class="material-icons">delete</i></a>
+                    <a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal"
+                       data-target="#deleteUserConfirmModal"
+                       data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
+                       data-org-party-id="${orgPartyId!}">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
                     </#if>
                 </td>
             </tr>
@@ -46,3 +75,77 @@
     </#if>
     </tbody>
 </table>
+
+<form id="suspend_user_form" action="<@ofbizUrl>ajaxSuspendUser</@ofbizUrl>">
+    <input type="hidden" id="suspendUser_partyId">
+</form>
+
+<form id="enable_user_form" action="<@ofbizUrl>ajaxActivateUser</@ofbizUrl>">
+    <input type="hidden" id="enableUser_partyId">
+</form>
+
+<div class="modal fade" id="activateUserConfirmModal" tabindex="-1" role="dialog" aria-labelledby="activateUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Activate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to activate account for <b><span id="activateUserPartyName"></span></b>?
+                <br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="activateUser()">Activate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="suspendUserConfirmModal" tabindex="-1" role="dialog" aria-labelledby="suspendUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Suspend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to suspend account for <b><span id="suspendUserPartyName"></span></b>?
+                <br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="suspendUser()">Suspend</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="resetPasswordUserConfirmModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Password Reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to reset password for <b><span id="resetPasswordForPartyName"></span></b>?
+                <br/>
+            </div>
+            <input type="hidden" name="resetPasswordUserLoginId" id="resetPasswordUserLoginId" value=""/>
+            <input type="hidden" name="resetPasswordOrgPartyId" id="resetPasswordOrgPartyId" value=""/>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="initResetUserPwd()">Reset Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

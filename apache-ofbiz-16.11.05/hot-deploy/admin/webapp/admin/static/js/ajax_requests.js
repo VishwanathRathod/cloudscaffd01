@@ -81,7 +81,7 @@ function activateOrgEmployee() {
     var employeePartyId = $("#enableEmployee_partyId").val()
     var orgPartyId = $('input[name="orgPartyId"]').val();
     var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
-    var formURL = $("#enable_org_employee_form").attr("action");
+    var formURL = $("#enable_user_form").attr("action");
     $.ajax(
         {
             url: formURL,

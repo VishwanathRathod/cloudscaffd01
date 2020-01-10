@@ -1,11 +1,11 @@
 package com.autopatt.portal.events;
 
+import com.autopatt.admin.utils.TenantCommonUtils;
 import com.autopatt.admin.utils.UserLoginUtils;
+import com.autopatt.common.utils.JWTHelper;
 import com.autopatt.common.utils.SecurityGroupUtils;
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.ScriptHelper;
-import org.apache.ofbiz.base.util.UtilDateTime;
-import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.*;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.security.Security;
@@ -223,6 +223,114 @@ public class UserMgmtEvents {
             return ERROR;
         }
         request.setAttribute("_EVENT_MESSAGE_", "Profile details updated successfully.");
+        return SUCCESS;
+    }
+
+    public static String activateUser(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String orgEmployeePartyId = request.getParameter("orgEmployeePartyId");
+        request.setAttribute("orgEmployeePartyId", orgEmployeePartyId);
+
+        GenericValue usersLogin = (GenericValue) session.getAttribute("userLogin");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        String userLoginId = UserLoginUtils.getUserLoginIdForPartyId(delegator, orgEmployeePartyId);
+        try {
+            if (UtilValidate.isEmpty(userLoginId)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Employee user with id "+ orgEmployeePartyId+" not found.");
+                return ERROR;
+            }
+            Map<String,Object> updateUserLoginResp = dispatcher.runSync("updateUserLoginSecurity",
+                    UtilMisc.toMap("userLogin", UserLoginUtils.getSystemUserLogin(delegator),
+                            "userLoginId", userLoginId,
+                            "enabled", "Y",
+                            "disabledDateTime", null));
+
+            if(!ServiceUtil.isSuccess(updateUserLoginResp)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Error trying to enable user with id "+ orgEmployeePartyId);
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to enable user with id "+ orgEmployeePartyId);
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "User enabled successfully.");
+        return SUCCESS;
+    }
+
+    public static String suspendUser(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        String orgEmployeePartyId = request.getParameter("orgEmployeePartyId");
+        request.setAttribute("orgEmployeePartyId", orgEmployeePartyId);
+
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        String userLoginId = UserLoginUtils.getUserLoginIdForPartyId(delegator, orgEmployeePartyId);
+        try {
+            if (UtilValidate.isEmpty(userLoginId)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Employee user with id "+ orgEmployeePartyId+" not found.");
+                return ERROR;
+            }
+            Map<String,Object> updateUserLoginResp = dispatcher.runSync("updateUserLoginSecurity",
+                    UtilMisc.toMap("userLogin", UserLoginUtils.getSystemUserLogin(delegator), "userLoginId", userLoginId, "enabled", "N"));
+
+            if(!ServiceUtil.isSuccess(updateUserLoginResp)) {
+                request.setAttribute("_ERROR_MESSAGE_", "Error trying to suspend user with id "+ orgEmployeePartyId);
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            e.printStackTrace();
+            request.setAttribute("_ERROR_MESSAGE_", "Error trying to suspend user with id "+ orgEmployeePartyId);
+            return ERROR;
+        }
+        request.setAttribute("_EVENT_MESSAGE_", "User suspending successfully.");
+        return SUCCESS;
+    }
+
+    public static String sendUserPasswordResetLink(HttpServletRequest request, HttpServletResponse response) {
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        String userLoginId = request.getParameter("userLoginId");
+        String orgPartyId = request.getParameter("orgPartyId");
+        String userTenantId = TenantCommonUtils.getTenantIdForOrgPartyId(delegator, orgPartyId);
+
+        Map<String, Object> result = null;
+        try {
+            result = dispatcher.runSync("generatePasswordResetToken",
+                    UtilMisc.<String, Object>toMap("userLoginId", userLoginId, "userTenantId", userTenantId));
+            if (!ServiceUtil.isSuccess(result)) {
+                request.setAttribute("_ERROR_MESSAGE_", result.get("errorMessage"));
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to generate reset token by admin");
+            return ERROR;
+        }
+
+        String newPassword = "P@" + RandomStringUtils.random(15, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyz1234567890@".toCharArray());
+        try {
+            Map<String, Object> resetPwdresult = dispatcher.runSync("resetPassword",
+                    UtilMisc.<String, String>toMap("userLoginId", userLoginId, "userTenantId", userTenantId,
+                            "newPassword", newPassword, "newPasswordVerify", newPassword));
+            if (!ServiceUtil.isSuccess(resetPwdresult)) {
+                if (resetPwdresult.containsKey("errorMessage")) {
+                    request.setAttribute("_ERROR_MESSAGE_", resetPwdresult.get("errorMessage"));
+                } else {
+                    request.setAttribute("_ERROR_MESSAGE_LIST_", resetPwdresult.get("errorMessageList"));
+                }
+                return ERROR;
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Failed to update the password");
+            return ERROR;
+        }
+        System.out.println(result.get("token"));
+        request.setAttribute("_EVENT_MESSAGE_", result.get("token"));
+        request.setAttribute("TOKEN", result.get("token"));
         return SUCCESS;
     }
 
