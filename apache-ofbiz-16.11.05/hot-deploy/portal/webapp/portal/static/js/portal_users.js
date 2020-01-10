@@ -18,8 +18,7 @@ function _removeUser() {
             data: postData,
             success: function (data, textStatus, jqXHR) {
                 $('#deleteUserConfirmModal').modal('hide');
-                // showSuccessToast("User Deleted Successfully");
-                //TODO: Show toast msg
+                showSuccessToast("User Deleted Successfully");
                 _loadUsers();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -30,26 +29,29 @@ function _removeUser() {
 
 function _loadUsers () {
     $("#users_list_section").load(getAppUrl("users_list_section"), function() {
-        //
+        initiateUsersMgmtModals();
     });
 }
 
 function activateUser() {
     var employeePartyId = $("#enableUser_partyId").val()
-    var orgPartyId = $('input[name="orgPartyId"]').val();
-    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
+    var postData = {partyId: employeePartyId};
     var formURL = $("#enable_user_form").attr("action");
     $.ajax(
         {
             url: formURL,
             type: "POST",
             data: postData,
-            success: function (data, textStatus, jqXHR) {
-                $('#activateUserConfirmModal').modal('hide');
-                //showSuccessToast("User Activated Successfully");
-                setTimeout(function () {
-                    _loadUsers();
+            success: function (resp) {
+                if(resp.Success === "Y") {
+                    $('#activateUserConfirmModal').modal('hide');
+                    showSuccessToast("User Activated Successfully");
+                    setTimeout(function () {
+                        _loadUsers();
                     }, 500);
+                } else {
+                    //showErrorToast("user cannot be activated");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
@@ -58,20 +60,23 @@ function activateUser() {
 }
 function suspendUser() {
     var employeePartyId = $("#suspendUser_partyId").val()
-    var orgPartyId = $('input[name="orgPartyId"]').val();
-    var postData = {orgPartyId: orgPartyId, orgEmployeePartyId: employeePartyId};
+    var postData = {partyId: employeePartyId};
     var formURL = $("#suspend_user_form").attr("action");
     $.ajax(
         {
             url: formURL,
             type: "POST",
             data: postData,
-            success: function (data, textStatus, jqXHR) {
+            success: function (resp) {
+                if(resp.Success === "Y"){
                 $('#suspendUserConfirmModal').modal('hide');
-                //showSuccessToast("User Suspended Successfully");
+                showSuccessToast("User Suspended Successfully");
                 setTimeout(function () {
                     _loadUsers();
                 }, 500);
+                } else {
+                    //showErrorToast("user cannot be suspended");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
@@ -79,20 +84,24 @@ function suspendUser() {
         });
 }
 function initResetUserPwd() {
-    var orgPartyId = $('input[id="resetPasswordOrgPartyId"]').val();
+    var PartyId = $('input[id="resetPasswordForPartyId"]').val();
     var userLoginId = $('input[id="resetPasswordUserLoginId"]').val();
-    var postData = {"orgPartyId": orgPartyId, "userLoginId":userLoginId};
+    var postData = {"partyId": PartyId, "userLoginId":userLoginId};
     var formURL = getAppUrl("initResetUserPwd");
     $.ajax(
         {
             url: formURL,
             type: "POST",
             data: postData,
-            success: function (data, textStatus, jqXHR) {
-                $('#resetPasswordUserConfirmModal').modal('hide');
-                alert("Reset password initiated successfully, User will receive mail with reset link");
-                setTimeout(function () {
-                }, 500);
+            success: function (resp) {
+                if(resp.Success === "Y") {
+                    $('#resetPasswordUserConfirmModal').modal('hide');
+                    showSuccessToast("Reset password initiated successfully, User will receive an e-mail with reset link");
+                    setTimeout(function () {
+                    }, 500);
+                } else {
+                    //showErrorToast("Not able to update password");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);

@@ -33,42 +33,41 @@
                         <div title="User has been disabled"><span class="status text-danger">&bull;</span> Suspended </div>
                     </#if>
                 </td>
-                <td width="20%">
-
-                    <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
-
-                    <#if user.userStatus?? && user.userStatus == "ACTIVE">
+                <td width="30%">
+                    <a href="<@ofbizUrl>edit_user?partyId=${user.partyId!}</@ofbizUrl>" class="btn btn-outline-primary" title="Edit" data-toggle="tooltip">
+                        <i  class="fa fa-edit" aria-hidden="true"></i></a>
+                    <#if user.userStatus?? && user.userStatus == "ACTIVE" && user.partyId != userLogin.partyId>
                         <a href="#"
                            data-target="#suspendUserConfirmModal"
                            class="btn btn-outline-danger" title="Suspend" data-toggle="modal"
-                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
-                           data-org-party-id="${orgPartyId!}">
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </a>
+                        <#if user.partyId != userLogin.partyId>
                         <a href="#"
                            data-target="#resetPasswordUserConfirmModal"
                            class="btn btn-outline-info" title="Reset Password" data-toggle="modal"
                            data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
-                           data-org-party-id="${orgPartyId!}" data-user-login-id="${user.userLogin.userLoginId!}">
+                           data-user-login-id="${user.userLogin.userLoginId!}">
                             <i class="fa fa-key" aria-hidden="true"></i>
                         </a>
-                    <#else>
+                        </#if>
+                    <#elseif user.partyId != userLogin.partyId>
                         <a href="#"
                            data-target="#activateUserConfirmModal"
-                           class="btn btn-outline-primary" title="Activate" data-toggle="modal"
-                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
-                           data-org-party-id="${orgPartyId!}">
+                           class="btn btn-outline-success" title="Activate" data-toggle="modal"
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}">
                             <i class="fa fa-unlock" aria-hidden="true"></i>
                         </a>
                     </#if>
                     <#if user.partyId != userLogin.partyId>
-                    <a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal"
-                       data-target="#deleteUserConfirmModal"
-                       data-party-id="${user.partyId}" data-party-name="${user.partyName!}"
-                       data-org-party-id="${orgPartyId!}">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
+                        <a href="#" class="btn btn-outline-danger" title="Remove" data-toggle="modal"
+                           data-target="#deleteUserConfirmModal"
+                           data-party-id="${user.partyId}" data-party-name="${user.partyName!}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </a>
                     </#if>
+
                 </td>
             </tr>
         </#list>
@@ -137,9 +136,10 @@
             <div class="modal-body">
                 Are you sure you want to reset password for <b><span id="resetPasswordForPartyName"></span></b>?
                 <br/>
+                <small>An email will be sent to user with a link to set their password.</small>
             </div>
             <input type="hidden" name="resetPasswordUserLoginId" id="resetPasswordUserLoginId" value=""/>
-            <input type="hidden" name="resetPasswordOrgPartyId" id="resetPasswordOrgPartyId" value=""/>
+            <input type="hidden" name="resetPasswordForPartyId" id="resetPasswordForPartyId" value=""/>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="initResetUserPwd()">Reset Password</button>

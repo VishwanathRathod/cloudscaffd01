@@ -1,6 +1,5 @@
 $(function() {
     initiateUsersMgmtModals();
-    initializeUserModals();
 });
 
 
@@ -15,8 +14,6 @@ function initiateUsersMgmtModals() {
         modal.find('#deletePartyName').text(deletingPartyName);
         $("#deleteUser_partyId").val(deletingPartyId);
     })
-}
-function initializeUserModals() {
 
     $('#suspendUserConfirmModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -43,13 +40,12 @@ function initializeUserModals() {
         var button = $(event.relatedTarget);
         var resetPasswordForPartyId = button.data('party-id');
         var resetPasswordForPartyName = button.data('party-name');
-        var resetPasswordOrgPartyId=button.data('org-party-id');
-        var resetPasswordUserLoginId=button.data('user-login-id');
+        var resetPasswordUserLoginId = button.data('user-login-id');
         if(resetPasswordForPartyName == null) resetPasswordForPartyName = "";
 
         var modal = $(this)
         modal.find('#resetPasswordForPartyName').text(resetPasswordForPartyName);
-        modal.find('#resetPasswordOrgPartyId').val(resetPasswordOrgPartyId);
+        modal.find('#resetPasswordForPartyId').val(resetPasswordForPartyId);
         modal.find('#resetPasswordUserLoginId').val(resetPasswordUserLoginId);
     });
 }

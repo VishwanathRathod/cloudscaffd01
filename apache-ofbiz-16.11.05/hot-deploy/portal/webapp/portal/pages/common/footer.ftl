@@ -7,6 +7,7 @@
 
   <script src="../static/js/portal_modals.js"></script>
   <script src="../static/js/portal_users.js"></script>
+  <script src="../static/js/toast_utils.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
