@@ -43,7 +43,7 @@
             </div>
             <div class="form-group row">
                 <label for="userEmail" class="col-sm-2 col-form-label">Email <span class="mandatory">*</span></label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     <input type="email" class="form-control" id="userEmail" name="email" placeholder="name@domain.com" onblur="checkIfAdminEmailExists()" required>
                     <span id="email_notAvailable" class="text-danger d-none">This Email address has already been used</span>
                 </div>

@@ -44,11 +44,17 @@
 
                     <div class="form-group">
                         <label>New Password</label>
-                        <input type="password" class="form-control" placeholder="" name="newPassword" required>
+                        <div class="input-container">
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                            <i class="fa fa-eye p_eye" aria-hidden="true" id="newPassword_eye"></i>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="" name="newPasswordVerify" required>
+                        <div class="input-container">
+                            <input type="password" class="form-control" id="newPasswordVerify" name="newPasswordVerify" required>
+                            <i class="fa fa-eye p_eye" aria-hidden="true" id="newPasswordVerify_eye"></i>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>

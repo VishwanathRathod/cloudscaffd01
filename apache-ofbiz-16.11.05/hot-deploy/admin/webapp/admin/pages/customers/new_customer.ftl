@@ -65,7 +65,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="contactPassword">Password</label>
-                                        <input type="password" class="form-control" id="contactPassword" name="contactPassword" placeholder="" required="true">
+                                        <div class="input-container">
+                                            <input type="password" class="form-control" id="password" name="contactPassword" placeholder="" required="true">
+                                            <i class="fa fa-eye p_eye" aria-hidden="true" id="password_eye"></i>
+                                        </div>
+
                                         <small id="emailHelp" class="form-text text-muted">User will be forced to change password on first login</small>
                                     </div>
                                 </div>

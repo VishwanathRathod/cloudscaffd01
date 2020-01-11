@@ -256,14 +256,15 @@
                         <label for="createEmployee_email" class="col-sm-10 col-form-label"> E-mail </label>
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="createEmployee_email" name="email"  onblur="checkEmailEmp()" required>
-                            <span id="email_notExists" class="text-danger d-none">This Email address has already been used</span>                        </div>
+                            <span id="email_notExists" class="text-danger d-none">This Email address has already been used</span>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="createEmployee_password" class="col-sm-10 col-form-label">Password  <span class="mandatory">*</span></label>
                         <div class="col-sm-10">
                             <div class="input-container">
-                                <input type="password" class="form-control" id="pwd" name="empPassword" required>
-                                <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+                                <input type="password" class="form-control" id="createEmployee_password" name="empPassword" required>
+                                <#--<i class="fa fa-eye" aria-hidden="true" id="eye"></i>-->
                             </div>
                         </div>
                     </div>
