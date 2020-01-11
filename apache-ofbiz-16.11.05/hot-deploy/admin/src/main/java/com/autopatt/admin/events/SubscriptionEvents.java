@@ -1,20 +1,22 @@
 package com.autopatt.admin.events;
 
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.UtilDateTime;
-import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.base.util.*;
+import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TimeZone;
 
 public class SubscriptionEvents {
@@ -22,6 +24,7 @@ public class SubscriptionEvents {
     public final static String module = SubscriptionEvents.class.getName();
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+    private static Properties SUBSCRIPTION_PROPERTIES = UtilProperties.getProperties("subscription.properties");
 
     public static String createSubscription(HttpServletRequest request, HttpServletResponse response) {
 
@@ -61,6 +64,14 @@ public class SubscriptionEvents {
             Debug.logError("Failed to parse From or To date", module);
             request.setAttribute("_ERROR_MESSAGE_", "Failed to parse From or To date");
             return ERROR;
+        }
+
+        //check any Active subscription already exists for this date range
+        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "true");
+        if ("true".equals(allowMultiActive)) {
+            if (checkOverlapsActiveSubscription(request, dispatcher, userLogin, orgPartyId, validFrom, validTo)) {
+                return ERROR;
+            }
         }
 
         try {
@@ -140,6 +151,7 @@ public class SubscriptionEvents {
     public static String renewSubscription(HttpServletRequest request, HttpServletResponse response) {
 
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         HttpSession session = request.getSession();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
         String subscriptionId = request.getParameter("subscriptionId");
@@ -172,6 +184,27 @@ public class SubscriptionEvents {
             return ERROR;
         }
 
+        //check any Active subscription already exists for this date range
+        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "true");
+        if ("true".equals(allowMultiActive)) {
+            try {
+                GenericValue subscription = delegator.findOne("Subscription", false, "subscriptionId", subscriptionId);
+                if (null == subscription) {
+                    request.setAttribute("_ERROR_MESSAGE_", "Subscription not found");
+                    return ERROR;
+                }
+                String orgPartyId = subscription.getString("partyId");
+                Timestamp fromDate = subscription.getTimestamp("fromDate");
+                if (checkOverlapsActiveSubscription(request, dispatcher, userLogin, orgPartyId, fromDate, validTo)) {
+                    return ERROR;
+                }
+            } catch (GenericEntityException e) {
+                request.setAttribute("_ERROR_MESSAGE_", "Failed to check multi active subscription feature");
+                return ERROR;
+            }
+
+        }
+
         try {
             resp = dispatcher.runSync("updateSubscriptionThruDate",
                     UtilMisc.<String, Object>toMap("subscriptionId", subscriptionId, "validTo", validTo,
@@ -188,5 +221,31 @@ public class SubscriptionEvents {
             return ERROR;
         }
         return SUCCESS;
+    }
+
+    public static boolean checkOverlapsActiveSubscription(HttpServletRequest request, LocalDispatcher dispatcher, GenericValue userLogin, String orgPartyId, Timestamp validFrom, Timestamp validTo) {
+        try {
+            Map<String, Object> respActSubs = dispatcher.runSync("getSubscriptions",
+                    UtilMisc.<String, Object>toMap("orgPartyId", orgPartyId, "status", "ACTIVE", "productId", null, "userLogin", userLogin));
+            if (ServiceUtil.isSuccess(respActSubs)) {
+                List<Map> activeSubscriptionList = (List<Map>) respActSubs.get("subscriptions");
+                if (!CollectionUtils.isEmpty(activeSubscriptionList)) {
+                    for (Map activeSubscription : activeSubscriptionList) {
+                        Timestamp fromDate = activeSubscription.containsKey("fromDate") ? (Timestamp) activeSubscription.get("fromDate") : null;
+                        Timestamp thruDate = activeSubscription.containsKey("thruDate") ? (Timestamp) activeSubscription.get("thruDate") : null;
+                        if ((fromDate.before(validFrom) && (null == thruDate || thruDate.after(validFrom)))
+                                || (fromDate.after(validFrom) && (null == validTo || fromDate.before(validTo)))) {
+                            request.setAttribute("_ERROR_MESSAGE_", "Active subscription already exists for this date range");
+                            return true;
+                        }
+                    }
+                }
+            }
+        } catch (GenericServiceException e) {
+            Debug.logError(e, module);
+            request.setAttribute("_ERROR_MESSAGE_", "Error while reading active subscriptions. ");
+            return true;
+        }
+        return false;
     }
 }
