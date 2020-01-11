@@ -136,14 +136,19 @@ function addNewSubscription() {
             type: "POST",
             data: postData,
             success: function (data, textStatus, jqXHR) {
-                $('#createSubscriptionModal').modal('hide');
-                showSuccessToast("Subscription added successfully");
-                setTimeout(function () {
-                    listSubscriptions();
-                }, 500);
+                if (data._ERROR_MESSAGE_ == null) {
+                    $('#createSubscriptionModal').modal('hide');
+                    showSuccessToast("Subscription added successfully");
+                    setTimeout(function () {
+                        listSubscriptions();
+                    }, 500);
+                } else {
+                    showErrorToast(data._ERROR_MESSAGE_ )
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + errorThrown);
+                showErrorToast("Error: " + errorThrown)
             }
         });
 }
