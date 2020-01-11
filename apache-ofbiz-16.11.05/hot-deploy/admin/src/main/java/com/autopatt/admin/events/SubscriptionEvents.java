@@ -67,8 +67,8 @@ public class SubscriptionEvents {
         }
 
         //check any Active subscription already exists for this date range
-        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "true");
-        if ("true".equals(allowMultiActive)) {
+        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "false");
+        if ("false".equals(allowMultiActive)) {
             if (checkOverlapsActiveSubscription(request, dispatcher, userLogin, orgPartyId, validFrom, validTo)) {
                 return ERROR;
             }
@@ -185,8 +185,8 @@ public class SubscriptionEvents {
         }
 
         //check any Active subscription already exists for this date range
-        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "true");
-        if ("true".equals(allowMultiActive)) {
+        String allowMultiActive = SUBSCRIPTION_PROPERTIES.getProperty("autopatt.subscription.allow.multiactive", "false");
+        if ("false".equals(allowMultiActive)) {
             try {
                 GenericValue subscription = delegator.findOne("Subscription", false, "subscriptionId", subscriptionId);
                 if (null == subscription) {
