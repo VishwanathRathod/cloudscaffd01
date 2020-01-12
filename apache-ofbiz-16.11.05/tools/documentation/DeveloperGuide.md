@@ -37,6 +37,10 @@ Run below sql commands
 make a copy from entityengine-dev.xml and call it entityengine.xml
 Under <OFBIZ_HOME>/framework/entity/config
 
+### general.properties
+
+make a copy from general-dev.properties and call it entityengine.xml
+Under <OFBIZ_HOME>/framework/common/config
 
 
 ### Build & Run Project
