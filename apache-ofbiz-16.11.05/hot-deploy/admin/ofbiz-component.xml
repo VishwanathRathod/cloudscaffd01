@@ -22,12 +22,14 @@
     <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityPermissionSeedData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/AdminSecurityGroupSeedData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/SubscriptionData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/EmailSeedData.xml"/>
 
     <!-- Demo Data -->
     <entity-resource type="data" reader-name="ext-test" loader="main" location="data/demo/AdminDemoData.xml"/>
 
     <service-resource type="model" loader="main" location="servicedef/services.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_common.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_email.xml"/>
 
 
     <!-- web applications; will be mounted when using the embedded container -->

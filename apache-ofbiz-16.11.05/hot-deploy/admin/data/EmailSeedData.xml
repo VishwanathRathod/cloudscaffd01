@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+
+    <EnumerationType description="Email Notification" enumTypeId="EMAIL_NOTIFICATION" hasTable="N" parentTypeId=""/>
+
+    <!-- Sample Email Seed Data -->
+    <Enumeration description="Test Email" enumCode="TEST_EMAIL" enumId="TEST_EMAIL" enumTypeId="EMAIL_NOTIFICATION" sequenceId="101"/>
+    <ProductStoreEmailSetting productStoreId="AUTOPATT_STORE" emailType="TEST_EMAIL"
+                              bodyScreenLocation="component://admin/widget/AdminEmailScreens.xml#TestEmail"
+                              subject="Test Email"
+                              bccAddress=""
+                              fromAddress="harishbn@arithaconsulting.com"/>
+
+
+    <!-- NEW_CUST_ONBOARDED - New customer onboarded email to contact -->
+    <Enumeration description="New Customer Onboarded Email" enumCode="NEW_CUST_ONBOARDED" enumId="NEW_CUST_ONBOARDED" enumTypeId="EMAIL_NOTIFICATION" sequenceId="102"/>
+    <ProductStoreEmailSetting productStoreId="AUTOPATT_STORE" emailType="NEW_CUST_ONBOARDED"
+                              bodyScreenLocation="component://admin/widget/AdminEmailScreens.xml#NewCustomerOnboardedEmail"
+                              subject="Your Organization Account has been created"
+                              bccAddress=""
+                              fromAddress="harishbn@arithaconsulting.com"/>
+
+
+</entity-engine-xml>
