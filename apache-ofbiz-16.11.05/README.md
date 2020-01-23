@@ -636,4 +636,4 @@ software:
  java.security.* and javax.crypto.* (the JCE, Java Cryptography
  Extensions API)
 - Other classes such as HttpClient and various related ones use
- the JSSE (Java Secure Sockets Extension) API
+ the JSSE (Java Secure Sockets Extension) API 
